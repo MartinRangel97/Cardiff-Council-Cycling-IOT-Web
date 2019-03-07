@@ -1,4 +1,11 @@
-// Style
-import './style.css'
+/**
+ * This file serves as the entry point for the Homepage Javascript
+ */
 
-// Plain JS goes here
+// Style
+import '../stylesheets/home.scss'
+
+// Font
+import 'typeface-poppins'
+
+// Login JS goes here

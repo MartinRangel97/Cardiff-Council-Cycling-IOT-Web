@@ -2,8 +2,8 @@ const path = require('path')
 
 module.exports = {
   entry: {
-    home: './client/home/index',
-    app: './client/app/index'
+    app: './client/app/index',
+    home: './client/home/index'
   },
   output: {
     filename: '[name].js',
@@ -19,15 +19,18 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /node_modules/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.svg$/,
         use: ['svg-inline-loader']
       },
       {
-        test: /\.(jpe?g|png|gif|ico)$/i,
+        test: /\.(jpe?g|png|gif|ico|woff|woff2)$/i,
         use: ['file-loader']
       }
     ]

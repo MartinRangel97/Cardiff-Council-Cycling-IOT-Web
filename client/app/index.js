@@ -1,9 +1,16 @@
+/**
+ * This file serves as the entry point for the Web App Javascript
+ */
+
 // React
 import React from 'react'
 import { render } from 'react-dom'
 
 // Style
-import './style.css'
+import '../stylesheets/app.scss'
+
+// Font
+import 'typeface-poppins'
 
 // Render
 render(
@@ -12,3 +19,4 @@ render(
   </div>,
   document.getElementById('app')
 )
+
