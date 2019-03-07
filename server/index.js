@@ -6,7 +6,8 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 
 // Routers
-const indexRouter = require('./routes/index')
+const pagesRouter = require('./routes/pages')
+const apiRouter = require('./routes/api')
 
 // Prepare express
 const app = express()
@@ -23,7 +24,8 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../public')))
 
 // Routes
-app.use('/', indexRouter)
+app.use('/', pagesRouter)
+app.use('/api', apiRouter)
 
 // Listen
 server.listen(3000)
