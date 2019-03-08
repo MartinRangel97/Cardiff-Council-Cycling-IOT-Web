@@ -65,3 +65,6 @@ public
 
 # macos
 .DS_Store
+
+# Custom Config
+/config/app.conf

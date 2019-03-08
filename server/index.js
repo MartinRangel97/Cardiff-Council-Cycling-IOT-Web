@@ -3,7 +3,11 @@
 const express = require('express')
 const http = require('http')
 const path = require('path')
+const fs = require('fs')
 const cookieParser = require('cookie-parser')
+
+// Database
+const database = require('./database')
 
 // Routers
 const pagesRouter = require('./routes/pages')
@@ -14,6 +18,24 @@ const webApiRouter = require('./routes/api/web')
 // Prepare express
 const app = express()
 const server = http.Server(app)
+
+// Get the config
+var config
+try {
+  if (fs.existsSync('./config/app.conf')) {
+    console.log('Using custom configuration.')
+    config = JSON.parse(fs.readFileSync('./config/app.conf'))
+  } else {
+    console.log('No app.conf file found. Using the default configuration.')
+    config = JSON.parse(fs.readFileSync('./config/default.conf'))
+  }
+} catch (e) {
+  console.log('Unable to read the configuration file, the JSON may be invalid.')
+  process.exit(1)
+}
+
+// MySQL Connection Setup
+database.connect(config.host, config.user, config.password, config.database)
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'))

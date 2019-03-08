@@ -10,6 +10,9 @@ To build this application, you'll need Node.JS installed with NPM (bundled with 
 
 [Download Node.JS and NPM](https://nodejs.org/en/)
 
+To run the application, you will need MySQL to be installed an configured on your system with a database named `CleanAir`. You can download MySQL here:
+[Download MySQL](https://dev.mysql.com/downloads/windows/installer/)
+
 This project also contains an editor config file. To use this with VS Code or Atom, you will need to install an extension. These extensions are available here:  
 
 * [VS Code](https://marketplace.visualstudio.com/items?itemName=editorconfig.editorconfig)
@@ -20,6 +23,17 @@ This project also contains an editor config file. To use this with VS Code or At
 Clone the repo  
 ```
 git clone git@gitlab.cs.cf.ac.uk:c1630757/cardiff-council-cycling-iot-web.git
+```
+
+Create a config.json file in the config folder  
+_If you don't create a configuration file, the default configuration will be used_
+```
+{
+  "host": "localhost",
+  "user": "root",
+  "password": "password",
+  "database": "clean_air"
+}
 ```
 
 Install with NPM  
