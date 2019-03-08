@@ -10,7 +10,7 @@ To build this application, you'll need Node.JS installed with NPM (bundled with 
 
 [Download Node.JS and NPM](https://nodejs.org/en/)
 
-To run the application, you will need MySQL to be installed an configured on your system with a database named `CleanAir`. You can download MySQL here:
+To run the application, you will need MySQL to be installed an configured on your system with a database named `clean_air`. You can download MySQL here:
 [Download MySQL](https://dev.mysql.com/downloads/windows/installer/)
 
 This project also contains an editor config file. To use this with VS Code or Atom, you will need to install an extension. These extensions are available here:  
