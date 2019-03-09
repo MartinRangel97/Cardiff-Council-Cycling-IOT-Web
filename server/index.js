@@ -35,7 +35,7 @@ try {
 }
 
 // MySQL Connection Setup
-database.connect(config.host, config.user, config.password, config.database)
+database.connect(config.mysql.host, config.mysql.user, config.mysql.password, config.mysql.database)
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -54,8 +54,8 @@ app.use('/api/app', appApiRouter)
 app.use('/api/web', webApiRouter)
 
 // Listen
-server.listen(3000)
-server.on('listening', () => console.log('Example app listening on port 3000'))
+server.listen(config.server.port)
+server.on('listening', () => console.log('Example app listening on port ' + config.server.port + ''))
 server.on('error', (error) => {
   // Check if the error was a listening error
   if (error.syscall !== 'listen') {
@@ -64,10 +64,10 @@ server.on('error', (error) => {
   // Handle common error codes
   switch (error.code) {
     case 'EACCES':
-      console.error('Port 3000 requires elevated privileges')
+      console.error('Port ' + config.server.port + ' requires elevated privileges')
       process.exit(1)
     case 'EADDRINUSE':
-      console.error('Port 3000 is already in use')
+      console.error('Port ' + config.server.port + ' is already in use')
       process.exit(1)
     default:
       throw error
