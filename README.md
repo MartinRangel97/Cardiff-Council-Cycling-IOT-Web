@@ -25,14 +25,19 @@ Clone the repo
 git clone git@gitlab.cs.cf.ac.uk:c1630757/cardiff-council-cycling-iot-web.git
 ```
 
-Create a config.json file in the config folder  
+Create an app.conf file in the config folder  
 _If you don't create a configuration file, the default configuration will be used_
 ```
 {
-  "host": "localhost",
-  "user": "root",
-  "password": "password",
-  "database": "clean_air"
+  "server": {
+    "port": 3000
+  },
+  "mysql": {
+    "host": "localhost",
+    "user": "root",
+    "password": "password",
+    "database": "clean_air"
+  }
 }
 ```
 
@@ -83,9 +88,6 @@ The following NPM scripts are included in the project. For the commands that bui
 
 * **Express**  
   Used for the web server.
-
-* **Socket IO**  
-  Used for implementing web-sockets in the application.
 
 * **Editor Config**  
   Sets editor settings for supported editors.  
