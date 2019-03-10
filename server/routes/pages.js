@@ -7,7 +7,7 @@ router.get('/', function (req, res, next) {
 })
 
 // Get App Page
-router.get('/app', function (req, res, next) {
+router.get('/app*', function (req, res, next) {
   res.render('app', { title: 'Cardiff Clean Air Project' })
 })
 

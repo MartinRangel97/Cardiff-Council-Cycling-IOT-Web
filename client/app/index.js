@@ -5,6 +5,7 @@
 // React
 import React from 'react'
 import { render } from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
 
 // App
 import App from './app'
@@ -18,7 +19,9 @@ import 'typeface-poppins'
 // Render
 render(
   <div className='container'>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </div>,
   document.getElementById('app')
 )
