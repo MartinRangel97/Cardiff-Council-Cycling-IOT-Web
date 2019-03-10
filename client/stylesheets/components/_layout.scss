@@ -18,7 +18,8 @@
     top: 0;
     left: 0;
     z-index: 500;
-    background-color: $colour-primary;
+    background-color: $colour-white;
+    box-shadow: 0px 0px 20px #0d0d0d14;
     @include responsive-mobile {
       display: none;
     }
@@ -26,7 +27,8 @@
   .mobile-action-bar {
     height: 56px;
     z-index: 500;
-    background-color: $colour-primary;
+    background-color: $colour-white;
+    box-shadow: 0px 0px 20px #0d0d0d14;
     @include responsive-non-mobile {
       display: none;
     }
@@ -34,7 +36,8 @@
   .mobile-bottom-nav-bar {
     height: 56px;
     z-index: 500;
-    background-color: $colour-primary;
+    background-color: $colour-white;
+    box-shadow: 0px 0px 20px #0d0d0d14;
     @include responsive-non-mobile {
       display: none;
     }
