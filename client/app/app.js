@@ -13,11 +13,23 @@ import ProfilePage from './pages/profile-page'
 import HistoryPage from './pages/history-page'
 
 export default class App extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      showSidebar: false
+    }
+    this.toggleSidebar = this.toggleSidebar.bind(this)
+  }
+
+  toggleSidebar () {
+    this.setState({ showSidebar: !this.state.showSidebar })
+  }
+
   render () {
     return (
-      <Layout>
+      <Layout >
         <Map />
-        <Sidebar>
+        <Sidebar showSidebar={this.state.showSidebar}>
           <Switch>
             <Redirect exact from='/app' to='/app/explore' />
             <Route path='/app/explore'>
