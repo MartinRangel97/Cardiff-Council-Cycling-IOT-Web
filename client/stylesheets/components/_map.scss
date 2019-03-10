@@ -1,0 +1,10 @@
+.map-container {
+  height: 100%;
+  @include responsive-desktop {
+    padding-left: 455px;
+  }
+
+  .map {
+    height: 100%;
+  }
+}

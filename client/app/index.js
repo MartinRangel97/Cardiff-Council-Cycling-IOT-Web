@@ -6,6 +6,9 @@
 import React from 'react'
 import { render } from 'react-dom'
 
+// App
+import App from './app'
+
 // Style
 import '../stylesheets/app.scss'
 
@@ -14,9 +17,8 @@ import 'typeface-poppins'
 
 // Render
 render(
-  <div className='page'>
-    App content will go here.
+  <div className='container'>
+    <App />
   </div>,
   document.getElementById('app')
 )
-
