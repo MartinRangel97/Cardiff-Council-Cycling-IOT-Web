@@ -1,0 +1,24 @@
+.modal {
+  .overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: $colour-shade;
+  }
+  .container {
+    height: 100%;
+    width: 100%;
+    background: $colour-white;
+    @include responsive-desktop {
+      max-height: 800px;
+      max-width: 1290px;
+      margin: 80px;
+    }
+  }
+}
