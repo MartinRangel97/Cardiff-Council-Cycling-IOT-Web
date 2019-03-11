@@ -4,6 +4,57 @@
   display: flex;
   flex-direction: column;
 
+  // Common
+  .centered {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+  }
+  .hover-circle {
+    height: 46px;
+    width: 46px;
+    background: $colour-primary;
+    border-radius: 100%;
+    opacity: 0;
+    transform: scale(0.75);
+    transition: opacity 150ms, transform 150ms;
+  }
+  .action-btn {
+    height: 80px;
+    width: 80px;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    @include responsive-mobile {
+      height: 56px;
+      width: 64px;
+    }
+    .icon {
+      height: 24px;
+      width: 24px;
+      opacity: 0.32;
+      transition: opacity 250ms, transform 400ms cubic-bezier(0.24, 1.43, 0.4, 1);
+    }
+    &:hover {
+      .hover-circle {
+        opacity: 0.10;
+        transform: scale(1);
+      }
+      .icon {
+        opacity: 0.8;
+        transform: rotate(90deg);
+      }
+    }
+    &.sidebar-btn {
+      @include responsive-desktop {
+        display: none;
+      }
+    }
+  }
+  // Content
   .content {
     position: relative;
     flex-grow: 1;
@@ -11,38 +62,16 @@
       padding-left: 80px;
     }
   }
+  // Hamburger
   .hamburger {
-    position: relative;
-    height: 80px;
-    width: 80px;
-    cursor: pointer;
-    .centered {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-    }
-    .hover-circle {
-      height: 46px;
-      width: 46px;
-      background: $colour-primary;
-      border-radius: 100%;
-      opacity: 0;
-      transform: scale(0.75);
-      transition: opacity 150ms, transform 150ms;
-    }
-    .stack {
-      width: 20px;
-      height: 18px;
-      .line {
-        height: 2px;
-        width: 100%;
-        background: $gradient-horizontal;
-        border-radius: 2px;
-        margin: 3px 0;
-      }
+    width: 20px;
+    height: 18px;
+    .line {
+      height: 2px;
+      width: 100%;
+      background: $gradient-horizontal;
+      border-radius: 2px;
+      margin: 3px 0;
     }
     &:hover {
       .hover-circle {
@@ -50,10 +79,8 @@
         transform: scale(1);
       }
     }
-    @include responsive-desktop {
-      display: none;
-    }
   }
+  // Desktop and Tablet Navbar
   .navbar {
     height: 100%;
     width: 80px;
@@ -95,23 +122,6 @@
         position: relative;
         flex-grow: 1;
         margin-right: 4px;
-        .centered {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          margin: auto;
-        }
-        .hover-circle {
-          height: 46px;
-          width: 46px;
-          background: $colour-primary;
-          border-radius: 100%;
-          opacity: 0;
-          transform: scale(0.75);
-          transition: opacity 150ms, transform 150ms;
-        }
         .icon {
           height: 24px;
           width: 24px;
@@ -173,50 +183,14 @@
         }
       }
     }
-    .action-btn {
-      height: 80px;
-      width: 80px;
-      display: block;
-      position: relative;
-      cursor: pointer;
-      .centered {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
-      }
-      .hover-circle {
-        height: 46px;
-        width: 46px;
-        background: $colour-primary;
-        border-radius: 100%;
-        opacity: 0;
-        transform: scale(0.75);
-        transition: opacity 150ms, transform 150ms;
-      }
-      .icon {
-        height: 24px;
-        width: 24px;
-        opacity: 0.32;
-        transition: opacity 250ms, transform 400ms cubic-bezier(0.24, 1.43, 0.4, 1);
-      }
-      &:hover {
-        .hover-circle {
-          opacity: 0.10;
-          transform: scale(1);
-        }
-        .icon {
-          opacity: 0.8;
-          transform: rotate(90deg);
-        }
-      }
-    }
   }
+  // Mobile Action Bar
   .mobile-action-bar {
     height: 56px;
     z-index: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: $colour-white;
     box-shadow: 0px 0px 20px #0d0d0d14;
     @include responsive-non-mobile {

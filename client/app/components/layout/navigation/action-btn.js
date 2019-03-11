@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default class NavbarActionBtn extends React.Component {
+export default class ActionBtn extends React.Component {
   render () {
     return (
       <a onClick={this.props.onClick} className='action-btn'>
@@ -12,7 +12,7 @@ export default class NavbarActionBtn extends React.Component {
   }
 }
 
-NavbarActionBtn.propTypes = {
+ActionBtn.propTypes = {
   icon: PropTypes.string,
   onClick: PropTypes.func
 }

@@ -4,14 +4,14 @@ import PropTypes from 'prop-types'
 export default class Hamburger extends React.Component {
   render () {
     return (
-      <div className='hamburger' onClick={this.props.onClick}>
+      <a className='action-btn sidebar-btn' onClick={this.props.onClick} >
         <div className='hover-circle centered' />
-        <div className='stack centered'>
+        <div className='hamburger centered'>
           <div className='line' />
           <div className='line' />
           <div className='line' />
         </div>
-      </div>
+      </a>
     )
   }
 }

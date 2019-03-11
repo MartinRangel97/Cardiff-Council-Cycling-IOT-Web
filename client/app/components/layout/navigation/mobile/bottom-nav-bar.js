@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class MobileBottomNavBar extends React.Component {
+export default class BottomNavBar extends React.Component {
   render () {
     return (
       <div className='mobile-bottom-nav-bar'>

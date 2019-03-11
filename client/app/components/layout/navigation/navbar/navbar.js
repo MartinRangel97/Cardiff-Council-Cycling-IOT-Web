@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import NavbarLinkBtn from './navbar-link-btn'
-import NavbarActionBtn from './navbar-action-btn'
+import ActionBtn from '../action-btn'
 import Hamburger from '../hamburger'
 
 import IconLogo from '../../../../icons/logo-gradient.svg'
@@ -28,7 +28,7 @@ export default class NavBar extends React.Component {
           <NavbarLinkBtn link='/app/history' name='History' icon={IconHistory} iconGradient={IconHistoryGradient} onClick={() => { this.props.sidebarToggle(true) }} />
         </div>
         <div className='bottom'>
-          <NavbarActionBtn icon={IconSettings} />
+          <ActionBtn icon={IconSettings} />
         </div>
       </div>
     )
