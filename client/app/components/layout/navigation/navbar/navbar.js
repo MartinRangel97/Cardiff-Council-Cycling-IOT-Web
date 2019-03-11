@@ -20,9 +20,9 @@ export default class NavBar extends React.Component {
           <img className='logo' src={IconLogo} />
         </div>
         <div className='mid'>
-          <NavbarLinkBtn link='/app/explore' icon={IconMap} iconGradient={IconMapGradient} />
-          <NavbarLinkBtn link='/app/profile' icon={IconProfile} iconGradient={IconProfileGradient} />
-          <NavbarLinkBtn link='/app/history' icon={IconHistory} iconGradient={IconHistoryGradient} />
+          <NavbarLinkBtn link='/app/explore' name='Explore' icon={IconMap} iconGradient={IconMapGradient} />
+          <NavbarLinkBtn link='/app/profile' name='Profile' icon={IconProfile} iconGradient={IconProfileGradient} />
+          <NavbarLinkBtn link='/app/history' name='History' icon={IconHistory} iconGradient={IconHistoryGradient} />
         </div>
         <div className='bottom'>
           <NavbarActionBtn icon={IconSettings} />

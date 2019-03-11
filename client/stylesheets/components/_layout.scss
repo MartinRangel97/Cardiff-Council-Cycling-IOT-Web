@@ -76,7 +76,30 @@
           }
         }
       }
+      &::after {
+        content: attr(name);
+        position: absolute;
+        left: 80px;
+        margin: 21px;
+        background-color: #313232;
+        padding: 4px 10px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        z-index: 1;
+        border-radius: 27px;
+        transition: 100ms ease-out;
+        transform: translateX(-20px) scale(0.8);
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+      }
       &:hover {
+        &::after {
+          transform: translateX(0);
+          opacity: 1;
+          visibility: visible;
+        }
         .hover-circle {
           opacity: 0.10;
           transform: scale(1);
