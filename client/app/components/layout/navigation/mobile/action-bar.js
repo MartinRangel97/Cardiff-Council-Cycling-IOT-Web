@@ -9,7 +9,7 @@ import IconSettings from '../../../../icons/settings.svg'
 export default class ActionBar extends React.Component {
   render () {
     return (
-      <div className='mobile-action-bar'>
+      <div className='action-bar'>
         <div className='left'>
           <Hamburger onClick={this.props.sidebarToggle} />
         </div>
