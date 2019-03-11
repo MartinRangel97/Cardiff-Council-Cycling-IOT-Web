@@ -23,9 +23,9 @@ export default class NavBar extends React.Component {
           <Hamburger onClick={this.props.sidebarToggle} />
         </div>
         <div className='mid'>
-          <NavbarLinkBtn link='/app/explore' name='Explore' icon={IconMap} iconGradient={IconMapGradient} />
-          <NavbarLinkBtn link='/app/profile' name='Profile' icon={IconProfile} iconGradient={IconProfileGradient} />
-          <NavbarLinkBtn link='/app/history' name='History' icon={IconHistory} iconGradient={IconHistoryGradient} />
+          <NavbarLinkBtn link='/app/explore' name='Explore' icon={IconMap} iconGradient={IconMapGradient} onClick={() => { this.props.sidebarToggle(true) }} />
+          <NavbarLinkBtn link='/app/profile' name='Profile' icon={IconProfile} iconGradient={IconProfileGradient} onClick={() => { this.props.sidebarToggle(true) }} />
+          <NavbarLinkBtn link='/app/history' name='History' icon={IconHistory} iconGradient={IconHistoryGradient} onClick={() => { this.props.sidebarToggle(true) }} />
         </div>
         <div className='bottom'>
           <NavbarActionBtn icon={IconSettings} />

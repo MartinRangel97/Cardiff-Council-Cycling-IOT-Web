@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 export default class NavbarLinkBtn extends React.Component {
   render () {
     return (
-      <NavLink to={this.props.link} className='link-btn' name={this.props.name}>
+      <NavLink to={this.props.link} className='link-btn' name={this.props.name} onClick={this.props.onClick}>
         <div className='selection-indicator' />
         <div className='container'>
           <div className='hover-circle centered' />
@@ -21,5 +21,6 @@ NavbarLinkBtn.propTypes = {
   link: PropTypes.string,
   icon: PropTypes.string,
   iconGradient: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
+  onClick: PropTypes.func
 }
