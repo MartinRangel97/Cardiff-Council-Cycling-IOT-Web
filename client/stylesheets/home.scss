@@ -1,1 +1,57 @@
 @import "base/all";
+@import "base/colours";
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.section-header {
+    align-self: flex-start;
+    margin: 10px;
+
+    p {
+        font-size: 12px;
+        font-weight: 600;
+        margin: 0;
+    }
+    img {
+        height: 50px;
+        width: 50px;
+        margin: 0 10px 0 0;
+    }
+}
+
+.section-title {
+    flex-grow: 1;
+
+    img {
+    height: 60px;
+    }
+    h1, h2 {
+        color: $colour-primary;
+        margin: 0;
+    }
+    h1 {
+        font-size: 48px;
+        font-weight: 600;
+    }
+    h2 {
+    font-size: 18px;
+    font-weight: 400;
+    }
+}
+
+ .section-login {
+     flex-grow: 1;
+ }
+
+ #background {
+    background-image: url("/static/images/Background.svg");
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 100vh;
+    width: 100%;
+ }
