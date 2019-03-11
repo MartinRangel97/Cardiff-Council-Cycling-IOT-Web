@@ -27,7 +27,7 @@ export default class App extends React.Component {
 
   render () {
     return (
-      <Layout >
+      <Layout sidebarToggle={this.toggleSidebar} >
         <Map />
         <Sidebar showSidebar={this.state.showSidebar}>
           <Switch>

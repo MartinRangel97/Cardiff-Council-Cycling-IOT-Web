@@ -1,7 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import NavbarLinkBtn from './navbar-link-btn'
 import NavbarActionBtn from './navbar-action-btn'
+import Hamburger from '../hamburger'
 
 import IconLogo from '../../../../icons/logo-gradient.svg'
 import IconMap from '../../../../icons/map.svg'
@@ -18,6 +20,7 @@ export default class NavBar extends React.Component {
       <div className='navbar'>
         <div className='top'>
           <img className='logo' src={IconLogo} />
+          <Hamburger onClick={this.props.sidebarToggle} />
         </div>
         <div className='mid'>
           <NavbarLinkBtn link='/app/explore' name='Explore' icon={IconMap} iconGradient={IconMapGradient} />
@@ -30,4 +33,8 @@ export default class NavBar extends React.Component {
       </div>
     )
   }
+}
+
+NavBar.propTypes = {
+  sidebarToggle: PropTypes.func
 }
