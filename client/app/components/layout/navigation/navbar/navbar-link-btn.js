@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
-export default class NavBarBtn extends React.Component {
+export default class NavbarLinkBtn extends React.Component {
   render () {
     return (
-      <NavLink to={this.props.link} className='btn'>
+      <NavLink to={this.props.link} className='link-btn'>
         <div className='selection-indicator' />
         <div className='container'>
           <div className='hover-circle centered' />
@@ -17,7 +17,7 @@ export default class NavBarBtn extends React.Component {
   }
 }
 
-NavBarBtn.propTypes = {
+NavbarLinkBtn.propTypes = {
   link: PropTypes.string,
   icon: PropTypes.string,
   iconGradient: PropTypes.string
