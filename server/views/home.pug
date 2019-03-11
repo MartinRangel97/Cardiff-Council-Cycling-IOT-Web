@@ -1,6 +1,24 @@
 extends layout
 block content
-  main
-    P.
-      Homepage will go here.
+  main#background.container
+    .section-header
+      img(src="/static/images/Cardiff-Council-Logo.svg", alt="Cardiff City Council logo")
+      img(src="/static/images/Cardiff-University-Logo.svg", alt="Cardiff University logo")
+      p Cardiff Council in partnership with the 
+      p National Software Academy
+
+    .section-title
+      img(src="/static/images/App-Logo.svg", alt="")
+      h1 Cardiff Clean Air Project
+      h2 Working together for a better, healthier smart city.
+
+    .section-login
+      p#login-title Login or Create an Account
+      input#email(placeholder="Email" type="email")
+      input#password(placeholder="Password" type="password")
+      a#login(href="") Login
+      a#register(href="") Register
+      p Terms & Conditions
+
   script(src="/home.js")
+
