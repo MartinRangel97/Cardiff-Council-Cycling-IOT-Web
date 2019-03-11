@@ -16,7 +16,7 @@ export default class App extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      showSidebar: false
+      showSidebar: true
     }
     this.toggleSidebar = this.toggleSidebar.bind(this)
   }
