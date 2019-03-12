@@ -5,12 +5,7 @@ import { CSSTransition } from 'react-transition-group'
 import Modal from './modal'
 
 export default class StateModal extends React.Component {
-  constructor (props) {
-    super(props)
-    this.getClassName = this.getClassName.bind(this)
-  }
-
-  getClassName () {
+  getClassName = () => {
     if (this.props.className) {
       return 'modal ' + this.props.className
     } else {

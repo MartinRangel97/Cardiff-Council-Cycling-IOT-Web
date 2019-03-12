@@ -6,16 +6,11 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import Modal from './modal'
 
 export default class LinkModal extends React.Component {
-  constructor (props) {
-    super(props)
-    this.getClassName = this.getClassName.bind(this)
-  }
-
   static contextTypes = {
     router: () => true
   }
 
-  getClassName () {
+  getClassName = () => {
     if (this.props.className) {
       return 'modal ' + this.props.className
     } else {

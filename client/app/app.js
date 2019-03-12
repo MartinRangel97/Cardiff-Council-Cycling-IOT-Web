@@ -21,11 +21,9 @@ export default class App extends React.Component {
       showSidebar: true,
       showSettings: false
     }
-    this.toggleSidebar = this.toggleSidebar.bind(this)
-    this.toggleSettings = this.toggleSettings.bind(this)
   }
 
-  toggleSidebar (show) {
+  toggleSidebar = (show) => {
     if (typeof show !== 'boolean') {
       this.setState({ showSidebar: !this.state.showSidebar })
     } else {
@@ -33,7 +31,7 @@ export default class App extends React.Component {
     }
   }
 
-  toggleSettings () {
+  toggleSettings = () => {
     this.setState({ showSettings: !this.state.showSettings })
   }
 

@@ -2,12 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 export default class Modal extends React.Component {
-  constructor (props) {
-    super(props)
-    this.overlayClick = this.overlayClick.bind(this)
-  }
-
-  overlayClick (event) {
+  overlayClick = (event) => {
     if (event.target === event.currentTarget) this.props.close()
   }
 
