@@ -11,7 +11,7 @@ import Sidebar from './components/sidebar/sidebar'
 import ExplorePage from './pages/explore-page'
 import ProfilePage from './pages/profile-page'
 import HistoryPage from './pages/history-page'
-import SettingsModal from './modals/settings-modal';
+import SettingsModal from './modals/settings-modal'
 
 export default class App extends React.Component {
   constructor (props) {
@@ -43,15 +43,9 @@ export default class App extends React.Component {
         <Sidebar showSidebar={this.state.showSidebar}>
           <Switch>
             <Redirect exact from='/app' to='/app/explore' />
-            <Route path='/app/explore'>
-              <ExplorePage />
-            </Route>
-            <Route path='/app/profile'>
-              <ProfilePage />
-            </Route>
-            <Route path='/app/History'>
-              <HistoryPage />
-            </Route>
+            <Route path='/app/explore' render={(props) => <ExplorePage {...props} />} />
+            <Route path='/app/profile' render={(props) => <ProfilePage {...props} />} />
+            <Route path='/app/history' render={(props) => <HistoryPage {...props} />} />
           </Switch>
         </Sidebar>
         <SettingsModal show={this.state.showSettings} close={this.toggleSettings} />

@@ -6,7 +6,7 @@ import StateModal from '../components/modal/state-modal'
 export default class SettingsModal extends React.Component {
   render () {
     return (
-      <StateModal className='read-article' show={this.props.show} close={this.props.close}>
+      <StateModal className='settings-modal' show={this.props.show} close={this.props.close}>
         Setup Model
       </StateModal>
     )

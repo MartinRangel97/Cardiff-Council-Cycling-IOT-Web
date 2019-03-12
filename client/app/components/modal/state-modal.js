@@ -5,9 +5,22 @@ import { CSSTransition } from 'react-transition-group'
 import Modal from './modal'
 
 export default class StateModal extends React.Component {
+  constructor (props) {
+    super(props)
+    this.getClassName = this.getClassName.bind(this)
+  }
+
+  getClassName () {
+    if (this.props.className) {
+      return 'modal ' + this.props.className
+    } else {
+      return 'modal'
+    }
+  }
+
   render () {
     return (
-      <div className='modal'>
+      <div className={this.getClassName()}>
         <CSSTransition
           in={this.props.show}
           classNames='animation'
@@ -23,6 +36,7 @@ export default class StateModal extends React.Component {
 }
 
 StateModal.propTypes = {
+  className: PropTypes.string,
   show: PropTypes.bool,
   close: PropTypes.func,
   children: PropTypes.node
