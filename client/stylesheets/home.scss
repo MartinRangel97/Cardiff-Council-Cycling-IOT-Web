@@ -17,7 +17,7 @@ font-weight: 400;
 #background {
     background-image: url("/static/images/Background.svg");
     background-repeat: no-repeat;
-    background-position: right;
+    background-position: bottom right;
     height: 100vh;
     width: 100%;
  }
@@ -31,6 +31,7 @@ font-weight: 400;
 
 .section-header {
     align-self: flex-start;
+    flex-grow: 1;
     margin: 10px;
 
     p {
@@ -58,12 +59,12 @@ font-weight: 400;
 }
 
  .section-login {
-     flex-grow: 1;
+     flex-grow: 2;
 
      .card {
         display: inline-block;
         background: $colour-white;
-        box-shadow: 0 2px 25px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 2px 25px rgba(0, 0, 0, 0.15);
         border-radius: 10px;
         text-align: center;
         padding: 60px 30px;
@@ -128,3 +129,34 @@ font-weight: 400;
         }
      }
  }
+
+ // Media Queries 
+
+@media only screen and (max-width: 1600px) {
+    #background {
+        background-size: 70vh;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .container {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #background {
+        background-size: 60vh;
+    }
+} 
+
+@media only screen and (max-width: 600px) {
+    .section-title {
+        padding: 20px;
+        text-align: center;
+
+        h1 {
+            font-size: 28px;
+        }
+    }
+} 
