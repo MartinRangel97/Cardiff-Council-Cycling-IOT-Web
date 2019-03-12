@@ -7,7 +7,7 @@ import TestModal from '../modals/test-modal'
 export default class ExplorePage extends React.Component {
   render () {
     return (
-      <div className='explore-page'>
+      <div className='sidebar-page explore-page'>
         <h1>Explore</h1>
         <h2>Test Modal</h2>
         <NavLink to='/app/explore/test'>

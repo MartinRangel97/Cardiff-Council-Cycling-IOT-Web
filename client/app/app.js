@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Switch, Route, Redirect } from 'react-router-dom'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 // Components
 import Layout from './components/layout/layout'
@@ -36,16 +37,26 @@ export default class App extends React.Component {
   }
 
   render () {
+    // Ignore link modal changes
+    var key = this.props.location.pathname.split('/')[2]
+
     return (
       <Layout sidebarToggle={this.toggleSidebar} settingsToggle={this.toggleSettings} >
         <Map />
         <Sidebar showSidebar={this.state.showSidebar}>
-          <Switch>
-            <Redirect exact from={this.props.match.path} to='/app/explore' />
-            <Route path={`${this.props.match.path}/explore`} render={(props) => <ExplorePage {...props} />} />
-            <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
-            <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
-          </Switch>
+          <TransitionGroup>
+            <CSSTransition
+              key={key}
+              classNames='sidebar-fade-animation'
+              timeout={150}>
+              <Switch location={this.props.location}>
+                <Redirect exact from={this.props.match.path} to='/app/explore' />
+                <Route path={`${this.props.match.path}/explore`} render={(props) => <ExplorePage {...props} />} />
+                <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
+                <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
         </Sidebar>
         <SettingsModal show={this.state.showSettings} close={this.toggleSettings} />
       </Layout>
@@ -54,5 +65,6 @@ export default class App extends React.Component {
 }
 
 App.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
+  location: PropTypes.object
 }
