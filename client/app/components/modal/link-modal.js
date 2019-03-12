@@ -14,26 +14,32 @@ export default class LinkModal extends React.Component {
     }
   }
 
+  close = () => {
+    if (this.props.history.length > 1) {
+      this.props.history.goBack()
+    } else {
+      this.props.history.push(this.props.match.path)
+    }
+  }
+
   render () {
     return (
       <div className={this.getClassName()}>
-        <Route render={({ location, history }) => (
-          <TransitionGroup>
-            <CSSTransition
-              key={location.key}
-              classNames='animation'
-              timeout={300}
-              unmountOnExit>
-              <Switch location={location}>
-                <Route path={this.props.path}>
-                  <Modal close={history.goBack}>
-                    {this.props.children}
-                  </Modal>
-                </Route>
-              </Switch>
-            </CSSTransition>
-          </TransitionGroup>
-        )} />
+        <TransitionGroup>
+          <CSSTransition
+            key={this.props.location.key}
+            classNames='animation'
+            timeout={300}
+            unmountOnExit>
+            <Switch location={this.props.location}>
+              <Route path={this.props.path}>
+                <Modal close={this.close}>
+                  {this.props.children}
+                </Modal>
+              </Route>
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
       </div>
     )
   }
@@ -42,5 +48,8 @@ export default class LinkModal extends React.Component {
 LinkModal.propTypes = {
   className: PropTypes.string,
   path: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
+  history: PropTypes.object,
+  match: PropTypes.object,
+  location: PropTypes.object
 }
