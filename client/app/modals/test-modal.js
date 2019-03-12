@@ -6,7 +6,7 @@ import LinkModal from '../components/modal/link-modal'
 export default class TestModal extends React.Component {
   render () {
     return (
-      <LinkModal className='test-modal' route={this.props.route}>
+      <LinkModal className='test-modal' path={this.props.path}>
         Test Model
       </LinkModal>
     )
@@ -14,5 +14,5 @@ export default class TestModal extends React.Component {
 }
 
 TestModal.propTypes = {
-  route: PropTypes.string
+  path: PropTypes.string
 }

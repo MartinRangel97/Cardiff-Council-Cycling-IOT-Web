@@ -6,10 +6,6 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import Modal from './modal'
 
 export default class LinkModal extends React.Component {
-  static contextTypes = {
-    router: () => true
-  }
-
   getClassName = () => {
     if (this.props.className) {
       return 'modal ' + this.props.className
@@ -21,7 +17,7 @@ export default class LinkModal extends React.Component {
   render () {
     return (
       <div className={this.getClassName()}>
-        <Route render={({ location }) => (
+        <Route render={({ location, history }) => (
           <TransitionGroup>
             <CSSTransition
               key={location.key}
@@ -29,8 +25,8 @@ export default class LinkModal extends React.Component {
               timeout={300}
               unmountOnExit>
               <Switch location={location}>
-                <Route path={this.props.route}>
-                  <Modal close={this.context.router.history.goBack}>
+                <Route path={this.props.path}>
+                  <Modal close={history.goBack}>
                     {this.props.children}
                   </Modal>
                 </Route>
@@ -45,6 +41,6 @@ export default class LinkModal extends React.Component {
 
 LinkModal.propTypes = {
   className: PropTypes.string,
-  route: PropTypes.string,
+  path: PropTypes.string,
   children: PropTypes.node
 }

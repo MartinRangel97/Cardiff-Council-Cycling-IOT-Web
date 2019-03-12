@@ -12,7 +12,7 @@ export default class ExplorePage extends React.Component {
         <NavLink to='/app/explore/test'>
           Open Test Modal
         </NavLink>
-        <TestModal route={`${this.props.match.path}/test`} />
+        <TestModal path={`${this.props.match.path}/test`} />
       </div>
     )
   }
