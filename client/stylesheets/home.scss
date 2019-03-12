@@ -48,6 +48,7 @@ font-weight: 400;
 
 .section-title {
     flex-grow: 1;
+    margin-bottom: 120px;
 
     img {
     height: 60px;
@@ -134,13 +135,16 @@ font-weight: 400;
 
 @media only screen and (max-width: 1600px) {
     #background {
-        background-size: 70vh;
+        background-size: 50vw;
     }
 }
 
 @media only screen and (max-width: 1200px) {
     .container {
         flex-direction: column;
+    }
+    .section-title {
+        margin-bottom: 0;
     }
 }
 
