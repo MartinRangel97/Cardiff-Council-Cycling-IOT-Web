@@ -34,7 +34,7 @@ class LinkModal extends React.Component {
             unmountOnExit>
             <Switch location={this.props.location}>
               <Route path={this.props.path}>
-                <Modal close={this.close}>
+                <Modal title={this.props.title} close={this.close}>
                   {this.props.children}
                 </Modal>
               </Route>
@@ -48,6 +48,7 @@ class LinkModal extends React.Component {
 
 LinkModal.propTypes = {
   className: PropTypes.string,
+  title: PropTypes.string,
   path: PropTypes.string,
   children: PropTypes.node,
   history: PropTypes.object,

@@ -21,7 +21,7 @@ export default class StateModal extends React.Component {
           classNames='animation'
           timeout={300}
           unmountOnExit>
-          <Modal close={this.props.close}>
+          <Modal title={this.props.title} close={this.props.close}>
             {this.props.children}
           </Modal>
         </CSSTransition>
@@ -32,6 +32,7 @@ export default class StateModal extends React.Component {
 
 StateModal.propTypes = {
   className: PropTypes.string,
+  title: PropTypes.string,
   show: PropTypes.bool,
   close: PropTypes.func,
   children: PropTypes.node
