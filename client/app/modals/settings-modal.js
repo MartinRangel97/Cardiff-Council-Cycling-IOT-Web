@@ -7,7 +7,7 @@ export default class SettingsModal extends React.Component {
   render () {
     return (
       <StateModal className='settings-modal' show={this.props.show} close={this.props.close}>
-        Setup Model
+        <h1>Settings Modal</h1>
       </StateModal>
     )
   }

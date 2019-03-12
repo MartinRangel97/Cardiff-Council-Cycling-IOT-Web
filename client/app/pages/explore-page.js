@@ -8,7 +8,8 @@ export default class ExplorePage extends React.Component {
   render () {
     return (
       <div className='explore-page'>
-        Explore<br />
+        <h1>Explore</h1>
+        <h2>Test Modal</h2>
         <NavLink to='/app/explore/test'>
           Open Test Modal
         </NavLink>

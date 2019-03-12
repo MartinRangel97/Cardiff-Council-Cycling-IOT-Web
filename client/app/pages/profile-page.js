@@ -4,7 +4,7 @@ export default class ProfilePage extends React.Component {
   render () {
     return (
       <div className='profile-page'>
-        Profile
+        <h1>Profile</h1>
       </div>
     )
   }

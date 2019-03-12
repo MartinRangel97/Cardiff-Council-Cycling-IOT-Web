@@ -7,7 +7,7 @@ export default class TestModal extends React.Component {
   render () {
     return (
       <LinkModal className='test-modal' path={this.props.path}>
-        Test Model
+        <h1>Test Modal</h1>
       </LinkModal>
     )
   }

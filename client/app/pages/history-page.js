@@ -4,7 +4,7 @@ export default class HistoryPage extends React.Component {
   render () {
     return (
       <div className='history-page'>
-        History
+        <h1>History</h1>
       </div>
     )
   }
