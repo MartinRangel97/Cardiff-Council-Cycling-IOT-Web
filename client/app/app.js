@@ -1,5 +1,6 @@
 // React
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 // Components
@@ -42,14 +43,18 @@ export default class App extends React.Component {
         <Map />
         <Sidebar showSidebar={this.state.showSidebar}>
           <Switch>
-            <Redirect exact from='/app' to='/app/explore' />
-            <Route path='/app/explore' render={(props) => <ExplorePage {...props} />} />
-            <Route path='/app/profile' render={(props) => <ProfilePage {...props} />} />
-            <Route path='/app/history' render={(props) => <HistoryPage {...props} />} />
+            <Redirect exact from={this.props.match.path} to='/app/explore' />
+            <Route path={`${this.props.match.path}/explore`} render={(props) => <ExplorePage {...props} />} />
+            <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
+            <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
           </Switch>
         </Sidebar>
         <SettingsModal show={this.state.showSettings} close={this.toggleSettings} />
       </Layout>
     )
   }
+}
+
+App.propTypes = {
+  match: PropTypes.object
 }
