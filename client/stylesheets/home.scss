@@ -14,7 +14,7 @@ font-size: 18px;
 font-weight: 400;
 }
 
-#background {
+.background {
     background-image: url("/static/images/Background.svg");
     background-repeat: no-repeat;
     background-position: bottom right;
@@ -134,8 +134,11 @@ font-weight: 400;
  // Media Queries 
 
 @media only screen and (max-width: 1600px) {
-    #background {
-        background-size: 50vw;
+    .background {
+        background-size: 60vw;
+    }
+    .section-title h1 {
+        font-size: 32px;
     }
 }
 
@@ -149,7 +152,7 @@ font-weight: 400;
 }
 
 @media only screen and (max-width: 768px) {
-    #background {
+    .background {
         background-size: 60vh;
     }
 } 
