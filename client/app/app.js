@@ -11,14 +11,17 @@ import Sidebar from './components/sidebar/sidebar'
 import ExplorePage from './pages/explore-page'
 import ProfilePage from './pages/profile-page'
 import HistoryPage from './pages/history-page'
+import SettingsModal from './modals/settings-modal';
 
 export default class App extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      showSidebar: true
+      showSidebar: true,
+      showSettings: false
     }
     this.toggleSidebar = this.toggleSidebar.bind(this)
+    this.toggleSettings = this.toggleSettings.bind(this)
   }
 
   toggleSidebar (show) {
@@ -29,9 +32,13 @@ export default class App extends React.Component {
     }
   }
 
+  toggleSettings () {
+    this.setState({ showSettings: !this.state.showSettings })
+  }
+
   render () {
     return (
-      <Layout sidebarToggle={this.toggleSidebar} >
+      <Layout sidebarToggle={this.toggleSidebar} settingsToggle={this.toggleSettings} >
         <Map />
         <Sidebar showSidebar={this.state.showSidebar}>
           <Switch>
@@ -47,6 +54,7 @@ export default class App extends React.Component {
             </Route>
           </Switch>
         </Sidebar>
+        <SettingsModal show={this.state.showSettings} close={this.toggleSettings} />
       </Layout>
     )
   }

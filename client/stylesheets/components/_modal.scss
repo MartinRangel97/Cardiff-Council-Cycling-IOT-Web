@@ -11,14 +11,47 @@
     z-index: 1000;
     background: $colour-shade;
   }
-  .container {
+  .modal-container {
     height: 100%;
     width: 100%;
+    padding: 50px 60px;
+    box-sizing: border-box;
+    border-radius: 10px;
     background: $colour-white;
+    box-shadow: $shadow-high-elevation;
     @include responsive-desktop {
       max-height: 800px;
       max-width: 1290px;
       margin: 80px;
+    }
+  }
+  /* Animation */
+  .animation-enter {
+    opacity: 0.01;
+    .modal-container {
+      transform: scale(0.8);
+    }
+  }
+  .animation-enter-active {
+    opacity: 1;
+    transition: all 100ms ease-out;
+    .modal-container {
+      transform: scale(1);
+      transition: transform 300ms cubic-bezier(0.3, 1.35, 0.5, 1);
+    }
+  }
+  .animation-exit {
+    opacity: 1;
+    .modal-container {
+      transform: scale(1);
+    }
+  }
+  .animation-exit-active {
+    opacity: 0.01;
+    transition: all 100ms ease-out;
+    .modal-container {
+      transform: scale(0.9);
+      transition: all 100ms ease-out;
     }
   }
 }

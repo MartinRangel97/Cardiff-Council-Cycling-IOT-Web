@@ -28,7 +28,7 @@ export default class NavBar extends React.Component {
           <NavbarLinkBtn link='/app/history' name='History' icon={IconHistory} iconGradient={IconHistoryGradient} onClick={() => { this.props.sidebarToggle(true) }} />
         </div>
         <div className='bottom'>
-          <ActionBtn icon={IconSettings} />
+          <ActionBtn icon={IconSettings} onClick={this.props.settingsToggle} />
         </div>
       </div>
     )
@@ -36,5 +36,6 @@ export default class NavBar extends React.Component {
 }
 
 NavBar.propTypes = {
-  sidebarToggle: PropTypes.func
+  sidebarToggle: PropTypes.func,
+  settingsToggle: PropTypes.func
 }

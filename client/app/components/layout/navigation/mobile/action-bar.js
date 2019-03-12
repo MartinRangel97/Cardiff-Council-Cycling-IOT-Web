@@ -14,7 +14,7 @@ export default class ActionBar extends React.Component {
           <Hamburger onClick={this.props.sidebarToggle} />
         </div>
         <div className='right'>
-          <NavbarActionBtn icon={IconSettings} />
+          <NavbarActionBtn icon={IconSettings} onClick={this.props.settingsToggle} />
         </div>
       </div>
     )
@@ -22,5 +22,6 @@ export default class ActionBar extends React.Component {
 }
 
 ActionBar.propTypes = {
-  sidebarToggle: PropTypes.func
+  sidebarToggle: PropTypes.func,
+  settingsToggle: PropTypes.func
 }

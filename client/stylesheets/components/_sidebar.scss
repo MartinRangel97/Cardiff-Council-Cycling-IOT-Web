@@ -4,7 +4,7 @@
   bottom: 0;
   width: 455px;
   background-color: $colour-background;
-  box-shadow: 0px 0px 20px #0d0d0d14;
+  box-shadow: $shadow-high-elevation;
   transition: transform 400ms cubic-bezier(0.22, 0.61, 0.36, 1),
               box-shadow 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
   @include responsive-non-desktop {
