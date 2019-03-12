@@ -14,13 +14,18 @@ block content
 
     .section-login
       .card
-        h2
-          span Login or 
-          span Create an Account
-        input#email(placeholder="Email" type="email")
-        input#password(placeholder="Password" type="password")
-        a#login.button(href="") Login
-        a#register.button.button-white(href="") Create Account
-        a(href="").sub Terms & Conditions
+        .card-contents
+          h2
+            span Login or 
+            span Create an Account
+          input#email(placeholder="Email" type="email")
+          input#password(placeholder="Password" type="password")
+          a#login.button(href="") Login
+          a#register.button.button-white(href="") Create Account
+          a(href="").sub Terms & Conditions
+        .spinner.hidden
+          .loader
+            svg.circle(viewbox='0 0 50 50')
+              circle.path(cx='25' cy='25' r='20' fill='none' stroke-width='2' stroke-miterlimit='10')
   script(src="/home.js")
 
