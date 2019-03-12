@@ -13,12 +13,15 @@ block content
       h2 Working together for a better, healthier smart city.
 
     .section-login
-      p#login-title Login or Create an Account
-      input#email(placeholder="Email" type="email")
-      input#password(placeholder="Password" type="password")
-      a#login(href="") Login
-      a#register(href="") Register
-      p Terms & Conditions
+      .card
+        h2
+          span Login or 
+          span Create an Account
+        input#email(placeholder="Email" type="email")
+        input#password(placeholder="Password" type="password")
+        a#login.button(href="") Login
+        a#register.button.button-white(href="") Create Account
+        a(href="").sub Terms & Conditions
 
   script(src="/home.js")
 
