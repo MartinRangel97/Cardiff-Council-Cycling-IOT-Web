@@ -5,7 +5,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import Modal from './modal'
 
-export default class LinkModal extends React.Component {
+class LinkModal extends React.Component {
   getClassName = () => {
     if (this.props.className) {
       return 'modal ' + this.props.className
@@ -23,6 +23,7 @@ export default class LinkModal extends React.Component {
   }
 
   render () {
+    console.log(this.props)
     return (
       <div className={this.getClassName()}>
         <TransitionGroup>
@@ -52,4 +53,14 @@ LinkModal.propTypes = {
   history: PropTypes.object,
   match: PropTypes.object,
   location: PropTypes.object
+}
+
+// Wrapper function to wrap the component in a Route.
+// This gives us access to React Router features like history.
+export default function Wrapper (props) {
+  return (
+    <Route render={(routerProps) => (
+      <LinkModal {...props} {...routerProps} />
+    )} />
+  )
 }
