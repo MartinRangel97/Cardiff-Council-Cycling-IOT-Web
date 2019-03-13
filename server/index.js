@@ -5,6 +5,7 @@ const http = require('http')
 const path = require('path')
 const fs = require('fs')
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 
 // Database
 const database = require('./database')
@@ -35,7 +36,28 @@ try {
 }
 
 // MySQL Connection Setup
-database.connect(config.host, config.user, config.password, config.database)
+// database.connect(config.host, config.user, config.password, config.database)
+
+const Sequelize = require('sequelize')
+const sequelize = new Sequelize({
+  host: 'localhost',
+  database: 'cycling_web',
+  username: 'root',
+  password: 'password',
+  dialect: 'mysql',
+  operatorsAliases: false,
+
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  }
+})
+
+sequelize.authenticate()
+  .then(() => console.log('Database Connected...'))
+  .catch(err => console.log('Error: ' + err))
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'))
