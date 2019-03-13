@@ -5,26 +5,20 @@ import IconButton from '../common/icon-button'
 
 import IconBack from '../../icons/back.svg'
 
-export default class Modal extends React.Component {
-  overlayClick = (event) => {
-    if (event.target === event.currentTarget) this.props.close()
-  }
-
-  render () {
-    return (
-      <div className='overlay' onClick={this.overlayClick}>
-        <div className='modal-container'>
-          <div className='modal-header'>
-            <IconButton className='close-btn' alt='Back' img={IconBack} onClick={this.props.close} />
-            <h1>
-              {this.props.title}
-            </h1>
-          </div>
-          {this.props.children}
+const Modal = props => {
+  return (
+    <div className='overlay' onClick={(event) => { if (event.target === event.currentTarget) props.close() }}>
+      <div className='modal-container'>
+        <div className='modal-header'>
+          <IconButton className='close-btn' alt='Back' img={IconBack} onClick={props.close} />
+          <h1>
+            {props.title}
+          </h1>
         </div>
+        {props.children}
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 Modal.propTypes = {
@@ -32,3 +26,5 @@ Modal.propTypes = {
   close: PropTypes.func,
   children: PropTypes.node
 }
+
+export default Modal
