@@ -5,7 +5,6 @@ const http = require('http')
 const path = require('path')
 const fs = require('fs')
 const cookieParser = require('cookie-parser')
-const bodyParser = require('body-parser')
 
 // Database
 const database = require('./database')
@@ -36,10 +35,7 @@ try {
 }
 
 // MySQL Connection Setup
-// database.connect(config.host, config.user, config.password, config.database)
-
-// Database Test
-database.authenticate()
+database.connect(config.host, config.user, config.password, config.database)
   .then(() => console.log('Database Connected...'))
   .catch(err => console.log('Error: ' + err))
 
