@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { NavLink } from 'react-router-dom'
 
 import TestModal from '../modals/test-modal'
+import Card from '../components/common/card'
 
 export default class ExplorePage extends React.Component {
   render () {
@@ -10,9 +10,9 @@ export default class ExplorePage extends React.Component {
       <div className='sidebar-page explore-page'>
         <h1>Explore</h1>
         <h2>Test Modal</h2>
-        <NavLink to='/app/explore/test'>
-          Open Test Modal
-        </NavLink>
+        <Card link='/app/explore/test'>
+          Click this card to open the test modal.
+        </Card>
         <TestModal path={`${this.props.match.path}/test`} />
       </div>
     )

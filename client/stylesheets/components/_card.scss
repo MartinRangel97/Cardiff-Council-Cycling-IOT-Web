@@ -1,0 +1,18 @@
+.card {
+  box-shadow: $shadow-low-elevation;
+  background: $colour-white;
+  color: $colour-black;
+  width: 100%;
+  padding: 27px;
+  margin-bottom: 12px;
+  display: flex;
+  border-radius: 10px;
+  box-sizing: border-box;
+  &.clickable {
+    transition: transform 200ms ease, box-shadow 200ms;
+    &:hover {
+      box-shadow: $shadow-low-elevation-hover;
+      transform: scale(1.02);
+    }
+  }
+}
