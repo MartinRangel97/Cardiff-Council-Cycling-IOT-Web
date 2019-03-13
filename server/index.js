@@ -38,24 +38,7 @@ try {
 // MySQL Connection Setup
 // database.connect(config.host, config.user, config.password, config.database)
 
-const Sequelize = require('sequelize')
-const sequelize = new Sequelize({
-  host: 'localhost',
-  database: 'cycling_web',
-  username: 'root',
-  password: 'password',
-  dialect: 'mysql',
-  operatorsAliases: false,
-
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  }
-})
-
-sequelize.authenticate()
+database.authenticate()
   .then(() => console.log('Database Connected...'))
   .catch(err => console.log('Error: ' + err))
 

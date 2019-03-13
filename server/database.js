@@ -21,9 +21,10 @@
 // }
 
 const Sequelize = require('sequelize')
-const sequelize = new Sequelize('database', 'user', 'password', {
+module.exports = new Sequelize({
   host: 'localhost',
-  username: 'user',
+  database: 'cycling_web',
+  username: 'root',
   password: 'password',
   dialect: 'mysql',
   operatorsAliases: false,
@@ -35,7 +36,3 @@ const sequelize = new Sequelize('database', 'user', 'password', {
     idle: 10000
   }
 })
-
-sequelize.authenticate()
-  .then(() => console.log('Database Connected...'))
-  .catch(err => console.log('Error: ' + err))
