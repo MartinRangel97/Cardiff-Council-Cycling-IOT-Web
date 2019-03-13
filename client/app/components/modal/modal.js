@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import IconButton from '../common/icon-button'
+
 import IconBack from '../../icons/back.svg'
 
 export default class Modal extends React.Component {
@@ -13,10 +15,7 @@ export default class Modal extends React.Component {
       <div className='overlay' onClick={this.overlayClick}>
         <div className='modal-container'>
           <div className='modal-header'>
-            <a className='close-btn icon-btn' alt='Back' onClick={this.props.close}>
-              <div className='hover-circle' />
-              <img className='icon' src={IconBack} />
-            </a>
+            <IconButton className='close-btn' alt='Back' img={IconBack} onClick={this.props.close} />
             <h1>
               {this.props.title}
             </h1>
