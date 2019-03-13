@@ -26,6 +26,18 @@
     right: 0;
     padding: 32px 40px;
     background-color: $colour-background;
+    .page-header {
+      height: 46px;
+      display: flex;
+      align-items: center;
+      margin: -2px 0 16px 0;
+      .back-btn {
+        margin-right: 12px;
+      }
+      h1 {
+        margin: 0;
+      }
+    }
   }
   .sidebar-fade-animation-enter {
     opacity: 0.01;
