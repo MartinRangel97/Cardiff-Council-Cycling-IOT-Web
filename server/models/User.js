@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize')
 const database = require('../database')
+const bcrypt = require('bcrypt')
 
-const User = database.define('user', {
+const UserSchema = database.define('user', {
   email: {
     type: Sequelize.STRING
   },
@@ -13,4 +14,12 @@ const User = database.define('user', {
   }
 })
 
-module.exports = User
+UserSchema.methods.generateHash = function (password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+}
+
+UserSchema.methods.validPassword = function (password) {
+  return bcrypt.compareSync(password, this.password)
+}
+
+module.exports = UserSchema
