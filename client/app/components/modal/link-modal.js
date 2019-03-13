@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import Modal from './modal'
@@ -55,12 +55,5 @@ LinkModal.propTypes = {
   location: PropTypes.object
 }
 
-// Wrapper function to wrap the component in a Route.
-// This gives us access to React Router features like history.
-export default function Wrapper (props) {
-  return (
-    <Route render={(routerProps) => (
-      <LinkModal {...props} {...routerProps} />
-    )} />
-  )
-}
+// Wrap the component using withRouter so we can access Router features like history.
+export default withRouter(LinkModal)
