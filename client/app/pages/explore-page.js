@@ -12,7 +12,8 @@ export default class ExplorePage extends React.Component {
         <h1>Explore</h1>
         <Section title='Test Modal'>
           <Card link='/app/explore/test'>
-            Click this card to open the test modal.
+            <h1>Open Test Modal</h1>
+            <h2>Click here to open the test modal.</h2>
           </Card>
         </Section>
         <TestModal path={`${this.props.match.path}/test`} />

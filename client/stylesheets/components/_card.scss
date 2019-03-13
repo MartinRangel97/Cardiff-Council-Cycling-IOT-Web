@@ -3,10 +3,11 @@
   background: $colour-white;
   color: $colour-black;
   width: 100%;
-  padding: 27px;
+  padding: 20px 27px;
   margin-bottom: 12px;
-  display: flex;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   &.clickable {
     transition: transform 200ms ease, box-shadow 200ms;
@@ -14,5 +15,17 @@
       box-shadow: $shadow-low-elevation-hover;
       transform: scale(1.02);
     }
+  }
+  h1 {
+    margin: 0;
+    color: $colour-black;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  h2 {
+    margin: 0;
+    color: $colour-grey;
+    font-size: 13px;
+    font-weight: 400;
   }
 }
