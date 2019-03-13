@@ -38,6 +38,7 @@ try {
 // MySQL Connection Setup
 // database.connect(config.host, config.user, config.password, config.database)
 
+// Database Test
 database.authenticate()
   .then(() => console.log('Database Connected...'))
   .catch(err => console.log('Error: ' + err))
