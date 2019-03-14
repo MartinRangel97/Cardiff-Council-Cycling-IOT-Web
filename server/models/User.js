@@ -10,7 +10,10 @@ const UserSchema = database.define('user', {
     type: Sequelize.STRING
   },
   share_Readings: {
-    type: Sequelize.STRING
+    type: Sequelize.BOOLEAN
+  },
+  isDeleted: {
+    type: Sequelize.BOOLEAN
   }
 })
 
