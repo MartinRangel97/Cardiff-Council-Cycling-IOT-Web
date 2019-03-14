@@ -5,7 +5,10 @@ import LinkModal from '../components/modal/link-modal'
 import Section from '../components/common/section'
 import Card from '../components/common/card'
 import Button from '../components/common/button'
+import IconButton from '../components/common/icon-button'
 import Toggle from '../components/common/toggle'
+
+import LogoGradient from '../icons/logo-gradient.svg'
 
 export default class TestModal extends React.Component {
   render () {
@@ -15,6 +18,11 @@ export default class TestModal extends React.Component {
           <Card>
             <Button text='Standard Button' />
             <Button text='Danger Button' danger />
+          </Card>
+        </Section>
+        <Section title='Icon Button'>
+          <Card>
+            <IconButton img={LogoGradient} />
           </Card>
         </Section>
         <Section title='Toggles'>
