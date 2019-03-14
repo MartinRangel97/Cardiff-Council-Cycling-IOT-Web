@@ -13,6 +13,7 @@ import SidebarPageManager from './components/sidebar/sidebar-page-manager'
 import ExplorePage from './pages/explore-page'
 import ProfilePage from './pages/profile-page'
 import HistoryPage from './pages/history-page'
+import SearchPage from './pages/search-page'
 import SettingsModal from './modals/settings-modal'
 
 export default class App extends React.Component {
@@ -46,6 +47,7 @@ export default class App extends React.Component {
             <Route path={`${this.props.match.path}/explore`} render={(props) => <ExplorePage {...props} />} />
             <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
+            <Route path={`${this.props.match.path}/search`} render={(props) => <SearchPage {...props} />} />
           </SidebarPageManager>
         </Sidebar>
         <SettingsModal show={this.state.showSettings} close={this.toggleSettings} />
