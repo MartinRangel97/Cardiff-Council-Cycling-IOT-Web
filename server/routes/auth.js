@@ -3,7 +3,7 @@ var router = express.Router()
 
 // Models
 const User = require('../models/User')
-const UserSession = require('../models/UserSession')
+// const UserSession = require('../models/UserSession')
 
 /*
 * Sign up
