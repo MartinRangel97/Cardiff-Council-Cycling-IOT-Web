@@ -20,8 +20,8 @@ const Toggle = props => {
 Toggle.propTypes = {
   checked: PropTypes.bool,
   defaultChecked: PropTypes.bool,
-  onClick: PropTypes.onClick,
-  onChange: PropTypes.onChange
+  onClick: PropTypes.func,
+  onChange: PropTypes.func
 }
 
 export default Toggle
