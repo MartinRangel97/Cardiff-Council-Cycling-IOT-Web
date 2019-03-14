@@ -21,9 +21,9 @@ const Card = props => {
   } else {
     // If there's no link or onClick, return a standard card
     return (
-      <a className={`card ${props.className ? props.className : ''}`}>
+      <div className={`card ${props.className ? props.className : ''}`}>
         {props.children}
-      </a>
+      </div>
     )
   }
 }
