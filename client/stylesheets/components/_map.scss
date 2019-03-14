@@ -7,9 +7,8 @@
   }
   // Toolbar
   .toolbar {
-    margin-bottom: -80px;
-    position: relative;
-    z-index: 200;
+    position: absolute;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     .mid {
