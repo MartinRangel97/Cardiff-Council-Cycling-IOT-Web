@@ -5,7 +5,7 @@ import { Route, Redirect } from 'react-router-dom'
 
 // Components
 import Layout from './components/layout/layout'
-import Map from './components/map/map'
+import MapView from './components/map/map-view'
 import Sidebar from './components/sidebar/sidebar'
 import SidebarPageManager from './components/sidebar/sidebar-page-manager'
 
@@ -40,7 +40,7 @@ export default class App extends React.Component {
   render () {
     return (
       <Layout sidebarToggle={this.toggleSidebar} settingsToggle={this.toggleSettings} >
-        <Map />
+        <MapView />
         <Sidebar showSidebar={this.state.showSidebar}>
           <SidebarPageManager>
             <Redirect exact from={this.props.match.path} to='/app/explore' />

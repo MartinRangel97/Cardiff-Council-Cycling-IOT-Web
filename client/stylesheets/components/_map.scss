@@ -11,9 +11,23 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    @include responsive-mobile {
+      flex-direction: column;
+    }
     .mid {
       max-width: 600px;
       flex-grow: 1;
+      @include responsive-mobile {
+        max-width: unset;
+      }
+    }
+    .right {
+      height: 65px;
+      width: 65px;
+      position: relative;
+      @include responsive-mobile {
+        align-self: flex-end;
+      }
     }
     .searchbar {
       height: 50px;
@@ -40,6 +54,64 @@
         position: absolute;
         top: 0;
         right: 0;
+      }
+    }
+    .overlay-picker {
+      height: 50px;
+      width: 50px;
+      margin: 15px 15px 0 0;
+      position: absolute;
+      right: 0;
+      display: flex;
+      flex-direction: row-reverse;
+      align-self: flex-end;
+      overflow: hidden;
+      border-radius: 25px;
+      background: $colour-white;
+      box-shadow: $shadow-high-elevation;
+      transition: width 300ms ease;
+      @include responsive-mobile {
+        margin-top: 0;
+      }
+      &:hover {
+        width: 371px;
+      }
+      .icon {
+        height: 24px;
+        width: 24px;
+        margin: 13px;
+      }
+      .button {
+        height: 38px;
+        min-width: 100px;
+        margin: 5px 0 5px 5px;
+        display: block;
+        background-color: #F9F9FB;
+        border: solid 1px #E3E4E7;
+        color: #8C8C8D;
+        border-radius: 20px;
+        line-height: 40px;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: center;
+        opacity: 0;
+        cursor: pointer;
+        transition: opacity 300ms, background-color 200ms, border-color 200ms, color 200ms;
+        &:hover {
+          background-color: rgba(76, 156, 255, 0.1);
+          color: $colour-primary;
+          border: solid 1px $colour-primary;
+        }
+        &.active {
+          background-color: rgba(76, 156, 255, 0.1);
+          color: $colour-primary;
+          border: solid 1px $colour-primary;
+        }
+      }
+      &:hover {
+        .button {
+          opacity: 1;
+        }
       }
     }
   }
