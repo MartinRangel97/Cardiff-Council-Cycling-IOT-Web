@@ -31,3 +31,48 @@
     }
   }
 }
+// Toggle
+.toggle {
+  display: block;
+  width: 45px;
+  cursor: pointer;
+  input {
+    display: none;
+  }
+  .slider {
+    display: block;
+    position: relative;
+    height: 24px;
+    width: 45px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: $colour-light-grey;
+    box-shadow: $shadow-low-elevation;
+    .gradient {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: $gradient-diagonal;
+      opacity: 0;
+      transition: opacity 200ms;
+    }
+    .switch {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: $colour-white;
+      border-radius: 100%;
+      margin: 4px;
+      box-shadow: $shadow-low-elevation;
+      transition: transform 200ms ease;
+    }
+  }
+  input:checked + .slider {
+    .gradient {
+      opacity: 1;
+    }
+    .switch {
+      transform: translateX(21px);
+    }
+  }
+}
