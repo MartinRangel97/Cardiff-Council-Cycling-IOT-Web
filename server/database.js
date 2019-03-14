@@ -11,6 +11,11 @@ function connect (host, user, password, database) {
       dialect: 'mysql',
       operatorsAliases: false,
 
+      define: {
+        freezeTableName: true,
+        timestamps: false
+      },
+
       pool: {
         max: 5,
         min: 0,
@@ -33,3 +38,25 @@ module.exports = {
   connect,
   getConnection
 }
+
+// const Sequelize = require('sequelize')
+// module.exports = new Sequelize({
+//   host: 'localhost',
+//   database: 'cycling_web',
+//   username: 'root',
+//   password: 'password',
+//   dialect: 'mysql',
+//   operatorsAliases: false,
+
+//   define: {
+//     freezeTableName: true,
+//     timestamps: false
+//   },
+
+//   pool: {
+//     max: 5,
+//     min: 0,
+//     acquire: 30000,
+//     idle: 10000
+//   }
+// })

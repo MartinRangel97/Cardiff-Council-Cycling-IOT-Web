@@ -1,8 +1,13 @@
 const Sequelize = require('sequelize')
 const database = require('../database')
-const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
 
 const UserSchema = database.define('user', {
+  user_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true
+  },
   email: {
     type: Sequelize.STRING
   },
@@ -17,12 +22,12 @@ const UserSchema = database.define('user', {
   }
 })
 
-UserSchema.methods.generateHash = function (password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
-}
+// UserSchema.methods.generateHash = function (password) {
+//   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+// }
 
-UserSchema.methods.validPassword = function (password) {
-  return bcrypt.compareSync(password, this.password)
-}
+// UserSchema.methods.validPassword = function (password) {
+//   return bcrypt.compareSync(password, this.password)
+// }
 
 module.exports = UserSchema
