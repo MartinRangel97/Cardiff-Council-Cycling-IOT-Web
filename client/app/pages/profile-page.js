@@ -10,7 +10,7 @@ import Card from '../components/common/card'
 export default class ProfilePage extends React.Component {
   render () {
     return (
-      <SidebarPageManager pathLevel={3}>
+      <SidebarPageManager>
         <Route path={`${this.props.match.path}/subpage`} render={() =>
           <SidebarPage title='Subpage Example' canGoBack>
             <Section title='About'>

@@ -4,13 +4,15 @@ import { Switch, withRouter } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 const SidebarPageManager = props => {
-  // Ignore link modal changes
-  var key = props.location.pathname.split('/')[props.pathLevel]
+  // Get the current page from the URL
+  let currentPage = props.location.pathname
+    .replace(props.match.path, '')
+    .split('/')[1]
 
   return (
     <TransitionGroup>
       <CSSTransition
-        key={key}
+        key={currentPage}
         classNames='sidebar-fade-animation'
         timeout={150}>
         <Switch location={props.location}>
@@ -22,7 +24,7 @@ const SidebarPageManager = props => {
 }
 
 SidebarPageManager.propTypes = {
-  pathLevel: PropTypes.number,
+  match: PropTypes.object,
   location: PropTypes.object,
   children: PropTypes.node
 }

@@ -41,7 +41,7 @@ export default class App extends React.Component {
       <Layout sidebarToggle={this.toggleSidebar} settingsToggle={this.toggleSettings} >
         <Map />
         <Sidebar showSidebar={this.state.showSidebar}>
-          <SidebarPageManager pathLevel={2}>
+          <SidebarPageManager>
             <Redirect exact from={this.props.match.path} to='/app/explore' />
             <Route path={`${this.props.match.path}/explore`} render={(props) => <ExplorePage {...props} />} />
             <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
