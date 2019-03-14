@@ -26,6 +26,9 @@
     right: 0;
     padding: 32px 40px;
     background-color: $colour-background;
+    @include responsive-mobile {
+      padding: 25px;
+    }
     .page-header {
       height: 46px;
       display: flex;

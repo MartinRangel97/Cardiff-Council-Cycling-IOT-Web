@@ -20,6 +20,9 @@
     background: $colour-background;
     will-change: transform;
     overflow-y: auto;
+    @include responsive-mobile {
+      padding: 25px;
+    }
     @include responsive-desktop {
       max-height: 800px;
       max-width: 1290px;
