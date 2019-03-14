@@ -15,10 +15,12 @@ class Searchbar extends React.Component {
   }
 
   submit = () => {
-    this.props.history.push({
-      pathname: '/app/search',
-      search: '?query=' + this.state.value
-    })
+    if (this.state.value) {
+      this.props.history.push({
+        pathname: '/app/search',
+        search: '?query=' + this.state.value
+      })
+    }
   }
 
   onChange = (event) => {
