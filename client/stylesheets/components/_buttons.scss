@@ -12,6 +12,9 @@
   box-shadow: $shadow-low-elevation;
   transition: opacity 200ms, box-shadow 200ms ease-out;
   cursor: pointer;
+  &:focus {
+    outline: 0;
+  }
   &:hover {
     opacity: 0.85;
     box-shadow: 0px 8px 20px rgba(76, 152, 255, 0.3);
