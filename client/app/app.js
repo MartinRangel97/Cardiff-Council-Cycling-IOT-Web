@@ -25,6 +25,19 @@ export default class App extends React.Component {
     }
   }
 
+  componentDidMount () {
+    // This is an artificial delay that can be replaced with loading data
+    setTimeout(() => {
+      // Ref: https://github.com/nguyenbathanh/react-loading-screen
+      const loadingScreen = document.getElementById('splash-screen')
+      loadingScreen.classList.add('fade-out')
+      setTimeout(() => {
+        // remove from DOM
+        loadingScreen.outerHTML = ''
+      }, 200)
+    }, 500)
+  }
+
   toggleSidebar = (show) => {
     if (typeof show !== 'boolean') {
       this.setState({ showSidebar: !this.state.showSidebar })
