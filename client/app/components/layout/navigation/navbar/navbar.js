@@ -5,14 +5,14 @@ import NavbarLinkBtn from './navbar-link-btn'
 import ActionBtn from '../action-btn'
 import Hamburger from '../hamburger'
 
-import IconLogo from '../../../../icons/logo-gradient.svg'
-import IconMap from '../../../../icons/map.svg'
-import IconMapGradient from '../../../../icons/map-gradient.svg'
-import IconProfile from '../../../../icons/profile.svg'
-import IconProfileGradient from '../../../../icons/profile-gradient.svg'
-import IconHistory from '../../../../icons/history.svg'
-import IconHistoryGradient from '../../../../icons/history-gradient.svg'
-import IconSettings from '../../../../icons/settings.svg'
+import IconLogo from './icons/logo-gradient.svg'
+import IconMap from './icons/map.svg'
+import IconMapGradient from './icons/map-gradient.svg'
+import IconProfile from './icons/profile.svg'
+import IconProfileGradient from './icons/profile-gradient.svg'
+import IconHistory from './icons/history.svg'
+import IconHistoryGradient from './icons/history-gradient.svg'
+import IconSettings from './icons/settings.svg'
 
 export default class NavBar extends React.Component {
   render () {

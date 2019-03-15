@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 
 import IconButton from '../common/icon-button'
 
-import IconSearch from '../../icons/search.svg'
+import IconSearch from './icons/search.svg'
 
 class Searchbar extends React.Component {
   constructor (props) {

@@ -7,8 +7,8 @@ export default class BottomNavLinkBtn extends React.Component {
     return (
       <NavLink className='link-btn' to={this.props.link} onClick={this.props.onClick}>
         <div className='icon-container'>
-          <img className='icon centered' src={this.props.icon} />
-          <img className='icon gradient centered' src={this.props.iconGradient} />
+          <this.props.icon className='icon centered' />
+          <this.props.iconGradient className='icon gradient centered' />
         </div>
         <div className='name'>{this.props.name}</div>
       </NavLink>
@@ -18,8 +18,6 @@ export default class BottomNavLinkBtn extends React.Component {
 
 BottomNavLinkBtn.propTypes = {
   link: PropTypes.string,
-  icon: PropTypes.string,
-  iconGradient: PropTypes.string,
   name: PropTypes.string,
   onClick: PropTypes.func
 }

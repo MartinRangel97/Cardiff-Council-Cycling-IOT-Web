@@ -27,8 +27,25 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
-        test: /.svg$/,
-        use: ['@svgr/webpack']
+        test: /\.svg$/,
+        use: [{
+          loader: '@svgr/webpack',
+          options: {
+            svgoConfig: {
+              plugins: [{
+                cleanupIDs: {
+                  prefix: {
+                    toString () {
+                      // Ref: https://github.com/svg/svgo/issues/674#issuecomment-328774019
+                      this.counter = this.counter || 0
+                      return `id-${this.counter++}`
+                    }
+                  }
+                }
+              }]
+            }
+          }
+        }]
       },
       {
         test: /\.(jpe?g|png|gif|ico|woff|woff2)$/i,

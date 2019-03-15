@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 
 import IconButton from '../common/icon-button'
 
-import IconBack from '../../icons/back.svg'
+import IconBack from './icons/back.svg'
 
 class SidebarPage extends React.Component {
   goBack = () => {

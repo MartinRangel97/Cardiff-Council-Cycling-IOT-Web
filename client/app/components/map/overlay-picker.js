@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import IconOverlays from '../../icons/overlays.svg'
+import IconOverlays from './icons/overlays.svg'
 
 export default class OverlayPicker extends React.Component {
   getClassName = (option) => {

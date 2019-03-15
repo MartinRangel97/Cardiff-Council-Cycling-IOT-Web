@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Hamburger from '../hamburger'
 import NavbarActionBtn from '../action-btn'
 
-import IconSettings from '../../../../icons/settings.svg'
+import IconSettings from './icons/settings.svg'
 
 export default class ActionBar extends React.Component {
   render () {

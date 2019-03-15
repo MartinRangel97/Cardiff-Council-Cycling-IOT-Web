@@ -8,7 +8,7 @@ import Button from '../components/common/button'
 import IconButton from '../components/common/icon-button'
 import Toggle from '../components/common/toggle'
 
-import LogoGradient from '../icons/logo-gradient.svg'
+import IconBike from './icons/bike.svg'
 
 export default class TestModal extends React.Component {
   render () {
@@ -22,7 +22,7 @@ export default class TestModal extends React.Component {
         </Section>
         <Section title='Icon Button'>
           <Card>
-            <IconButton icon={LogoGradient} />
+            <IconButton icon={IconBike} />
           </Card>
         </Section>
         <Section title='Toggles'>

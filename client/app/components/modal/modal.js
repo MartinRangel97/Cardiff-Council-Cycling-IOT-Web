@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import IconButton from '../common/icon-button'
 
-import IconBack from '../../icons/back.svg'
+import IconBack from './icons/back.svg'
 
 const Modal = props => {
   return (
