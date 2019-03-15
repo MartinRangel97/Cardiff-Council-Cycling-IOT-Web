@@ -32,7 +32,6 @@ export default class App extends React.Component {
       const loadingScreen = document.getElementById('splash-screen')
       loadingScreen.classList.add('fade-out')
       setTimeout(() => {
-        // remove from DOM
         loadingScreen.outerHTML = ''
       }, 200)
     }, 500)
