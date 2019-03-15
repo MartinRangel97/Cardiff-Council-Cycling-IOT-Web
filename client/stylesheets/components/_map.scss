@@ -69,10 +69,7 @@
       border-radius: 25px;
       background: $colour-white;
       box-shadow: $shadow-high-elevation;
-      transition: width 300ms ease;
-      @include responsive-mobile {
-        margin-top: 0;
-      }
+      transition: width 300ms ease, height 300ms ease;
       &:hover {
         width: 371px;
       }
@@ -85,36 +82,64 @@
           width: 24px;
         }
       }
-      .button {
-        height: 38px;
-        min-width: 100px;
-        margin: 5px 0 5px 5px;
-        display: block;
-        background-color: #F9F9FB;
-        border: solid 1px #E3E4E7;
-        color: #8C8C8D;
-        border-radius: 20px;
-        line-height: 40px;
-        font-size: 13px;
-        font-weight: 600;
-        text-align: center;
+      .options {
+        height: 50px;
+        width: 321px;
+        display: flex;
         opacity: 0;
-        cursor: pointer;
-        transition: opacity 300ms, background-color 200ms, border-color 200ms, color 200ms;
-        &:hover {
-          background-color: rgba(76, 156, 255, 0.1);
-          color: $colour-primary;
-          border: solid 1px $colour-primary;
-        }
-        &.active {
-          background-color: rgba(76, 156, 255, 0.1);
-          color: $colour-primary;
-          border: solid 1px $colour-primary;
+        transition: opacity 300ms;
+        .button {
+          height: 38px;
+          min-width: 100px;
+          margin: 5px 0 5px 5px;
+          display: block;
+          background-color: #F9F9FB;
+          border: solid 1px #E3E4E7;
+          color: #8C8C8D;
+          border-radius: 20px;
+          line-height: 40px;
+          font-size: 13px;
+          font-weight: 600;
+          text-align: center;
+          cursor: pointer;
+          transition: background-color 200ms, border-color 200ms, color 200ms;
+          &:hover {
+            background-color: rgba(76, 156, 255, 0.1);
+            color: $colour-primary;
+            border: solid 1px $colour-primary;
+          }
+          &.active {
+            background-color: rgba(76, 156, 255, 0.1);
+            color: $colour-primary;
+            border: solid 1px $colour-primary;
+          }
         }
       }
       &:hover {
-        .button {
+        transition: width 100ms ease, height 300ms ease;
+        .options {
           opacity: 1;
+        }
+      }
+      @include responsive-mobile {
+        margin-top: 0;
+        flex-direction: column;
+        &:hover {
+          flex-direction: column;
+          align-items: flex-end;
+          width: 150px;
+          height: 185px;
+        }
+        .icon {
+          align-self: flex-end;
+        }
+        .options {
+          flex-direction: column;
+          align-self: flex-end;
+          width: 150px;
+          .button {
+            margin: 0 5px 5px 5px;
+          }
         }
       }
     }

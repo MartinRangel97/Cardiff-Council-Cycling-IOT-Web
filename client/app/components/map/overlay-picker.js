@@ -18,15 +18,17 @@ export default class OverlayPicker extends React.Component {
         <div className='icon'>
           <IconOverlays />
         </div>
-        <a className={this.getClassName('pollution')} onClick={() => { this.props.onChange('pollution') }}>
-          Pollution
-        </a>
-        <a className={this.getClassName('noise')} onClick={() => { this.props.onChange('noise') }}>
-          Noise
-        </a>
-        <a className={this.getClassName('none')} onClick={() => { this.props.onChange('none') }}>
-          None
-        </a>
+        <div className='options'>
+          <a className={this.getClassName('none')} onClick={() => { this.props.onChange('none') }}>
+            None
+          </a>
+          <a className={this.getClassName('noise')} onClick={() => { this.props.onChange('noise') }}>
+            Noise
+          </a>
+          <a className={this.getClassName('pollution')} onClick={() => { this.props.onChange('pollution') }}>
+            Pollution
+          </a>
+        </div>
       </div>
     )
   }
