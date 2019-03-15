@@ -6,6 +6,7 @@ const UserSchema = database.define('user', {
   user_id: {
     type: Sequelize.INTEGER,
     allowNull: false,
+    autoIncrement: true,
     primaryKey: true
   },
   email: {
