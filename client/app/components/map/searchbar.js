@@ -40,7 +40,7 @@ class Searchbar extends React.Component {
           placeholder='Search'
           onChange={this.onChange}
           onKeyPress={this.onKeyPress} />
-        <IconButton className='search-btn' onClick={this.submit} img={IconSearch} />
+        <IconButton className='search-btn' title='Search' onClick={this.submit} icon={IconSearch} />
       </div>
     )
   }

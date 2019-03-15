@@ -22,7 +22,7 @@ export default class TestModal extends React.Component {
         </Section>
         <Section title='Icon Button'>
           <Card>
-            <IconButton img={LogoGradient} />
+            <IconButton icon={LogoGradient} />
           </Card>
         </Section>
         <Section title='Toggles'>

@@ -20,7 +20,7 @@ class SidebarPage extends React.Component {
       <div className='sidebar-page'>
         <div className='page-header'>
           {this.props.canGoBack &&
-            <IconButton className='back-btn' alt='Back' img={IconBack} onClick={this.goBack} />
+            <IconButton className='back-btn' title='Back' icon={IconBack} onClick={this.goBack} />
           }
           <h1>{this.props.title}</h1>
         </div>

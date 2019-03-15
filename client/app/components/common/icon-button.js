@@ -3,9 +3,12 @@ import PropTypes from 'prop-types'
 
 const IconButton = props => {
   return (
-    <a className={`icon-btn ${props.className ? props.className : ''}`} onClick={props.onClick}>
+    <a
+      className={`icon-btn ${props.className ? props.className : ''}`}
+      onClick={props.onClick}
+      title={props.title}>
       <div className='hover-circle' />
-      <img className='icon' alt={props.alt} src={props.img} />
+      <props.icon className='icon' />
     </a>
   )
 }
@@ -13,8 +16,7 @@ const IconButton = props => {
 IconButton.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
-  img: PropTypes.string,
-  alt: PropTypes.string
+  title: PropTypes.string
 }
 
 export default IconButton

@@ -10,7 +10,7 @@ const Modal = props => {
     <div className='overlay' onClick={(event) => { if (event.target === event.currentTarget) props.close() }}>
       <div className='modal-container'>
         <div className='modal-header'>
-          <IconButton className='close-btn' alt='Back' img={IconBack} onClick={props.close} />
+          <IconButton className='close-btn' title='Back' icon={IconBack} onClick={props.close} />
           <h1>
             {props.title}
           </h1>

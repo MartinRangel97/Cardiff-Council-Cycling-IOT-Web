@@ -9,8 +9,8 @@ export default class NavbarLinkBtn extends React.Component {
         <div className='selection-indicator' />
         <div className='container'>
           <div className='hover-circle centered' />
-          <img className='icon centered' src={this.props.icon} />
-          <img className='icon gradient centered' src={this.props.iconGradient} />
+          <this.props.icon className='icon centered' />
+          <this.props.iconGradient className='icon gradient centered' />
         </div>
       </NavLink>
     )
@@ -19,8 +19,6 @@ export default class NavbarLinkBtn extends React.Component {
 
 NavbarLinkBtn.propTypes = {
   link: PropTypes.string,
-  icon: PropTypes.string,
-  iconGradient: PropTypes.string,
   name: PropTypes.string,
   onClick: PropTypes.func
 }

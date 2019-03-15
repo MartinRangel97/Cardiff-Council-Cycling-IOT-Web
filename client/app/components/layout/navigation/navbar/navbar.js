@@ -19,7 +19,9 @@ export default class NavBar extends React.Component {
     return (
       <div className='navbar'>
         <div className='top'>
-          <img className='logo' src={IconLogo} />
+          <div className='logo'>
+            <IconLogo />
+          </div>
           <Hamburger onClick={this.props.sidebarToggle} />
         </div>
         <div className='mid'>

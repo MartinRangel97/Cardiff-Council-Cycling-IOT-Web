@@ -6,13 +6,12 @@ export default class ActionBtn extends React.Component {
     return (
       <a onClick={this.props.onClick} className='action-btn'>
         <div className='hover-circle centered' />
-        <img className='icon centered' src={this.props.icon} />
+        <this.props.icon className='icon centered' />
       </a>
     )
   }
 }
 
 ActionBtn.propTypes = {
-  icon: PropTypes.string,
   onClick: PropTypes.func
 }

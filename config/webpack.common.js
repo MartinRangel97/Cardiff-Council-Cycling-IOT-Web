@@ -26,12 +26,12 @@ module.exports = {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
       },
-      // {
-      //   test: /\.svg$/,
-      //   use: ['svg-inline-loader']
-      // },
       {
-        test: /\.(jpe?g|png|gif|ico|svg|woff|woff2)$/i,
+        test: /.svg$/,
+        use: ['@svgr/webpack']
+      },
+      {
+        test: /\.(jpe?g|png|gif|ico|woff|woff2)$/i,
         use: ['file-loader']
       }
     ]

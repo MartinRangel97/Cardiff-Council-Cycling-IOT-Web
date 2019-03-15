@@ -15,7 +15,9 @@ export default class OverlayPicker extends React.Component {
   render () {
     return (
       <div className='overlay-picker'>
-        <img className='icon' src={IconOverlays} />
+        <div className='icon'>
+          <IconOverlays />
+        </div>
         <a className={this.getClassName('pollution')} onClick={() => { this.props.onChange('pollution') }}>
           Pollution
         </a>
