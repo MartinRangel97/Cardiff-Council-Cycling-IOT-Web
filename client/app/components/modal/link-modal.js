@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Route, Switch, withRouter } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
+import Portal from './portal'
 import Modal from './modal'
 
 class LinkModal extends React.Component {
@@ -24,23 +25,25 @@ class LinkModal extends React.Component {
 
   render () {
     return (
-      <div className={this.getClassName()}>
-        <TransitionGroup>
-          <CSSTransition
-            key={this.props.location.key}
-            classNames='animation'
-            timeout={300}
-            unmountOnExit>
-            <Switch location={this.props.location}>
-              <Route path={this.props.path}>
-                <Modal title={this.props.title} close={this.close}>
-                  {this.props.children}
-                </Modal>
-              </Route>
-            </Switch>
-          </CSSTransition>
-        </TransitionGroup>
-      </div>
+      <Portal>
+        <div className={this.getClassName()}>
+          <TransitionGroup>
+            <CSSTransition
+              key={this.props.location.key}
+              classNames='animation'
+              timeout={300}
+              unmountOnExit>
+              <Switch location={this.props.location}>
+                <Route path={this.props.path}>
+                  <Modal title={this.props.title} close={this.close}>
+                    {this.props.children}
+                  </Modal>
+                </Route>
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
+        </div>
+      </Portal>
     )
   }
 }

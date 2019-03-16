@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
 
+import Portal from './portal'
 import Modal from './modal'
 
 export default class StateModal extends React.Component {
@@ -15,17 +16,19 @@ export default class StateModal extends React.Component {
 
   render () {
     return (
-      <div className={this.getClassName()}>
-        <CSSTransition
-          in={this.props.show}
-          classNames='animation'
-          timeout={300}
-          unmountOnExit>
-          <Modal title={this.props.title} close={this.props.close}>
-            {this.props.children}
-          </Modal>
-        </CSSTransition>
-      </div>
+      <Portal>
+        <div className={this.getClassName()}>
+          <CSSTransition
+            in={this.props.show}
+            classNames='animation'
+            timeout={300}
+            unmountOnExit>
+            <Modal title={this.props.title} close={this.props.close}>
+              {this.props.children}
+            </Modal>
+          </CSSTransition>
+        </div>
+      </Portal>
     )
   }
 }

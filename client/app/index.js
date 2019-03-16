@@ -23,5 +23,5 @@ render(
       <Route path='/app' render={(props) => <App {...props} />} />
     </BrowserRouter>
   </div>,
-  document.getElementById('app')
+  document.getElementById('app-root')
 )
