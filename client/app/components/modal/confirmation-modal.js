@@ -7,14 +7,6 @@ import Portal from './portal'
 import Button from '../common/button'
 
 export default class StateModal extends React.Component {
-  getClassName = () => {
-    if (this.props.className) {
-      return 'overlay-modal ' + this.props.className
-    } else {
-      return 'overlay-modal'
-    }
-  }
-
   render () {
     return (
       <Portal>

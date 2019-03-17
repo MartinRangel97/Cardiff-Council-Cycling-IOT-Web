@@ -1,14 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import className from 'classnames'
 
 const Button = props => {
-  // Get the className
-  let className = 'btn '
-  if (props.danger) className += 'danger '
-  if (props.className) className += props.className
-
   return (
-    <button className={className} onClick={props.onClick}>
+    <button className={className('btn', props.className, { 'danger': props.danger })} onClick={props.onClick}>
       {props.text}
     </button>
   )

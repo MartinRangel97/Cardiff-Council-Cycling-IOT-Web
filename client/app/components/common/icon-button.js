@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import className from 'classnames'
 
 const IconButton = props => {
   return (
     <a
-      className={`icon-btn ${props.className ? props.className : ''}`}
+      className={className('icon-btn', props.className)}
       onClick={props.onClick}
       title={props.title}>
       <div className='hover-circle' />

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import className from 'classnames'
 
 import { Link } from 'react-router-dom'
 
@@ -7,21 +8,21 @@ const Card = props => {
   if (props.link) {
     // If a link prop exists, return the card as a React Router link
     return (
-      <Link className={`card clickable ${props.className ? props.className : ''}`} to={props.link}>
+      <Link className={className('card clickable', props.className)} to={props.link}>
         {props.children}
       </Link>
     )
   } else if (props.onClick) {
     // If an onClick prop exists, return the card as clickable with the onClick action
     return (
-      <a className={`card clickable ${props.className ? props.className : ''}`} onClick={props.onClick}>
+      <a className={className('card clickable', props.className)} onClick={props.onClick}>
         {props.children}
       </a>
     )
   } else {
     // If there's no link or onClick, return a standard card
     return (
-      <div className={`card ${props.className ? props.className : ''}`}>
+      <div className={className('card ', props.className)}>
         {props.children}
       </div>
     )

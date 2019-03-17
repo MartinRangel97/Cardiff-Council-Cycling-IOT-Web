@@ -1,25 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import className from 'classnames'
 
-export default class Sidebar extends React.Component {
-  getSidebarClassName () {
-    if (this.props.showSidebar) {
-      return 'sidebar'
-    } else {
-      return 'sidebar hidden'
-    }
-  }
-
-  render () {
-    return (
-      <div className={this.getSidebarClassName()}>
-        {this.props.children}
-      </div>
-    )
-  }
+const Sidebar = props => {
+  return (
+    <div className={className('sidebar', { 'hidden': props.showSidebar })}>
+      {props.children}
+    </div>
+  )
 }
 
 Sidebar.propTypes = {
   children: PropTypes.node,
   showSidebar: PropTypes.bool
 }
+
+export default Sidebar
