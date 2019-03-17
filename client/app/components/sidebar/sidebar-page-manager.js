@@ -10,7 +10,7 @@ const SidebarPageManager = props => {
     .split('/')[1]
 
   return (
-    <TransitionGroup>
+    <TransitionGroup className='sidebar-page-manager'>
       <CSSTransition
         key={currentPage}
         classNames='sidebar-fade-animation'
