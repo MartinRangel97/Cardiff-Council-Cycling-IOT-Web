@@ -13,6 +13,8 @@ import IconProfileGradient from './icons/profile-gradient.svg'
 import IconHistory from './icons/history.svg'
 import IconHistoryGradient from './icons/history-gradient.svg'
 import IconSettings from './icons/settings.svg'
+import IconSettingsGradient from './icons/settings-gradient.svg'
+import IconLogout from './icons/logout.svg'
 
 export default class NavBar extends React.Component {
   render () {
@@ -28,9 +30,10 @@ export default class NavBar extends React.Component {
           <NavbarLinkBtn link='/app/explore' name='Explore' icon={IconMap} iconGradient={IconMapGradient} onClick={() => { this.props.sidebarToggle(true) }} />
           <NavbarLinkBtn link='/app/profile' name='Profile' icon={IconProfile} iconGradient={IconProfileGradient} onClick={() => { this.props.sidebarToggle(true) }} />
           <NavbarLinkBtn link='/app/history' name='History' icon={IconHistory} iconGradient={IconHistoryGradient} onClick={() => { this.props.sidebarToggle(true) }} />
+          <NavbarLinkBtn link='/app/settings' name='Settings' icon={IconSettings} iconGradient={IconSettingsGradient} rotateEffect />
         </div>
         <div className='bottom'>
-          <ActionBtn icon={IconSettings} onClick={this.props.settingsToggle} />
+          <ActionBtn icon={IconLogout} onClick={this.props.logout} />
         </div>
       </div>
     )
@@ -39,5 +42,5 @@ export default class NavBar extends React.Component {
 
 NavBar.propTypes = {
   sidebarToggle: PropTypes.func,
-  settingsToggle: PropTypes.func
+  logout: PropTypes.func
 }

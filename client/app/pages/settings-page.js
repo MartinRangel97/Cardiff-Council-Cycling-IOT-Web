@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import LinkModal from '../components/modal/link-modal'
+import Page from '../components/page/page'
 import Section from '../components/common/section'
 import Card from '../components/common/card'
 import Button from '../components/common/button'
@@ -10,10 +10,10 @@ import Toggle from '../components/common/toggle'
 
 import IconBike from './icons/bike.svg'
 
-export default class TestModal extends React.Component {
+export default class SettingsModal extends React.Component {
   render () {
     return (
-      <LinkModal className='test-modal' title='Test Modal' path={this.props.path}>
+      <Page className='settings-modal' title='Settings' path={this.props.path}>
         <Section title='Text Buttons'>
           <Card>
             <Button text='Standard Button' />
@@ -32,11 +32,11 @@ export default class TestModal extends React.Component {
             <Toggle defaultChecked />
           </Card>
         </Section>
-      </LinkModal>
+      </Page>
     )
   }
 }
 
-TestModal.propTypes = {
+SettingsModal.propTypes = {
   path: PropTypes.string
 }

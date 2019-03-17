@@ -9,8 +9,8 @@ export default class Layout extends React.Component {
   render () {
     return (
       <div className='layout'>
-        <NavBar sidebarToggle={this.props.sidebarToggle} settingsToggle={this.props.settingsToggle} />
-        <ActionBar sidebarToggle={this.props.sidebarToggle} settingsToggle={this.props.settingsToggle} />
+        <NavBar sidebarToggle={this.props.sidebarToggle} logout={this.props.logout} />
+        <ActionBar sidebarToggle={this.props.sidebarToggle} logout={this.props.logout} />
         <div className='content'>
           {this.props.children}
         </div>
@@ -23,5 +23,5 @@ export default class Layout extends React.Component {
 Layout.propTypes = {
   children: PropTypes.node,
   sidebarToggle: PropTypes.func,
-  settingsToggle: PropTypes.func
+  logout: PropTypes.func
 }

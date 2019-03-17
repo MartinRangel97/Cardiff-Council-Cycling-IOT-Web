@@ -8,20 +8,22 @@ import Layout from './components/layout/layout'
 import MapView from './components/map/map-view'
 import Sidebar from './components/sidebar/sidebar'
 import SidebarPageManager from './components/sidebar/sidebar-page-manager'
+import ConfirmationModal from './components/modal/confirmation-modal'
 
 // Pages
 import ExplorePage from './pages/explore-page'
 import ProfilePage from './pages/profile-page'
 import HistoryPage from './pages/history-page'
 import SearchPage from './pages/search-page'
-import SettingsModal from './modals/settings-modal'
+import TestPage from './pages/explore/test-page'
+import SettingsPage from './pages/settings-page'
 
 export default class App extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       showSidebar: true,
-      showSettings: false
+      showLogoutConfirmation: false
     }
   }
 
@@ -45,13 +47,17 @@ export default class App extends React.Component {
     }
   }
 
-  toggleSettings = () => {
-    this.setState({ showSettings: !this.state.showSettings })
+  logout = () => {
+    console.log('Logging Out')
+  }
+
+  toggleLogoutConfirmation = () => {
+    this.setState({ showLogoutConfirmation: !this.state.showLogoutConfirmation })
   }
 
   render () {
     return (
-      <Layout sidebarToggle={this.toggleSidebar} settingsToggle={this.toggleSettings} >
+      <Layout sidebarToggle={this.toggleSidebar} logout={this.toggleLogoutConfirmation} >
         <MapView />
         <Sidebar showSidebar={this.state.showSidebar}>
           <SidebarPageManager>
@@ -62,7 +68,16 @@ export default class App extends React.Component {
             <Route path={`${this.props.match.path}/search`} render={(props) => <SearchPage {...props} />} />
           </SidebarPageManager>
         </Sidebar>
-        <SettingsModal show={this.state.showSettings} close={this.toggleSettings} />
+        <TestPage path={`${this.props.match.path}/explore/test`} />
+        <SettingsPage path={`${this.props.match.path}/settings`} />
+        <ConfirmationModal
+          show={this.state.showLogoutConfirmation}
+          close={this.toggleLogoutConfirmation}
+          title='Logout'
+          subheading='Are you sure you want to logout?'
+          onNo={this.toggleLogoutConfirmation}
+          onYes={this.logout}
+          dangerYes />
       </Layout>
     )
   }

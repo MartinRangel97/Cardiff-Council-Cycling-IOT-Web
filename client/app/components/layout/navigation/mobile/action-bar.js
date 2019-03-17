@@ -2,9 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Hamburger from '../hamburger'
-import NavbarActionBtn from '../action-btn'
+import ActionBtn from '../action-btn'
 
 import IconSettings from './icons/settings.svg'
+import IconLogout from './icons/logout.svg'
 
 export default class ActionBar extends React.Component {
   render () {
@@ -14,7 +15,8 @@ export default class ActionBar extends React.Component {
           <Hamburger onClick={this.props.sidebarToggle} />
         </div>
         <div className='right'>
-          <NavbarActionBtn icon={IconSettings} onClick={this.props.settingsToggle} />
+          <ActionBtn icon={IconSettings} link='/app/settings' />
+          <ActionBtn icon={IconLogout} onClick={this.props.logout} />
         </div>
       </div>
     )
@@ -23,5 +25,5 @@ export default class ActionBar extends React.Component {
 
 ActionBar.propTypes = {
   sidebarToggle: PropTypes.func,
-  settingsToggle: PropTypes.func
+  logout: PropTypes.func
 }
