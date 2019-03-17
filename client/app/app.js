@@ -15,7 +15,7 @@ import ExplorePage from './pages/explore-page'
 import ProfilePage from './pages/profile-page'
 import HistoryPage from './pages/history-page'
 import SearchPage from './pages/search-page'
-import TestPage from './pages/explore/test-page'
+import AveragesPage from './pages/explore-page/averages-page'
 import SettingsPage from './pages/settings-page'
 
 export default class App extends React.Component {
@@ -68,7 +68,7 @@ export default class App extends React.Component {
             <Route path={`${this.props.match.path}/search`} render={(props) => <SearchPage {...props} />} />
           </SidebarPageManager>
         </Sidebar>
-        <TestPage path={`${this.props.match.path}/explore/test`} />
+        <AveragesPage path={`${this.props.match.path}/explore/averages/:type`} />
         <SettingsPage path={`${this.props.match.path}/settings`} />
         <ConfirmationModal
           show={this.state.showLogoutConfirmation}

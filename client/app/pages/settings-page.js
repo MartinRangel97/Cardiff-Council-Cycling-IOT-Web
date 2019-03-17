@@ -8,7 +8,7 @@ import Button from '../components/common/button'
 import IconButton from '../components/common/icon-button'
 import Toggle from '../components/common/toggle'
 
-import IconBike from './icons/bike.svg'
+import IconBike from './settings-page/icons/bike.svg'
 
 export default class SettingsModal extends React.Component {
   render () {
