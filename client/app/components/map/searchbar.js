@@ -20,6 +20,7 @@ class Searchbar extends React.Component {
         pathname: '/app/search',
         search: '?query=' + this.state.value
       })
+      this.props.onSubmit()
     }
   }
 
@@ -47,7 +48,8 @@ class Searchbar extends React.Component {
 }
 
 Searchbar.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  onSubmit: PropTypes.func
 }
 
 export default withRouter(Searchbar)

@@ -58,7 +58,7 @@ export default class App extends React.Component {
   render () {
     return (
       <Layout sidebarToggle={this.toggleSidebar} logout={this.toggleLogoutConfirmation} >
-        <MapView />
+        <MapView sidebarToggle={this.toggleSidebar} />
         <Sidebar showSidebar={this.state.showSidebar}>
           <SidebarPageManager>
             <Redirect exact from={this.props.match.path} to='/app/explore' />

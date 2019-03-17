@@ -14,7 +14,7 @@ export default class Layout extends React.Component {
         <div className='content'>
           {this.props.children}
         </div>
-        <BottomNav />
+        <BottomNav sidebarToggle={this.props.sidebarToggle} />
       </div>
     )
   }

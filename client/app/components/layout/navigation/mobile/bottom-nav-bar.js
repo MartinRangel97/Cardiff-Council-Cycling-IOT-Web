@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import BottomNavLinkBtn from './bottom-nav-link-btn'
 
@@ -13,10 +14,14 @@ export default class BottomNavBar extends React.Component {
   render () {
     return (
       <div className='bottom-nav-bar'>
-        <BottomNavLinkBtn link='/app/explore' name='Explore' icon={IconMap} iconGradient={IconMapGradient} />
-        <BottomNavLinkBtn link='/app/profile' name='Profile' icon={IconProfile} iconGradient={IconProfileGradient} />
-        <BottomNavLinkBtn link='/app/history' name='History' icon={IconHistory} iconGradient={IconHistoryGradient} />
+        <BottomNavLinkBtn link='/app/explore' name='Explore' icon={IconMap} iconGradient={IconMapGradient} onClick={() => { this.props.sidebarToggle(true) }} />
+        <BottomNavLinkBtn link='/app/profile' name='Profile' icon={IconProfile} iconGradient={IconProfileGradient} onClick={() => { this.props.sidebarToggle(true) }} />
+        <BottomNavLinkBtn link='/app/history' name='History' icon={IconHistory} iconGradient={IconHistoryGradient} onClick={() => { this.props.sidebarToggle(true) }} />
       </div>
     )
   }
+}
+
+BottomNavBar.propTypes = {
+  sidebarToggle: PropTypes.func
 }

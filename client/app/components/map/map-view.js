@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 
 import Searchbar from './searchbar'
@@ -35,7 +36,7 @@ export default class MapView extends React.Component {
         <div className='toolbar'>
           <div className='left' />
           <div className='mid'>
-            <Searchbar />
+            <Searchbar onSubmit={() => { this.props.sidebarToggle(true) }} />
           </div>
           <div className='right'>
             <OverlayPicker selected={this.state.selectedOverlay} onChange={this.changeSelectedOverlay} />
@@ -45,4 +46,8 @@ export default class MapView extends React.Component {
       </div>
     )
   }
+}
+
+MapView.propTypes = {
+  sidebarToggle: PropTypes.func
 }
