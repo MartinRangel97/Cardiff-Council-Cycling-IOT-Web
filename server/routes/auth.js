@@ -1,5 +1,6 @@
 var express = require('express')
 var router = express.Router()
+var bcrypt = require('bcrypt')
 
 // Models
 const User = require('../models/User')
@@ -55,9 +56,27 @@ router.post('/signup', (req, res, next) => {
 /*
 * Login
 */
-// router.get('/login', (req, res, next) => {
+router.post('/login', (req, res, next) => {
+  const { body } = req
+  let { email } = body
+  const { password } = body
 
-// })
+  if (!email) {
+    return res.send({
+      success: false,
+      message: 'Error: Missing email'
+    })
+  }
+
+  if (!password) {
+    return res.send({
+      success: false,
+      message: 'Error: Missing password'
+    })
+  }
+
+  email = email.toLowerCase()
+})
 
 /*
 * Verify User
