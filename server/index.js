@@ -7,21 +7,9 @@ const fs = require('fs')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const passport = require('passport')
-const passportJWT = require('passport-jwt')
-var jwt = require('jsonwebtoken')
 
 // Database
 const database = require('./database')
-
-// Models
-const User = require('./models/User')
-
-// Queries
-const getUser = async obj => {
-  return User.findOne({
-    where: obj
-  })
-}
 
 // Routers
 const pagesRouter = require('./routes/pages')
@@ -46,31 +34,17 @@ try {
 } catch (e) {
   console.log('Unable to read the configuration file, the JSON may be invalid.')
   process.exit(1)
-// }
+}
 
 // MySQL Connection Setup
 database.connect(config.host, config.user, config.password, config.database)
   .then(() => console.log('Database Connected...'))
   .catch(err => console.log('Error: ' + err))
 
-var ExtractJwt = passportJWT.ExtractJwt
-
-var JwtStrategy = passportJWT.Strategy
-var jwtOptions = {}
-
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-jwtOptions.secretOrKey = 'wowwow'
-
-var strategy = new JwtStrategy(jwtOptions, function (jwtPayload, next) {
-  console.log('payload recieved', jwtPayload)
-  var user = getUser({ id: jwtPayload.id })
-  if (user) {
-    next(null, user)
-  } else {
-    next(null, false)
-  }
-})
-passport.use(strategy)
+database
+  .authenticate()
+  .then(() => console.log('Connection has been established successfully'))
+  .catch(err => console.error('Unable to connect to the database: ', err))
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -83,33 +57,18 @@ app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, '../public')))
+
+// Pasport Middleware
 app.use(passport.initialize())
+
+// Passport config
+require('../config/passport')(passport)
 
 // Routes
 app.use('/', pagesRouter)
 app.use('/auth', authRouter)
 app.use('/api/app', appApiRouter)
 app.use('/api/web', webApiRouter)
-
-/*
-* Login
-*/
-app.post('/login', async function (req, res, next) {
-  const { email, password } = req.body
-  if (email && password) {
-    var user = await getUser({ email })
-    if (!user) {
-      res.status(401).json({ msg: 'No such user found', user })
-    }
-    if (user.password === password) {
-      var payload = { id: user.id }
-      var token = jwt.sign(payload, jwtOptions.secretOrKey)
-      res.json({ msg: 'ok', token: token })
-    } else {
-      res.status(401).json({ msg: 'Password is incorrect' })
-    }
-  }
-})
 
 app.get('/protected', passport.authenticate('jwt', { session: false }), function (req, res) {
   res.json({ msg: 'Authorized User' })
