@@ -37,6 +37,10 @@ export default class MapView extends React.Component {
     this.setState({ selectedOverlay: selection })
   }
 
+  componentWillUnmount () {
+    this.map.remove()
+  }
+
   render () {
     return (
       <div className='map-container'>

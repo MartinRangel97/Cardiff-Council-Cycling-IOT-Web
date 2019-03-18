@@ -5,7 +5,7 @@ import SidebarPage from '../../components/sidebar/sidebar-page'
 import Section from '../../components/common/section'
 import Card from '../../components/common/card'
 
-export default class AveragesPage extends React.Component {
+export default class DetailssPage extends React.Component {
   getLngLat = () => {
     // Get the longitude and latitude from the URL
     let params = new URLSearchParams(this.props.location.search.slice(1))
@@ -28,6 +28,6 @@ export default class AveragesPage extends React.Component {
   }
 }
 
-AveragesPage.propTypes = {
-  location: PropTypes.location
+DetailssPage.propTypes = {
+  location: PropTypes.object
 }
