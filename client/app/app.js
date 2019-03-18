@@ -43,7 +43,10 @@ export default class App extends React.Component {
   }
 
   onMapClick = (event) => {
-    this.setState({ mapState: { clickLocation: event.lngLat } })
+    this.setState({
+      showSidebar: true,
+      mapState: { clickLocation: event.lngLat }
+    })
   }
 
   toggleSidebar = (show) => {
