@@ -9,7 +9,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: $colour-shade;
+  background: $color-shade;
   will-change: opacity;
   .container {
     height: auto;
@@ -18,7 +18,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    background: $colour-background;
+    background: $color-background;
     will-change: transform;
     overflow-y: auto;
     border-radius: 18px;
@@ -36,7 +36,7 @@
       font-size: 13px;
       font-weight: 500;
       margin: 0 0 15px 0;
-      color: $colour-grey;
+      color: $color-grey;
     }
     .button-container {
       display: flex;
