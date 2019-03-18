@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var passport = require('passport')
+var bcrypt = require('bcrypt')
 
 var jwt = require('jsonwebtoken')
 var keys = require('../../config/keys')
@@ -55,19 +56,23 @@ router.post('/signup', (req, res, next) => {
 */
 router.post('/login', async function (req, res, next) {
   const { email, password } = req.body
-  if (email && password) {
-    var user = await User.findOne({ email })
+
+  User.findOne({ email }).then(user => {
+  // Check if user exists
     if (!user) {
-      res.status(401).json({ msg: 'No such user found', user })
+      return res.status(404).json({ emailnotfound: 'Email not found' })
     }
-    if (user.password === password && user.email === email) {
-      var payload = { id: user.id }
-      var token = jwt.sign(payload, keys.secretOrKey)
-      res.json({ msg: 'ok', token: token })
-    } else {
-      res.status(401).json({ msg: 'Incorrect Credentials' })
-    }
-  }
+    // Check password
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (email && isMatch) {
+        const payload = { id: user.id }
+        const token = jwt.sign(payload, keys.secretOrKey)
+        res.status(401).json({ message: 'ok', token: token })
+      } else {
+        res.status(401).json({ msg: 'Incorrect Password' })
+      }
+    })
+  })
 })
 
 /*
