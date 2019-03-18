@@ -59,12 +59,12 @@ router.post('/login', async function (req, res, next) {
     if (!user) {
       res.status(401).json({ msg: 'No such user found', user })
     }
-    if (user.password === password) {
+    if (user.password === password && user.email === email) {
       var payload = { id: user.id }
       var token = jwt.sign(payload, keys.secretOrKey)
       res.json({ msg: 'ok', token: token })
     } else {
-      res.status(401).json({ msg: 'Password is incorrect' })
+      res.status(401).json({ msg: 'Incorrect Credentials' })
     }
   }
 })
