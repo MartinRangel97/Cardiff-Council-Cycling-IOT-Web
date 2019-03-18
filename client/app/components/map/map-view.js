@@ -24,6 +24,13 @@ export default class MapView extends React.Component {
       center: [-3.175559, 51.480802],
       zoom: 13.75
     })
+    // Prepare event listeners
+    this.map.on('load', () => {
+      this.props.onMapLoad()
+    })
+    this.map.on('click', (event) => {
+      this.props.onMapClick(event)
+    })
   }
 
   changeSelectedOverlay = (selection) => {
@@ -49,5 +56,7 @@ export default class MapView extends React.Component {
 }
 
 MapView.propTypes = {
-  sidebarToggle: PropTypes.func
+  sidebarToggle: PropTypes.func,
+  onMapLoad: PropTypes.func,
+  onMapClick: PropTypes.func
 }
