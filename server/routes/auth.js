@@ -1,18 +1,23 @@
 var express = require('express')
 var router = express.Router()
-var bcrypt = require('bcrypt')
 
 // Models
 const User = require('../models/User')
-// const UserSession = require('../models/UserSession')
+
+// Queries
+// const createUser = async ({ email, password, shareReadings }) => {
+//   return User.create({ email, password, shareReadings })
+// }
+
+// const getAllUsers = async () => {
+//   return User.findAll()
+// }
 
 /*
 * Sign up
 */
 router.post('/signup', (req, res, next) => {
-  const { body } = req
-  let { email } = body
-  const { password } = body
+  const { email, password } = req.body
 
   if (!email) {
     return res.send({
@@ -27,9 +32,6 @@ router.post('/signup', (req, res, next) => {
       message: 'Error: Missing password'
     })
   }
-
-  email = email.toLowerCase()
-
   User.findOne({
     where: {
       email: email
@@ -43,7 +45,7 @@ router.post('/signup', (req, res, next) => {
       newUser.email = email
       newUser.password = password
       newUser.save()
-        .then(res.json(newUser))
+        .then(res.json({ newUser, message: 'Account Created Successfully' }))
     }
   }).catch(err => { // catch all errors thrown witihn the scope of the findOne call
     res.send({
@@ -52,38 +54,6 @@ router.post('/signup', (req, res, next) => {
     })
   })
 })
-
-/*
-* Login
-*/
-router.post('/login', (req, res, next) => {
-  const { body } = req
-  let { email } = body
-  const { password } = body
-
-  if (!email) {
-    return res.send({
-      success: false,
-      message: 'Error: Missing email'
-    })
-  }
-
-  if (!password) {
-    return res.send({
-      success: false,
-      message: 'Error: Missing password'
-    })
-  }
-
-  email = email.toLowerCase()
-})
-
-/*
-* Verify User
-*/
-// router.get('/verify', (req, res, next) => {
-
-// })
 
 /*
 * Logout

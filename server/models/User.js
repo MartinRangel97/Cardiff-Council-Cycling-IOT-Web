@@ -2,37 +2,39 @@ const Sequelize = require('sequelize')
 const database = require('../database')
 const bcrypt = require('bcrypt')
 
-const UserSchema = database.define('user', {
-  userId: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true
-  },
+const User = database.define('user', {
+  // userId: {
+  //   type: Sequelize.INTEGER,
+  //   allowNull: false,
+  //   autoIncrement: true,
+  //   primaryKey: true
+  // },
   email: {
     type: Sequelize.STRING
   },
   password: {
     type: Sequelize.STRING
   },
-  share_Readings: {
+  shareReadings: {
     type: Sequelize.BOOLEAN
-  },
-  isDeleted: {
-    type: Sequelize.BOOLEAN
-  }
-}, {
-  hooks: {
-    beforeCreate: (user) => {
-      const salt = bcrypt.genSaltSync(8)
-      user.password = bcrypt.hashSync(user.password, salt)
-    }
-  },
-  instanceMethods: {
-    validPassword (password) {
-      return bcrypt.compareSync(password, this.password)
-    }
   }
 })
+// {
+//   hooks: {
+//     beforeCreate: (user) => {
+//       const salt = bcrypt.genSaltSync(8)
+//       user.password = bcrypt.hashSync(user.password, salt)
+//     }
+//   },
+//   instanceMethods: {
+//     validPassword (password) {
+//       return bcrypt.compareSync(password, this.password)
+//     }
+//   }
+// })
 
-module.exports = UserSchema
+User.sync()
+  .then(() => console.log('User table created successfully'))
+  .catch(err => console.log('Wrong database credentials entered: ', err))
+
+module.exports = User
