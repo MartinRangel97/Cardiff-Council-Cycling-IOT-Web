@@ -10,7 +10,7 @@ export default class HistoryPage extends React.Component {
   render () {
     return (
       <SidebarPage title='History'>
-        <Section title='Hello World'>
+        <Section title='Select a day'>
           <Card>
             <Calendar
               showWeekNumber={false}
@@ -19,7 +19,7 @@ export default class HistoryPage extends React.Component {
               // disabledTime={disabledTime}
               showDateInput={false}
               showToday={false}
-              showOk={false}
+              showOk={true} // Fix, only shows when today is also on
               // timePicker={timePickerElement}
               // onChange={onStandaloneChange}
               // disabledDate={disabledDate}

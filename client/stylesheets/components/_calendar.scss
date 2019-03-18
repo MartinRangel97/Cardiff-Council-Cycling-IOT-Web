@@ -1,0 +1,105 @@
+.rc-calendar * {
+    box-sizing: border-box;
+}
+
+.rc-calendar {
+    font-size: 13px;
+    font-family: inherit;
+    width: 100%;
+    box-shadow: none;
+    border: none;
+}
+
+.rc-calendar-date-panel, .rc-calendar-panel {
+    padding: 0 10px;
+}
+
+.rc-calendar-header {
+    text-align: center;
+    border: none;
+}
+
+.rc-calendar-prev-month-btn {
+    position: absolute;
+    left: 0;
+}
+
+.rc-calendar-next-month-btn {
+    position: absolute;
+    right: 0;
+}
+
+.rc-calendar-prev-month-btn, .rc-calendar-next-month-btn {
+    color: $colour-black;
+    font-family: inherit;
+    font-size: 28px;
+}
+
+.rc-calendar-prev-year-btn, .rc-calendar-next-year-btn {
+    display: none; 
+}
+
+.rc-calendar-year-select, .rc-calendar-month-select, .rc-calendar-day-select {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: $colour-black;
+    padding: 0 8px;
+    line-height: 34px;
+    text-transform: uppercase;
+}
+
+.rc-calendar-body {
+    padding: 0px;
+    height: 200px;
+}
+
+.rc-calendar-table thead tr th {
+    padding: 10px 0;
+}
+
+.rc-calendar table, .rc-calendar td, .rc-calendar th, .rc-calendar td {
+    padding: 4px 0;
+}
+
+.rc-calendar table {
+    border-collapse: collapse;
+    max-width: 100%;
+    background-color: transparent;
+    width: 100%;
+}
+
+.rc-calendar-selected-date .rc-calendar-date {
+    background: $colour-primary;
+    border-radius: 50px;
+}
+
+.rc-calendar-year-panel-header > a,
+.rc-calendar-month-panel-header > a {
+    font-weight: 600;
+}
+
+.rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month,
+.rc-calendar-year-panel-selected-cell .rc-calendar-year-panel-year,
+.rc-calendar-selected-day .rc-calendar-date,
+.rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month:hover,
+.rc-calendar-selected-date .rc-calendar-date:hover {
+    background: $colour-primary;
+    color: $colour-white;
+}
+.rc-calendar-day-select:hover,
+.rc-calendar-year-select:hover, .rc-calendar-month-select:hover, 
+.rc-calendar-prev-month-btn:hover, .rc-calendar-next-month-btn:hover, 
+.rc-calendar-prev-year-btn:hover, .rc-calendar-next-year-btn:hover,
+.rc-calendar-year-panel-header > a:hover {
+    color: $colour-primary;
+}
+
+.rc-calendar-today .rc-calendar-date, .rc-calendar-year-panel-header, .rc-calendar-month-panel-header {
+    border: none;
+}
+
+// TODO: HIDE PROGRAMATICALLY
+.rc-calendar-tbody tr:nth-child(6) {
+    display: none;
+}
