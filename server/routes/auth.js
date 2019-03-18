@@ -1,5 +1,6 @@
 var express = require('express')
 var router = express.Router()
+var passport = require('passport')
 
 var jwt = require('jsonwebtoken')
 var keys = require('../../config/keys')
@@ -67,6 +68,13 @@ router.post('/login', async function (req, res, next) {
       res.status(401).json({ msg: 'Incorrect Credentials' })
     }
   }
+})
+
+/*
+* Verify
+*/
+router.get('/verify', passport.authenticate('jwt', { session: false }), function (req, res) {
+  res.json({ msg: 'Authorized User' })
 })
 
 /*

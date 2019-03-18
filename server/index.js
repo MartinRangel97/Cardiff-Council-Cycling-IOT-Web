@@ -70,10 +70,6 @@ app.use('/auth', authRouter)
 app.use('/api/app', appApiRouter)
 app.use('/api/web', webApiRouter)
 
-app.get('/protected', passport.authenticate('jwt', { session: false }), function (req, res) {
-  res.json({ msg: 'Authorized User' })
-})
-
 // Listen
 server.listen(3000)
 server.on('listening', () => console.log('Example app listening on port 3000'))
