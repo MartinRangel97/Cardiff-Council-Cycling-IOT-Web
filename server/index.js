@@ -41,11 +41,6 @@ database.connect(config.host, config.user, config.password, config.database)
   .then(() => console.log('Database Connected...'))
   .catch(err => console.log('Error: ' + err))
 
-database
-  .authenticate()
-  .then(() => console.log('Connection has been established successfully'))
-  .catch(err => console.error('Unable to connect to the database: ', err))
-
 // View engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
