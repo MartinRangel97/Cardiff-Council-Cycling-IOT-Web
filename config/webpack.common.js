@@ -1,4 +1,5 @@
 const path = require('path')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
@@ -28,7 +29,24 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        use: ['svg-inline-loader']
+        use: [{
+          loader: '@svgr/webpack',
+          options: {
+            svgoConfig: {
+              plugins: [{
+                cleanupIDs: {
+                  prefix: {
+                    toString () {
+                      // Ref: https://github.com/svg/svgo/issues/674#issuecomment-328774019
+                      this.counter = this.counter || 0
+                      return `id-${this.counter++}`
+                    }
+                  }
+                }
+              }]
+            }
+          }
+        }]
       },
       {
         test: /\.(jpe?g|png|gif|ico|woff|woff2)$/i,
@@ -37,6 +55,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       {
         from: './client/static',

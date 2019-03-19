@@ -1,0 +1,158 @@
+
+.map-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  @include responsive-tablet {
+    margin-left: 80px;
+  }
+  @include responsive-desktop {
+    margin-left: 535px;
+  }
+  // Toolbar
+  .toolbar {
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    @include responsive-mobile {
+      flex-direction: column;
+    }
+    .mid {
+      max-width: 600px;
+      flex-grow: 1;
+      @include responsive-mobile {
+        max-width: unset;
+      }
+    }
+    .right {
+      height: 65px;
+      width: 65px;
+      position: relative;
+      @include responsive-mobile {
+        align-self: flex-end;
+      }
+    }
+    .searchbar {
+      height: 50px;
+      margin: 15px;
+      position: relative;
+      box-sizing: border-box;
+      input {
+        height: 100%;
+        width: 100%;
+        padding: 0px 25px;
+        border: none;
+        border-radius: 25px;
+        box-sizing: border-box;
+        box-shadow: 0px 0px 20px rgba(13, 13, 13, 0.08);
+        font-family: 'Poppins', sans-serif;
+        transition: box-shadow 200ms ease-out;
+        &:focus {
+          outline: none;
+          box-shadow: 0px 0px 20px rgba(76, 152, 255, 0.3);
+        }
+      }
+      .search-btn {
+        margin: 2px;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+    .overlay-picker {
+      height: 50px;
+      width: 50px;
+      margin: 15px 15px 0 0;
+      position: absolute;
+      right: 0;
+      display: flex;
+      flex-direction: row-reverse;
+      align-self: flex-end;
+      overflow: hidden;
+      border-radius: 25px;
+      background: $color-white;
+      box-shadow: $shadow-high-elevation;
+      transition: width 300ms ease, height 300ms ease;
+      &:hover {
+        width: 371px;
+      }
+      .icon {
+        height: 24px;
+        width: 24px;
+        margin: 13px;
+        svg {
+          height: 24px;
+          width: 24px;
+        }
+      }
+      .options {
+        height: 50px;
+        width: 321px;
+        display: flex;
+        opacity: 0;
+        transition: opacity 300ms;
+        .button {
+          height: 38px;
+          min-width: 100px;
+          margin: 5px 0 5px 5px;
+          display: block;
+          background-color: #F9F9FB;
+          border: solid 1px #E3E4E7;
+          color: #8C8C8D;
+          border-radius: 20px;
+          line-height: 40px;
+          font-size: 13px;
+          font-weight: 600;
+          text-align: center;
+          cursor: pointer;
+          transition: background-color 200ms, border-color 200ms, color 200ms;
+          &:hover {
+            background-color: rgba(76, 156, 255, 0.1);
+            color: $color-primary;
+            border: solid 1px $color-primary;
+          }
+          &.active {
+            background-color: rgba(76, 156, 255, 0.1);
+            color: $color-primary;
+            border: solid 1px $color-primary;
+          }
+        }
+      }
+      &:hover {
+        transition: width 100ms ease, height 300ms ease;
+        .options {
+          opacity: 1;
+        }
+      }
+      @include responsive-mobile {
+        margin-top: 0;
+        flex-direction: column;
+        &:hover {
+          flex-direction: column;
+          align-items: flex-end;
+          width: 150px;
+          height: 185px;
+        }
+        .icon {
+          align-self: flex-end;
+        }
+        .options {
+          flex-direction: column;
+          align-self: flex-end;
+          width: 150px;
+          .button {
+            margin: 0 5px 5px 5px;
+          }
+        }
+      }
+    }
+  }
+  // Map
+  .map {
+    height: 100%;
+  }
+}

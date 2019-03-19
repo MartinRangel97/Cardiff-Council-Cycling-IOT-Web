@@ -1,0 +1,80 @@
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  background: $color-shade;
+  will-change: opacity;
+  @include responsive-non-mobile {
+    margin-left: 80px;
+  }
+  @include responsive-mobile {
+    margin-bottom: 56px;
+  }
+  .page {
+    height: 100%;
+    width: 100%;
+    padding: 32px 40px;
+    box-sizing: border-box;
+    background: $color-background;
+    will-change: transform;
+    overflow-y: auto;
+    @include responsive-mobile {
+      padding: 25px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      flex-direction: column;
+      &.full-width {
+        max-width: unset;
+      }
+      .modal-header {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        margin-bottom: 22px;
+        h1 {
+          margin: 0;
+        }
+        .close-btn {
+          margin-right: 12px;
+        }
+      }
+    }
+  }
+  // Animation
+  &.animation-enter {
+    opacity: 0.01;
+    .page {
+      transform: translateY(25%);
+    }
+  }
+  &.animation-enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+    .page {
+      transform: translateY(0);
+      transition: transform 300ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+  }
+  &.animation-exit {
+    opacity: 1;
+    .page {
+      transform: translateY(0);
+    }
+  }
+  &.animation-exit-active {
+    opacity: 0.01;
+    transition: opacity 150ms;
+    .page {
+      transform: translateY(25%);
+      transition: transform 150ms ease-in;
+    }
+  }
+}
