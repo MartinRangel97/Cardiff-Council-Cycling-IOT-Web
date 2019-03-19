@@ -23,8 +23,8 @@ router.post('/signup', [
   check('password')
     .isLength({ min: 8 })
     .withMessage('Must be a minimum of 8 characters')
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, 'i')
-    .withMessage('Must contain 1 lowercase, 1 uppercase, and 1 number')
+    .matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
+    .withMessage('Must contain 1 lowercase, 1 uppercase, 1 number and 1 special character')
 ], (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
