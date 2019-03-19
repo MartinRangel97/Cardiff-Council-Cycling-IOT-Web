@@ -10,7 +10,6 @@ var jwtOptions = {}
 jwtOptions.secretOrKey = keys.secretOrKey
 
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-jwtOptions.secretOrKey = 'wowwow'
 
 module.exports = passport => {
   passport.use(
@@ -28,12 +27,3 @@ module.exports = passport => {
     })
   )
 }
-// var strategy = new JwtStrategy(jwtOptions, function (jwtPayload, next) {
-//   var user = User.findOne({ id: jwtPayload.id })
-//   if (user) {
-//     next(null, user)
-//   } else {
-//     next(null, false)
-//   }
-// })
-// passport.use(strategy)

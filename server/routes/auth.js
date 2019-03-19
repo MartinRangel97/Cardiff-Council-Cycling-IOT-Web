@@ -55,7 +55,7 @@ router.post('/signup', [
       throw new Error('Email address is already taken') // throw an error within the scope of the
       // sequelize promise (goes to line 49)
     } else {
-      const newUser = new User() // otherwise create a new user, same as your old code
+      const newUser = new User() // otherwise create a new user
       newUser.email = email
       newUser.password = password
       newUser.save()
