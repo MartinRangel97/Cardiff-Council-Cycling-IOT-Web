@@ -17,8 +17,14 @@ const { check, validationResult } = require('express-validator/check')
 * Sign up
 */
 router.post('/signup', [
-  check('email').isEmail(),
-  check('password').isLength({ min: 8 })
+  check('email')
+    .isEmail()
+    .withMessage('Must be an email. E.g: example@example.com'),
+  check('password')
+    .isLength({ min: 8 })
+    .withMessage('Must be a minimum of 8 characters')
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, 'i')
+    .withMessage('Must contain 1 lowercase, 1 uppercase, and 1 number')
 ], (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
