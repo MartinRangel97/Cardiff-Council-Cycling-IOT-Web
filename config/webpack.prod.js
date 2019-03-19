@@ -5,8 +5,6 @@ const CompressionPlugin = require('compression-webpack-plugin')
 module.exports = merge(common, {
   mode: 'production',
   plugins: [
-    new CompressionPlugin({
-      deleteOriginalAssets: true
-    })
+    new CompressionPlugin()
   ]
 })
