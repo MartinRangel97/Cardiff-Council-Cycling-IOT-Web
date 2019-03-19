@@ -3,16 +3,28 @@ var router = express.Router()
 var passport = require('passport')
 var bcrypt = require('bcrypt')
 
+// Jwt Token and keys
 var jwt = require('jsonwebtoken')
 var keys = require('../../config/keys')
 
 // Models
 const User = require('../models/User')
 
+// Express Validation
+const { check, validationResult } = require('express-validator/check')
+
 /*
 * Sign up
 */
-router.post('/signup', (req, res, next) => {
+router.post('/signup', [
+  check('email').isEmail(),
+  check('password').isLength({ min: 8 })
+], (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() })
+  }
+
   const { email, password } = req.body
 
   if (!email) {
