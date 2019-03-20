@@ -1,9 +1,13 @@
-const Sequelize = require('sequelize')
-let connection
+let Sequelize = require('sequelize')
+let DataTypes = Sequelize.DataTypes
 
-function connect (host, user, password, database) {
-  return new Promise((resolve, reject) => {
-    connection = new Sequelize({
+let db = {}
+
+function configure (host, user, password, database) {
+  return new Promise((resolve) => {
+    console.log(user)
+    // Prepare the Sequelize instance
+    let sequelize = new Sequelize({
       host: host,
       database: database,
       username: user,
@@ -23,18 +27,23 @@ function connect (host, user, password, database) {
         idle: 10000
       }
     })
-
-    connection.authenticate()
-      .then(resolve)
-      .catch(err => reject(err))
+    // Require Models
+    let UserModel = require('./models/user')(sequelize, DataTypes)
+    // Add the models
+    db.user = UserModel
+    // TODO: Add any associations here
+    // Set the db Sequelize instance
+    db.sequelize = sequelize
+    db.Sequelize = Sequelize
+    resolve()
   })
 }
 
-function getConnection () {
-  return connection
+function getDatabase () {
+  return db
 }
 
 module.exports = {
-  connect,
-  getConnection
+  configure,
+  getDatabase
 }

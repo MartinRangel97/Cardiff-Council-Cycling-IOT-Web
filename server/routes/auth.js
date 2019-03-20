@@ -7,8 +7,8 @@ var bcrypt = require('bcrypt')
 var jwt = require('jsonwebtoken')
 var keys = require('../../config/keys')
 
-// Models
-const User = require('../models/User')
+// Database
+const database = require('../database')
 
 // Express Validation
 const { check, validationResult } = require('express-validator/check')
@@ -33,20 +33,7 @@ router.post('/signup', [
 
   const { email, password } = req.body
 
-  if (!email) {
-    return res.send({
-      success: false,
-      message: 'Error: Missing email'
-    })
-  }
-
-  if (!password) {
-    return res.send({
-      success: false,
-      message: 'Error: Missing password'
-    })
-  }
-  User.findOne({
+  database.getDatabase().user.findOne({
     where: {
       email: email
     }
@@ -55,11 +42,14 @@ router.post('/signup', [
       throw new Error('Email address is already taken') // throw an error within the scope of the
       // sequelize promise (goes to line 49)
     } else {
-      const newUser = new User() // otherwise create a new user
-      newUser.email = email
-      newUser.password = password
-      newUser.save()
-        .then(res.json({ newUser, message: 'Account Created Successfully' }))
+      database.getDatabase().user.create({
+        email: email,
+        password: password
+      })
+        .then(model => {
+          console.log(model)
+          res.json({ message: 'Account Created Successfully' })
+        })
     }
   }).catch(err => { // catch all errors thrown witihn the scope of the findOne call
     res.send({
@@ -75,7 +65,9 @@ router.post('/signup', [
 router.post('/login', async function (req, res, next) {
   const { email, password } = req.body
 
-  User.findOne({ email }).then(user => {
+  console.log(database.getDatabase().user)
+
+  database.getDatabase().user.findOne({ email }).then(user => {
   // Check if user exists
     if (!user) {
       return res.status(404).json({ emailnotfound: 'Email not found' })

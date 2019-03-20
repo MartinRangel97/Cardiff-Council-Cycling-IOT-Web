@@ -1,6 +1,6 @@
 const passportJWT = require('passport-jwt')
 
-const User = require('../server/models/User')
+const database = require('../server/database')
 const keys = require('./keys')
 
 var ExtractJwt = passportJWT.ExtractJwt
@@ -15,7 +15,7 @@ module.exports = passport => {
   passport.use(
     new JwtStrategy(jwtOptions, (jwtPayload, next) => {
       console.log('payload recieved', jwtPayload)
-      User.findOne({ id: jwtPayload.id })
+      database.getDatabase().user.findOne({ id: jwtPayload.id })
         .then(user => {
           if (user) {
             next(null, user)
