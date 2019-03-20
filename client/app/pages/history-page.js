@@ -42,6 +42,7 @@ export default class HistoryPage extends React.Component {
               showToday={true}
               showOk={true}
               onOk={this.onChange}
+              renderFooter={<Button text="Select day" />}
             />
           </Card>
           <Card className='average' link={`/app/history/${this.state.link}`}>

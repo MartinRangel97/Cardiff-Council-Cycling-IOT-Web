@@ -1,7 +1,7 @@
 .card {
   box-shadow: $shadow-low-elevation;
-  background: $colour-white;
-  color: $colour-black;
+  background: $color-white;
+  color: $color-black;
   width: 100%;
   padding: 20px 27px;
   margin-bottom: 12px;
@@ -18,13 +18,13 @@
   }
   h1 {
     margin: 0;
-    color: $colour-black;
+    color: $color-black;
     font-size: 16px;
     font-weight: 500;
   }
   h2 {
     margin: 0;
-    color: $colour-grey;
+    color: $color-grey;
     font-size: 13px;
     font-weight: 400;
   }
