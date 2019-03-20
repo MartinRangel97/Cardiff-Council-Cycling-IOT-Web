@@ -81,12 +81,12 @@
 
 .rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month,
 .rc-calendar-year-panel-selected-cell .rc-calendar-year-panel-year,
-.rc-calendar-selected-day .rc-calendar-date,
 .rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month:hover,
 .rc-calendar-selected-date .rc-calendar-date:hover {
     background: $colour-primary;
     color: $colour-white;
 }
+
 .rc-calendar-day-select:hover,
 .rc-calendar-year-select:hover, .rc-calendar-month-select:hover, 
 .rc-calendar-prev-month-btn:hover, .rc-calendar-next-month-btn:hover, 
@@ -95,11 +95,17 @@
     color: $colour-primary;
 }
 
-.rc-calendar-today .rc-calendar-date, .rc-calendar-year-panel-header, .rc-calendar-month-panel-header {
+.rc-calendar-today .rc-calendar-date {
+    background: none;
+    color: #666;
+}
+
+.rc-calendar-today .rc-calendar-date, .rc-calendar-year-panel-header, 
+.rc-calendar-month-panel-header, .rc-calendar-footer {
     border: none;
 }
 
 // TODO: HIDE PROGRAMATICALLY
-.rc-calendar-tbody tr:nth-child(6) {
+.rc-calendar-tbody tr:nth-child(6), .rc-calendar-today-btn  {
     display: none;
 }
