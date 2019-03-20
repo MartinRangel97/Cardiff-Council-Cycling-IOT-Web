@@ -5,6 +5,8 @@ const http = require('http')
 const path = require('path')
 const fs = require('fs')
 const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const passport = require('passport')
 
 // Database
 const database = require('./database')
@@ -35,7 +37,10 @@ try {
 }
 
 // MySQL Connection Setup
-database.connect(config.mysql.host, config.mysql.user, config.mysql.password, config.mysql.database)
+
+database.connect(config.host, config.user, config.password, config.database)
+  .then(() => console.log('Database Connected...'))
+  .catch(err => console.log('Error: ' + err))
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -45,7 +50,15 @@ app.set('view engine', 'pug')
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, '../public')))
+
+// Pasport Middleware
+app.use(passport.initialize())
+
+// Passport config
+require('../config/passport')(passport)
 
 // Routes
 app.use('/', pagesRouter)

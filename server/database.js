@@ -1,18 +1,37 @@
-var mysql = require('mysql')
-var connectionPool
+const Sequelize = require('sequelize')
+let connection
 
 function connect (host, user, password, database) {
-  connectionPool = mysql.createPool({
-    connectionLimit: 10,
-    host: host,
-    user: user,
-    password: password,
-    database: database
+  return new Promise((resolve, reject) => {
+    connection = new Sequelize({
+      host: host,
+      database: database,
+      username: user,
+      password: password,
+      dialect: 'mysql',
+      operatorsAliases: false,
+
+      define: {
+        freezeTableName: true,
+        timestamps: false
+      },
+
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      }
+    })
+
+    connection.authenticate()
+      .then(resolve)
+      .catch(err => reject(err))
   })
 }
 
 function getConnection () {
-  return connectionPool
+  return connection
 }
 
 module.exports = {
