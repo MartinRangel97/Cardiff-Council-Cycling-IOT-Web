@@ -2,10 +2,9 @@ import React from 'react'
 
 import Card from '../components/common/card'
 import Calendar from 'rc-calendar'
-import Button from '../components/common/button'
 import SidebarPage from '../components/sidebar/sidebar-page'
 import Section from '../components/common/section'
-import moment from 'moment';
+import moment from 'moment'
 
 import IconAirPollution from './explore-page/icons/air-pollution.svg'
 import 'rc-calendar/assets/index.css'
@@ -15,7 +14,7 @@ import 'rc-calendar/assets/index.css'
 // Proptypes? http://react-component.github.io/calendar/examples/antd-calendar.html
 
 export default class HistoryPage extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       value: moment(),
@@ -28,7 +27,7 @@ export default class HistoryPage extends React.Component {
     this.setState({
       value,
       link: value.format('YYYY/MM/DD')
-    });
+    })
   }
 
   render () {
@@ -39,12 +38,12 @@ export default class HistoryPage extends React.Component {
             <Calendar
               showWeekNumber={false}
               showDateInput={false}
-              showToday={true}
-              showOk={true}
+              showToday
+              showOk
               onOk={this.onChange}
             />
           </Card>
-          <Card className='average' link={`/app/history/${this.state.link}`}>
+          <Card className='average' link={`/app/history/${this.state.link}/details`}>
             <IconAirPollution className='icon' />
             <div className='details'>
               <h1>Air Pollution</h1>
