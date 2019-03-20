@@ -15,7 +15,7 @@
   .hover-circle {
     height: 46px;
     width: 46px;
-    background: $color-primary;
+    background: $colour-primary;
     border-radius: 100%;
     opacity: 0;
     transform: scale(0.75);
@@ -89,7 +89,7 @@
     top: 0;
     left: 0;
     z-index: 1000;
-    background-color: $color-white;
+    background-color: $colour-white;
     box-shadow: $shadow-high-elevation;
     @include responsive-mobile {
       display: none;
@@ -202,7 +202,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: $color-white;
+    background-color: $colour-white;
     box-shadow: $shadow-high-elevation;
     @include responsive-non-mobile {
       display: none;
@@ -245,7 +245,7 @@
       .name {
         text-align: center;
         text-decoration: none;
-        color: $color-black;
+        color: $colour-black;
         font-size: 12.5px;
         font-weight: 500;
         margin-bottom: 6px;
@@ -274,7 +274,7 @@
         }
         .name {
           opacity: 1;
-          color: $color-primary;
+          color: $colour-primary;
         }
       }
     }

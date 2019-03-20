@@ -1,0 +1,11 @@
+$colour-primary: rgb(76, 156, 255);
+$colour-secondary: rgb(51, 102, 255);
+$colour-white: rgb(255, 255, 255);
+$colour-light-grey: rgb(192, 202, 209);
+$colour-grey: rgb(129, 150, 163);
+$colour-black: rgb(49, 50, 50);
+$colour-shade: rgba(129, 150, 163, 0.5);
+$colour-background: rgb(249, 249, 251);
+$gradient-diagonal: linear-gradient(135deg, $colour-primary 0%,$colour-secondary 100%);
+$gradient-horizontal: linear-gradient(90deg, $colour-primary 0%,$colour-secondary 100%);
+$gradient-danger-diagonal: linear-gradient(135deg, rgb(255, 77, 77) 0%, rgb(255, 60, 60) 100%);

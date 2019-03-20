@@ -4,7 +4,7 @@ import className from 'classnames'
 
 const Sidebar = props => {
   return (
-    <div className={className('sidebar', { 'hidden': !props.showSidebar })}>
+    <div className={className('sidebar', { 'hidden': props.showSidebar })}>
       {props.children}
     </div>
   )

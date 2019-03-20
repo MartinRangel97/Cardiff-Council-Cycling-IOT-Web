@@ -1,6 +1,5 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const CompressionPlugin = require('compression-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -61,8 +60,7 @@ module.exports = {
         to: 'static/',
         toType: 'dir'
       }
-    ]),
-    new CompressionPlugin()
+    ])
   ],
   target: 'web'
 }

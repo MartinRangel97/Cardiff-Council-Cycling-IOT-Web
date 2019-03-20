@@ -13,7 +13,7 @@ export default class SearchPage extends React.Component {
 
   render () {
     return (
-      <SidebarPage title='Search' canGoBack>
+      <SidebarPage title='Search'>
         <Section title={'Results for ' + this.getQuery()}>
           <Card>
             In Development

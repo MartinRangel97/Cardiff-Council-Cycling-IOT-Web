@@ -13,7 +13,7 @@ import IconBike from './settings-page/icons/bike.svg'
 export default class SettingsModal extends React.Component {
   render () {
     return (
-      <Page className='settings-modal' title='Settings' path={this.props.path} canGoBack>
+      <Page className='settings-modal' title='Settings' path={this.props.path}>
         <Section title='Text Buttons'>
           <Card>
             <Button text='Standard Button' />

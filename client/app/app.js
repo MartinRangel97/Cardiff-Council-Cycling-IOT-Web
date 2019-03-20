@@ -23,30 +23,20 @@ export default class App extends React.Component {
     super(props)
     this.state = {
       showSidebar: true,
-      showLogoutConfirmation: false,
-      mapState: null
+      showLogoutConfirmation: false
     }
   }
 
-  hideSplash () {
-    // Hide the splash screen
-    // Ref: https://github.com/nguyenbathanh/react-loading-screen
-    const loadingScreen = document.getElementById('splash-screen')
-    loadingScreen.classList.add('fade-out')
+  componentDidMount () {
+    // This is an artificial delay that can be replaced with loading data
     setTimeout(() => {
-      loadingScreen.outerHTML = ''
-    }, 200)
-  }
-
-  onMapLoad = () => {
-    this.hideSplash()
-  }
-
-  onMapClick = (event) => {
-    this.setState({
-      showSidebar: true,
-      mapState: { clickLocation: event.lngLat }
-    })
+      // Ref: https://github.com/nguyenbathanh/react-loading-screen
+      const loadingScreen = document.getElementById('splash-screen')
+      loadingScreen.classList.add('fade-out')
+      setTimeout(() => {
+        loadingScreen.outerHTML = ''
+      }, 200)
+    }, 500)
   }
 
   toggleSidebar = (show) => {
@@ -58,7 +48,7 @@ export default class App extends React.Component {
   }
 
   logout = () => {
-    window.location = '/'
+    console.log('Logging Out')
   }
 
   toggleLogoutConfirmation = () => {
@@ -68,14 +58,11 @@ export default class App extends React.Component {
   render () {
     return (
       <Layout sidebarToggle={this.toggleSidebar} logout={this.toggleLogoutConfirmation} >
-        <MapView
-          onMapLoad={this.onMapLoad}
-          onMapClick={this.onMapClick}
-          sidebarToggle={this.toggleSidebar} />
+        <MapView sidebarToggle={this.toggleSidebar} />
         <Sidebar showSidebar={this.state.showSidebar}>
           <SidebarPageManager>
             <Redirect exact from={this.props.match.path} to='/app/explore' />
-            <Route path={`${this.props.match.path}/explore`} render={(props) => <ExplorePage {...props} mapState={this.state.mapState} />} />
+            <Route path={`${this.props.match.path}/explore`} render={(props) => <ExplorePage {...props} />} />
             <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
             <Route path={`${this.props.match.path}/search`} render={(props) => <SearchPage {...props} />} />
