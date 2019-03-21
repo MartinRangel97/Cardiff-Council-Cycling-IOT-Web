@@ -19,29 +19,34 @@ const { check, validationResult } = require('express-validator/check')
 /*
 * Sign up
 */
-router.post('/signup', [
-  check('email')
-    .isEmail()
-    .withMessage('Must be an email. E.g: example@example.com'),
-  check('password')
-    .isLength({ min: 8 })
-    .withMessage('Must be a minimum of 8 characters')
-    .matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
-    .withMessage('Must contain 1 lowercase, 1 uppercase, 1 number and 1 special character')
-], (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() })
-  }
-  a
-  authenicationService.createUser(req.body.email, req.body.password)
-    .then(() => {
-      res.sendStatus(200).json({ msg: 'Account Created' }).send()
-    })
-    .catch((error) => {
-      res.sendStatus(400).json({ msg: error.toString() }).send()
-    })
-})
+router.post('/signup',
+  [
+    // checks that the users email is in an email format
+    check('email')
+      .isEmail()
+      .withMessage('Must be an email. E.g: example@example.com'),
+    // checks that the users password is using the correct password convetions
+    check('password')
+      .isLength({ min: 8 })
+      .withMessage('Must be a minimum of 8 characters')
+      .matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
+      .withMessage('Must contain 1 lowercase, 1 uppercase, 1 number and 1 special character')
+  ],
+  (req, res) => {
+    // if there is an error in the validation process it sends a 422
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
+    // authentication  services checks the email is availble and will create the account with a hashed password
+    authenicationService.createUser(req.body.email, req.body.password)
+      .then(() => {
+        res.sendStatus(200).json({ msg: 'Account Created' }).send()
+      })
+      .catch((error) => {
+        res.sendStatus(400).json({ msg: error.toString() }).send()
+      })
+  })
 
 /*
 * Login
