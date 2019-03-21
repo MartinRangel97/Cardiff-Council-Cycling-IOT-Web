@@ -10,10 +10,8 @@ import moment from 'moment'
 import IconAirPollution from './explore-page/icons/air-pollution.svg'
 import 'rc-calendar/assets/index.css'
 
-// Bug: Today is not highlighted when clicked, change css
 // Todo: return search results of noise/air pollution for selected day
 // Todo: Provide link to detailed analytics of selected day
-// Proptypes? http://react-component.github.io/calendar/examples/antd-calendar.html
 
 export default class HistoryPage extends React.Component {
   constructor (props) {
@@ -30,7 +28,6 @@ export default class HistoryPage extends React.Component {
         pathname: '/app/history/',
         search: '?date=' + this.state.value.format('YYYY/MM/DD')
       })
-      console.log(this.state.value)
     })
   }
 
