@@ -1,11 +1,14 @@
-var express = require('express')
-var router = express.Router()
-var passport = require('passport')
-var bcrypt = require('bcrypt')
+const express = require('express')
+const router = express.Router()
+const passport = require('passport')
+const bcrypt = require('bcrypt')
+
+// Service
+const authenicationService = require('../services/authenticationService')
 
 // Jwt Token and keys
-var jwt = require('jsonwebtoken')
-var keys = require('../../config/keys')
+const jwt = require('jsonwebtoken')
+const keys = require('../../config/keys')
 
 // Database
 const database = require('../database')
@@ -25,38 +28,19 @@ router.post('/signup', [
     .withMessage('Must be a minimum of 8 characters')
     .matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
     .withMessage('Must contain 1 lowercase, 1 uppercase, 1 number and 1 special character')
-], (req, res, next) => {
+], (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() })
   }
-
-  const { email, password } = req.body
-
-  database.getDatabase().user.findOne({
-    where: {
-      email: email
-    }
-  }).then(user => { // then get the user (which sequelize sends)
-    if (user) { // if user is null or undefined (will send null if your query matches nothing)
-      throw new Error('Email address is already taken') // throw an error within the scope of the
-      // sequelize promise (goes to line 49)
-    } else {
-      database.getDatabase().user.create({
-        email: email,
-        password: password
-      })
-        .then(model => {
-          console.log(model)
-          res.json({ message: 'Account Created Successfully' })
-        })
-    }
-  }).catch(err => { // catch all errors thrown witihn the scope of the findOne call
-    res.send({
-      success: false,
-      message: `Error: ${err.message}` // print the error message
+  a
+  authenicationService.createUser(req.body.email, req.body.password)
+    .then(() => {
+      res.sendStatus(200).json({ msg: 'Account Created' }).send()
     })
-  })
+    .catch((error) => {
+      res.sendStatus(400).json({ msg: error.toString() }).send()
+    })
 })
 
 /*
