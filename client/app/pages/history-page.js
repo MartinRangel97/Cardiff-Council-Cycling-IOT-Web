@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Route } from 'react-router-dom'
 
+import SidebarPageManager from '../components/sidebar/sidebar-page-manager'
 import Card from '../components/common/card'
 import Calendar from 'rc-calendar'
 import SidebarPage from '../components/sidebar/sidebar-page'
+import ViewDatePage from './history-page/view-date-page'
 import Section from '../components/common/section'
 import moment from 'moment'
 
-import IconAirPollution from './explore-page/icons/air-pollution.svg'
 import 'rc-calendar/assets/index.css'
 
 // Todo: return search results of noise/air pollution for selected day
@@ -25,7 +27,7 @@ export default class HistoryPage extends React.Component {
   onChange = (value) => {
     this.setState({ value, link: value.format('YYYY/MM/DD') }, function () {
       this.props.history.push({
-        pathname: '/app/history/',
+        pathname: '/app/history/view',
         search: '?date=' + this.state.value.format('YYYY/MM/DD')
       })
     })
@@ -44,19 +46,16 @@ export default class HistoryPage extends React.Component {
               onOk={this.onChange}
             />
           </Card>
-          <Card className='average' link={`/app/history/?date=${this.state.link}/details`}>
-            <IconAirPollution className='icon' />
-            <div className='details'>
-              <h1>Air Pollution</h1>
-              <span className='value'>Moderate</span>
-            </div>
-          </Card>
         </Section>
+        <SidebarPageManager>
+          <Route path={`${this.props.match.path}/view`} component={ViewDatePage} />
+        </SidebarPageManager>
       </SidebarPage>
     )
   }
 }
 
 HistoryPage.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  match: PropTypes.object
 }
