@@ -25,7 +25,7 @@ export default class HistoryPage extends React.Component {
   }
 
   onChange = (value) => {
-    this.setState({ value, link: value.format('YYYY/MM/DD') }, function() {
+    this.setState({ value, link: value.format('YYYY/MM/DD') }, function () {
       this.props.history.push({
         pathname: '/app/history/',
         search: '?date=' + this.state.value.format('YYYY/MM/DD')
@@ -33,13 +33,6 @@ export default class HistoryPage extends React.Component {
       console.log(this.state.value)
     })
   }
-
-  openAddBoardModal(){
-    this.setState({ boardAddModalShow: true }, function () {
-        console.log(this.state.boardAddModalShow);
-    });
-  }
-
 
   render () {
     return (
