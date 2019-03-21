@@ -5,7 +5,7 @@
   border: none;
   border-radius: 6px;
   background: $gradient-diagonal;
-  color: $colour-white;
+  color: $color-white;
   font-family: 'Poppins', sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -37,7 +37,7 @@
   .hover-circle {
     height: 46px;
     width: 46px;
-    background: $colour-primary;
+    background: $color-primary;
     border-radius: 100%;
     opacity: 0;
     transform: scale(0.75);
@@ -74,7 +74,7 @@
     width: 45px;
     border-radius: 12px;
     overflow: hidden;
-    background-color: $colour-light-grey;
+    background-color: $color-light-grey;
     box-shadow: $shadow-low-elevation;
     .gradient {
       position: absolute;
@@ -88,7 +88,7 @@
       position: absolute;
       width: 16px;
       height: 16px;
-      background: $colour-white;
+      background: $color-white;
       border-radius: 100%;
       margin: 4px;
       box-shadow: $shadow-low-elevation;

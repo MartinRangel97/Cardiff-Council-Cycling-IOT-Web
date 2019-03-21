@@ -5,6 +5,7 @@ const http = require('http')
 const path = require('path')
 const fs = require('fs')
 const cookieParser = require('cookie-parser')
+const expressStaticGzip = require('express-static-gzip')
 
 // Database
 const database = require('./database')
@@ -45,7 +46,7 @@ app.set('view engine', 'pug')
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, '../public')))
+app.use('/', expressStaticGzip(path.join(__dirname, '../public'), { index: false }))
 
 // Routes
 app.use('/', pagesRouter)

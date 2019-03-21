@@ -30,7 +30,7 @@
 }
 
 .rc-calendar-prev-month-btn, .rc-calendar-next-month-btn {
-    color: $colour-black;
+    color: $color-black;
     font-family: inherit;
     font-size: 28px;
 }
@@ -43,7 +43,7 @@
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
-    color: $colour-black;
+    color: $color-black;
     padding: 0 8px;
     line-height: 34px;
     text-transform: uppercase;
@@ -70,7 +70,7 @@
 }
 
 .rc-calendar-selected-date .rc-calendar-date {
-    background: $colour-primary;
+    background: $color-primary;
     border-radius: 50px;
 }
 
@@ -81,25 +81,70 @@
 
 .rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month,
 .rc-calendar-year-panel-selected-cell .rc-calendar-year-panel-year,
-.rc-calendar-selected-day .rc-calendar-date,
 .rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month:hover,
 .rc-calendar-selected-date .rc-calendar-date:hover {
-    background: $colour-primary;
-    color: $colour-white;
+    background: $color-primary;
+    color: $color-white;
 }
+
 .rc-calendar-day-select:hover,
 .rc-calendar-year-select:hover, .rc-calendar-month-select:hover, 
 .rc-calendar-prev-month-btn:hover, .rc-calendar-next-month-btn:hover, 
 .rc-calendar-prev-year-btn:hover, .rc-calendar-next-year-btn:hover,
 .rc-calendar-year-panel-header > a:hover {
-    color: $colour-primary;
+    color: $color-primary;
 }
 
-.rc-calendar-today .rc-calendar-date, .rc-calendar-year-panel-header, .rc-calendar-month-panel-header {
+.rc-calendar-today .rc-calendar-date {
+    background: none;
+    color: #666;
+}
+
+.rc-calendar-today .rc-calendar-date, .rc-calendar-year-panel-header, 
+.rc-calendar-month-panel-header, .rc-calendar-footer {
     border: none;
 }
 
+.rc-calendar-footer {
+    padding: 10px 0 0;
+}
+
 // TODO: HIDE PROGRAMATICALLY
-.rc-calendar-tbody tr:nth-child(6) {
+.rc-calendar-tbody tr:nth-child(6), .rc-calendar-today-btn  {
     display: none;
+}
+
+
+// Button
+.rc-calendar-ok-btn {
+    margin: 6px 0;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    background: $gradient-diagonal;
+    color: $color-white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: $shadow-low-elevation;
+    transition: opacity 200ms, box-shadow 200ms ease-out;
+    cursor: pointer;
+    &:focus {
+      outline: 0;
+    }
+    &:hover {
+      opacity: 0.85;
+      box-shadow: 0px 8px 20px rgba(76, 152, 255, 0.3);
+      color: $color-white;
+    }
+}
+
+.rc-calendar-ok-btn-disabled {
+    background: $color-grey;
+    opacity: 0.3;
+}
+
+.rc-calendar-ok-btn-disabled:hover {
+    opacity: 0.3;
+    box-shadow: $shadow-low-elevation;
 }

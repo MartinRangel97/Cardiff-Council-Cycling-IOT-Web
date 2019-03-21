@@ -1,9 +1,15 @@
 
 .map-container {
-  position: relative;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  @include responsive-tablet {
+    margin-left: 80px;
+  }
   @include responsive-desktop {
-    margin-left: 455px;
+    margin-left: 535px;
   }
   // Toolbar
   .toolbar {
@@ -68,7 +74,7 @@
       align-self: flex-end;
       overflow: hidden;
       border-radius: 25px;
-      background: $colour-white;
+      background: $color-white;
       box-shadow: $shadow-high-elevation;
       transition: width 300ms ease, height 300ms ease;
       &:hover {
@@ -106,13 +112,13 @@
           transition: background-color 200ms, border-color 200ms, color 200ms;
           &:hover {
             background-color: rgba(76, 156, 255, 0.1);
-            color: $colour-primary;
-            border: solid 1px $colour-primary;
+            color: $color-primary;
+            border: solid 1px $color-primary;
           }
           &.active {
             background-color: rgba(76, 156, 255, 0.1);
-            color: $colour-primary;
-            border: solid 1px $colour-primary;
+            color: $color-primary;
+            border: solid 1px $color-primary;
           }
         }
       }

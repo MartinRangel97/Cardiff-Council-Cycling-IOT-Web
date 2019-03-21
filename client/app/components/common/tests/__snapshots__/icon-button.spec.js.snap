@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon Button Component Snapshots Custom class icon button style matches Snapshot 1`] = `
+<a
+  className="icon-btn test"
+  title="Test"
+>
+  <div
+    className="hover-circle"
+  />
+  <mockImg
+    className="icon"
+  />
+</a>
+`;
+
+exports[`Icon Button Component Snapshots Standard icon button style matches Snapshot 1`] = `
+<a
+  className="icon-btn"
+  title="Test"
+>
+  <div
+    className="hover-circle"
+  />
+  <mockImg
+    className="icon"
+  />
+</a>
+`;
