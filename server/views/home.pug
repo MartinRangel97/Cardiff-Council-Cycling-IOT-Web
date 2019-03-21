@@ -20,10 +20,10 @@ block content
             span Create an Account
           input#email(placeholder="Email" type="email")
           input#password(placeholder="Password" type="password")
-          a#login.button(href="") Login
+          a#login.button(href="/app") Login
           a#register.button.button-white(href="") Create Account
           a(href="").sub Terms & Conditions
-        .spinner.hidden
+        .loader-container.hidden
           .loader
             svg.circle(viewbox='0 0 50 50')
               circle.path(cx='25' cy='25' r='20' fill='none' stroke-width='2' stroke-miterlimit='10')

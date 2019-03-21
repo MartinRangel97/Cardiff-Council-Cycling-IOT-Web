@@ -1,5 +1,6 @@
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -28,7 +29,24 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        use: ['svg-inline-loader']
+        use: [{
+          loader: '@svgr/webpack',
+          options: {
+            svgoConfig: {
+              plugins: [{
+                cleanupIDs: {
+                  prefix: {
+                    toString () {
+                      // Ref: https://github.com/svg/svgo/issues/674#issuecomment-328774019
+                      this.counter = this.counter || 0
+                      return `id-${this.counter++}`
+                    }
+                  }
+                }
+              }]
+            }
+          }
+        }]
       },
       {
         test: /\.(jpe?g|png|gif|ico|woff|woff2)$/i,
@@ -43,7 +61,8 @@ module.exports = {
         to: 'static/',
         toType: 'dir'
       }
-    ])
+    ]),
+    new CompressionPlugin()
   ],
   target: 'web'
 }

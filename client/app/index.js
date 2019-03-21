@@ -5,6 +5,10 @@
 // React
 import React from 'react'
 import { render } from 'react-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
+
+// App
+import App from './app'
 
 // Style
 import '../stylesheets/app.scss'
@@ -14,8 +18,10 @@ import 'typeface-poppins'
 
 // Render
 render(
-  <div className='page'>
-    App content will go here.
+  <div className='container'>
+    <BrowserRouter>
+      <Route path='/app' render={(props) => <App {...props} />} />
+    </BrowserRouter>
   </div>,
-  document.getElementById('app')
+  document.getElementById('app-root')
 )

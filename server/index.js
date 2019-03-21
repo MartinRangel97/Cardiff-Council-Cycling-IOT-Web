@@ -7,6 +7,7 @@ const fs = require('fs')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const passport = require('passport')
+const expressStaticGzip = require('express-static-gzip')
 
 // Database
 const database = require('./database')
@@ -47,10 +48,10 @@ async function startServer () {
   // Processors
   app.use(express.json())
   app.use(express.urlencoded({ extended: false }))
-  app.use(cookieParser())
-  app.use(bodyParser.urlencoded({ extended: true }))
   app.use(bodyParser.json())
-  app.use(express.static(path.join(__dirname, '../public')))
+  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(cookieParser())
+  app.use('/', expressStaticGzip(path.join(__dirname, '../public'), { index: false }))
 
   // Pasport Middleware
   app.use(passport.initialize())
