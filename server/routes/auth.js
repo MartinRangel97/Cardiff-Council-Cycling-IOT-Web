@@ -51,10 +51,8 @@ router.post('/signup',
 /*
 * Login
 */
-router.post('/login', async function (req, res, next) {
+router.post('/login', async function (req, res) {
   const { email, password } = req.body
-
-  console.log(database.getDatabase().user)
 
   database.getDatabase().user.findOne({ email }).then(user => {
   // Check if user exists
