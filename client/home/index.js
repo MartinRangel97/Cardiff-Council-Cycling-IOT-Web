@@ -9,14 +9,35 @@ import '../stylesheets/home.scss'
 import 'typeface-poppins'
 
 // Login JS goes here
-const axios = require('axios').Axios
-
-document.addEventListener('click', createUser())
+const $ = require('jquery')
 
 function createUser () {
-  let email = document.getElementById('email')
-  let password = document.getElementById('password')
+  // let email = document.getElementById('email')
+  // let password = document.getElementById('password')
 
-  console.log(email)
-  console.log(password)
+  $('#newUser').submit(function (e) {
+    let formData = {
+      'email': $('input[name=email]').val(),
+      'password': $('input[name=password]').val()
+    }
+
+    console.log('Form Data = ' + formData)
+    console.log(JSON.stringify(formData))
+
+    $.ajax({
+      type: 'POST',
+      url: '/auth/signup',
+      data: formData,
+      dataType: 'text',
+      encode: true
+    }).done(function (data) {
+      console.log('Sucess')
+      window.location.href('/')
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+      console.log('failed')
+    })
+    e.preventDefault()
+  })
 }
+
+document.getElementById('register').addEventListener('click', createUser)
