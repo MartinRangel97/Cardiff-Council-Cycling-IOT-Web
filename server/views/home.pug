@@ -4,7 +4,7 @@ block content
     .section-header
       img#logo-council(src="/static/images/Cardiff-Council-Logo.svg", alt="Cardiff City Council logo")
       img(src="/static/images/Cardiff-University-Logo.svg", alt="Cardiff University logo")
-      p Cardiff Council in partnership with the 
+      p Cardiff Council in partnership with the
       p National Software Academy
 
     .section-title
@@ -16,12 +16,12 @@ block content
       .card
         .card-contents
           h2
-            span Login or 
+            span Login or
             span Create an Account
           input#email(placeholder="Email" type="email")
           input#password(placeholder="Password" type="password")
-          a#login.button(href="/app") Login
-          a#register.button.button-white(href="") Create Account
+          a#login.button() Login
+          a#register.button.button-white(onclick='createUser()') Create Account
           a(href="").sub Terms & Conditions
         .loader-container.hidden
           .loader
