@@ -21,5 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
 
+  User.sync()
+    .then(() => console.log('User table created successfully'))
+    .catch(err => console.log('Wrong database credentials entered: ', err))
+
   return User
 }
