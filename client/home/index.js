@@ -11,6 +11,8 @@ import 'typeface-poppins'
 // Login JS goes here
 const axios = require('axios').Axios
 
+document.addEventListener('click', createUser())
+
 function createUser () {
   let email = document.getElementById('email')
   let password = document.getElementById('password')
