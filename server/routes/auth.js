@@ -41,10 +41,10 @@ router.post('/signup',
     // authentication  services checks the email is availble and will create the account with a hashed password
     authenicationService.createUser(req.body.email, req.body.password)
       .then(() => {
-        res.sendStatus(200).json({ msg: 'Account Created' }).send()
+        res.status(200).json({ msg: 'Account Created' }).send()
       })
       .catch((error) => {
-        res.sendStatus(400).json({ msg: error.toString() }).send()
+        res.status(400).json({ msg: error.toString() }).send()
       })
   })
 
