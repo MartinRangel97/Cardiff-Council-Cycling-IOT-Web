@@ -9,35 +9,27 @@ import '../stylesheets/home.scss'
 import 'typeface-poppins'
 
 // Login JS goes here
-const $ = require('jquery')
-
 function createUser () {
-  // let email = document.getElementById('email')
-  // let password = document.getElementById('password')
+  let formData = {
+    'email': document.getElementById('email').value,
+    'password': document.getElementById('password').value
+  }
 
-  $('#newUser').submit(function (e) {
-    let formData = {
-      'email': $('input[name=email]').val(),
-      'password': $('input[name=password]').val()
-    }
-
-    console.log('Form Data = ' + formData)
-    console.log(JSON.stringify(formData))
-
-    $.ajax({
-      type: 'POST',
-      url: '/auth/signup',
-      data: formData,
-      dataType: 'text',
-      encode: true
-    }).done(function (data) {
+  let request = new XMLHttpRequest()
+  request.open('POST', '/auth/signup')
+  request.setRequestHeader('Content-Type', 'application/json')
+  request.onload = (data) => {
+    if (request.status === 200) {
       console.log('Sucess')
-      window.location.href('/')
-    }).fail(function (jqXHR, textStatus, errorThrown) {
-      console.log('failed')
-    })
-    e.preventDefault()
-  })
+    } else {
+      console.log('Failed')
+    }
+  }
+  request.send(JSON.stringify(formData))
+  event.preventDefault()
 }
 
-document.getElementById('register').addEventListener('click', createUser)
+// Wait until the DOM is loaded
+window.addEventListener('DOMContentLoaded', (event) => {
+  document.getElementById('register').addEventListener('click', createUser)
+})

@@ -76,11 +76,9 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bcrypt": "^3.0.4",
-    "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
-    "jquery": "^3.3.1",
     "jsonwebtoken": "^8.5.0",
     "mysql": "^2.16.0",
     "mysql2": "^1.6.5",
@@ -96,7 +94,8 @@
       "jest"
     ],
     "env": {
-      "jest": true
+      "jest": true,
+      "browser": true
     },
     "extends": [
       "standard",

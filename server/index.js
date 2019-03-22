@@ -5,7 +5,6 @@ const http = require('http')
 const path = require('path')
 const fs = require('fs')
 const cookieParser = require('cookie-parser')
-const bodyParser = require('body-parser')
 const passport = require('passport')
 const expressStaticGzip = require('express-static-gzip')
 
@@ -47,9 +46,7 @@ async function startServer () {
 
   // Processors
   app.use(express.json())
-  app.use(express.urlencoded({ extended: false }))
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(express.urlencoded({ extended: true }))
   app.use(cookieParser())
   app.use('/', expressStaticGzip(path.join(__dirname, '../public'), { index: false }))
 
