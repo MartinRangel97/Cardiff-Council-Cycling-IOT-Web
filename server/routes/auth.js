@@ -64,7 +64,8 @@ router.post('/login', async function (req, res) {
       if (email && isMatch) {
         const payload = { id: user.id }
         const token = jwt.sign(payload, keys.secretOrKey)
-        res.status(401).json({ message: 'ok', token: token })
+        res.cookie('token', token, { httpOnly: true }).sendStatus(200)
+        console.log(token)
       } else {
         res.status(401).json({ msg: 'Incorrect Password' })
       }
