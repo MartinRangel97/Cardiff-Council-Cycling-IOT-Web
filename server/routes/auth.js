@@ -74,13 +74,6 @@ router.post('/login', async function (req, res) {
 })
 
 /*
-* Verify
-*/
-router.get('/verify', passport.authenticate('jwt', { session: false }), function (req, res) {
-  res.json({ msg: 'Authorized User' })
-})
-
-/*
 * Logout
 */
 // router.get('/logout', (req, res, next) => {
