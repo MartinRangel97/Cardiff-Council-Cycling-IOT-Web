@@ -21,8 +21,10 @@ function createUser () {
   request.onload = (data) => {
     if (request.status === 200) {
       console.log('Sucess')
+      location.href = 'http://localhost:3000/'
     } else {
       console.log('Failed')
+      location.href = 'http://localhost:3000/'
     }
   }
   request.send(JSON.stringify(formData))
@@ -45,9 +47,11 @@ function login () {
   request.setRequestHeader('Content-Type', 'application/json')
   request.onload = (data) => {
     if (request.status === 200) {
+      location.href = 'http://localhost:3000/app'
       console.log('Sucess')
     } else {
       console.log('Failed')
+      location.href = 'http://localhost:3000/'
     }
   }
   request.send(JSON.stringify(formData))
