@@ -74,21 +74,28 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "bcrypt": "^3.0.4",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
     "moment": "^2.24.0",
     "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "pug": "^2.0.3",
     "rc-calendar": "^9.11.0",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react-dom": "^16.8.4",
+    "sequelize": "^4.43.0"
   },
   "eslintConfig": {
     "plugins": [
       "jest"
     ],
     "env": {
-      "jest": true
+      "jest": true,
+      "browser": true
     },
     "extends": [
       "standard",
