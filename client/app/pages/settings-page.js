@@ -5,17 +5,32 @@ import Page from '../components/page/page'
 import Section from '../components/common/section'
 import Card from '../components/common/card'
 import Button from '../components/common/button'
+import IconButton from '../components/common/icon-button'
 import Toggle from '../components/common/toggle'
 import Divider from '../components/common/divider'
+
+// Icons
+import EnglishFlag from './settings-page/icons/England.svg'
+import WelshFlag from './settings-page/icons/Wales.svg'
 
 export default class SettingsModal extends React.Component {
   render () {
     return (
       <Page className='settings-modal' title='Settings' path={this.props.path} canGoBack>
         <Section title='General'>
-          <Card>
-            <h1>Language</h1>
-            <h2>Select your Language / Dewiswch eich iaith</h2>
+          <Card className={'p-0'}>
+            <div className='setting'>
+              <div className='details'>
+                <h1>Language</h1>
+                <h2>Select your Language / Dewiswch eich iaith</h2>
+              </div>
+              <div className='action'>
+                <IconButton icon={WelshFlag} />
+              </div>
+              <div className='action'>
+                <IconButton icon={EnglishFlag} />
+              </div>
+            </div>
           </Card>
         </Section>
         <Section title='Privacy'>
