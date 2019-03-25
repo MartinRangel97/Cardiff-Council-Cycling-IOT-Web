@@ -19,26 +19,50 @@ export default class SettingsModal extends React.Component {
           </Card>
         </Section>
         <Section title='Privacy'>
-          <Card>
-            <h1>Share Readings Publicly</h1>
-            <h2>Your readings are currently shown on the public map.</h2>
-            <h2>These readings are anonymous and your trips are not public.</h2>
-            <Toggle />
+          <Card className={'p-0'}>
+            <div className='setting'>
+              <div className='details'>
+                <h1>Share Readings Publicly</h1>
+                <h2>Your readings are currently shown on the public map.</h2>
+                <h2>These readings are anonymous and your trips are not public.</h2>
+              </div>
+              <div className='action'>
+                <Toggle />
+              </div>
+            </div>
           </Card>
         </Section>
         <Section title='Account'>
-          <Card>
-            <h1>Email</h1>
-            <h2>Change your account email.</h2>
-            <Button text='Change Email' />
+          <Card className={'p-0'}>
+            <div className='setting'>
+              <div className='details'>
+                <h1>Email</h1>
+                <h2>Change your account email.</h2>
+              </div>
+              <div className='action'>
+                <Button text='Change Email' />
+              </div>
+            </div>
             <Divider />
-            <h1>Password</h1>
-            <h2>Change your account Password.</h2>
-            <Button text='Change Password' />
+            <div className='setting'>
+              <div className='details'>
+                <h1>Password</h1>
+                <h2>Change your account Password.</h2>
+              </div>
+              <div className='actions'>
+                <Button text='Change Password' />
+              </div>
+            </div>
             <Divider />
-            <h1>Delete Account</h1>
-            <h2>Careful, this cannot be undone.</h2>
-            <Button text='Delete Account' danger />
+            <div className='setting'>
+              <div className='details'>
+                <h1>Delete Account</h1>
+                <h2>Careful, this cannot be undone.</h2>
+              </div>
+              <div className='actions'>
+                <Button text='Delete Account' danger />
+              </div>
+            </div>
           </Card>
         </Section>
       </Page>

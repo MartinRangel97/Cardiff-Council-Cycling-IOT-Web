@@ -1,6 +1,12 @@
 .setting {
     display: flex;
-    justify-content: space-around;
-    align-items: baseline;
-    align-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px 27px;
+    .details {
+        flex-grow: 1;
+    }
+    .actions {
+
+    }
 }
