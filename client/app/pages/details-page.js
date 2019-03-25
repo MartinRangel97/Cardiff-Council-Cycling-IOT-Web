@@ -23,11 +23,11 @@ export default class DetailsModal extends React.Component {
                 { title: 'Air NO2', field: 'notwo' }
               ]}
               data={[
-                { id: '1', location: 'Long/lat?', date: '10/1/2018', noise: 40, pmtwofive: 2, pmten: 3, notwo: 4 },
-                { id: '2', location: 'Address?', date: '10/10/2018', noise: 25, pmtwofive: 2, pmten: 3, notwo: 4 },
-                { id: '3', location: '31 Cardiff', date: '10/6/2018', noise: 14, pmtwofive: 2, pmten: 3, notwo: 4 },
-                { id: '4', location: '10 Data', date: '10/3/2019', noise: 69, pmtwofive: 2, pmten: 3, notwo: 4 },
-                { id: '5', location: '20 Table - 100', date: '23/1/2019', noise: 20, pmtwofive: 2, pmten: 3, notwo: 4 },
+                { id: '1', location: '-3.179 / 51.48', date: '10/1/2018', noise: 40, pmtwofive: 2, pmten: 3, notwo: 4 },
+                { id: '2', location: '-3.179 / 51.48', date: '10/10/2018', noise: 25, pmtwofive: 2, pmten: 3, notwo: 4 },
+                { id: '3', location: '-3.179 / 51.48', date: '10/6/2018', noise: 14, pmtwofive: 2, pmten: 3, notwo: 4 },
+                { id: '4', location: '-3.179 / 51.48', date: '10/3/2019', noise: 69, pmtwofive: 2, pmten: 3, notwo: 4 },
+                { id: '5', location: '-3.179 / 51.48', date: '23/1/2019', noise: 20, pmtwofive: 2, pmten: 3, notwo: 4 },
               ]}
               title='Sensor Readings'
               options={{
