@@ -49,9 +49,9 @@ export default class MapView extends React.Component {
             type: 'exponential',
             stops: [
               [{ zoom: 15, value: 1 }, 5],
-              [{ zoom: 15, value: 62 }, 10],
+              [{ zoom: 15, value: 62 }, 5],
               [{ zoom: 22, value: 1 }, 20],
-              [{ zoom: 22, value: 62 }, 50]
+              [{ zoom: 22, value: 62 }, 20]
             ]
           },
           'circle-color': {
@@ -83,11 +83,15 @@ export default class MapView extends React.Component {
 
     this.map.on('click', 'trees-point', (event) => {
       this.props.onMapClick(event)
+      // Show point data when clicked
       new mapboxgl.Popup()
         .setLngLat(event.features[0].geometry.coordinates)
         .setHTML('<b>DBH:</b> ' + event.features[0].properties.dbh)
         .addTo(this.map)
     })
+
+    // Add zoom and rotation controls to the map.
+    this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
   }
 
   changeSelectedOverlay = (selection) => {
