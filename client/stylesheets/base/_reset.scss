@@ -1,0 +1,14 @@
+@mixin reset-box-model {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html, body {
+  @include reset-box-model;
+  font-family: 'Poppins', sans-serif;
+  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0)!important;
+}
+a {
+  text-decoration: none;
+}

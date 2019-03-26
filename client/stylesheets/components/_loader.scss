@@ -1,0 +1,60 @@
+//   Loading Spinner 
+//   Based on Modern Google Loader in Pure CSS by jczimm
+//   https://codepen.io/jczimm/pen/vEBpoL 
+
+.loader-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .loader {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    animation: splash-spinner-fade-in 500ms;
+    .circle {
+      animation: splash-spinner-rotate 2s linear infinite;
+      transform-origin: center center;
+      height: 100%;
+      width: 100%;
+    }
+    .path {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+      animation: splash-spinner-dash 1.5s ease-in-out infinite;
+      stroke-linecap: round;
+      stroke: $color-primary;
+    }
+    @keyframes splash-spinner-fade-in {
+      from {
+        opacity: 0;
+      }
+      to   {
+        opacity: 1;
+      }
+    }
+    @keyframes splash-spinner-rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes splash-spinner-dash {
+      0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+      }
+      50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+      }
+      100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+      }
+    }
+  }
+}

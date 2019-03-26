@@ -1,0 +1,132 @@
+{
+  "name": "cardiff-council-cycling-iot-web",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "npm run start:prod",
+    "start:prod": "cross-env NODE_ENV=production nodemon ./server/index.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon ./server/index.js",
+    "build": "npm run build:prod",
+    "build:prod": "cross-env MODE_ENV=production webpack --config ./config/webpack.prod.js",
+    "build:dev": "cross-env MODE_ENV=development webpack --config ./config/webpack.dev.js",
+    "watch": "npm run watch:prod",
+    "watch:prod": "cross-env MODE_ENV=production webpack --config ./config/webpack.prod.js --watch",
+    "watch:dev": "cross-env MODE_ENV=development webpack --config ./config/webpack.dev.js --watch",
+    "buildRun": "npm run buildRun:prod",
+    "buildRun:prod": "concurrently \"npm:watch:prod\" \"npm:start:prod\"",
+    "buildRun:dev": "concurrently \"npm:watch:dev\" \"npm:start:dev\"",
+    "lint": "eslint . --ext .js,.jsx",
+    "lint:fix": "eslint . --ext .js,.jsx --fix",
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/plugin-transform-arrow-functions": "^7.2.0",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "@svgr/webpack": "^4.1.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "classnames": "^2.2.6",
+    "compression-webpack-plugin": "^2.0.0",
+    "concurrently": "^4.1.0",
+    "copy-webpack-plugin": "^5.0.1",
+    "cross-env": "^5.2.0",
+    "css-loader": "^1.0.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.10.0",
+    "enzyme-to-json": "^3.3.4",
+    "eslint": "^5.15.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-config-standard-react": "^7.0.2",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^22.3.1",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "express-static-gzip": "^1.1.3",
+    "file-loader": "^2.0.0",
+    "husky": "^1.3.1",
+    "jest": "^24.4.0",
+    "mapbox-gl": "^0.53.1",
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.9",
+    "pre-commit": "^1.2.2",
+    "react-router-dom": "^4.3.1",
+    "react-transition-group": "^2.6.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "svg-inline-loader": "^0.8.0",
+    "typeface-poppins": "0.0.72",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.1.2",
+    "webpack-merge": "^4.2.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bcrypt": "^3.0.4",
+    "cookie-parser": "^1.4.3",
+    "date-fns": "^2.0.0-alpha.16",
+    "express": "^4.16.4",
+    "material-table": "^1.27.1",
+    "moment": "^2.24.0",
+    "express-validator": "^5.3.1",
+    "jsonwebtoken": "^8.5.0",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "pug": "^2.0.3",
+    "rc-calendar": "^9.11.0",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "sequelize": "^4.43.0"
+  },
+  "eslintConfig": {
+    "plugins": [
+      "jest"
+    ],
+    "env": {
+      "jest": true,
+      "browser": true
+    },
+    "extends": [
+      "standard",
+      "standard-react"
+    ],
+    "parser": "babel-eslint"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-arrow-functions",
+      "@babel/plugin-proposal-class-properties"
+    ]
+  },
+  "jest": {
+    "setupFiles": [
+      "./config/jest/jestSetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/config/jest/styleMock.js"
+    }
+  }
+}

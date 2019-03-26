@@ -1,0 +1,95 @@
+extends layout
+block head
+  style(type='text/css').
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 5000;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: opacity 200ms;
+    }
+    #splash-screen.fade-out {
+      opacity: 0;
+    }
+    .splash-top {
+      display: flex;
+      flex-grow: 1;
+      align-items: flex-end;
+    }
+    .splash-bottom {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+    }
+    .splash-logo {
+      height: 160px;
+      width: 160px;
+      transition: transform 200ms cubic-bezier(1, 0, 1, 1);
+    }
+    #splash-screen.fade-out .splash-logo {
+      transform: scale(2);
+    }
+    .splash-spinner {
+      width: 50px;
+      height: 50px;
+      display: inline-block;
+      animation: splash-spinner-fade-in 500ms;
+    }
+    .splash-spinner .circle {
+      animation: splash-spinner-rotate 2s linear infinite;
+      transform-origin: center center;
+      height: 100%;
+      width: 100%;
+    }
+    .splash-spinner .path {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+      animation: splash-spinner-dash 1.5s ease-in-out infinite;
+      stroke-linecap: round;
+      stroke: rgb(76, 156, 255);
+    }
+    @keyframes splash-spinner-fade-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes splash-spinner-rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    @keyframes splash-spinner-dash {
+      0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+      }
+      50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+      }
+      100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+      }
+    }
+
+block content
+  #splash-screen
+    .splash-top
+      img.splash-logo(src='/static/splash-logo.svg')
+    .splash-bottom
+      .splash-spinner
+        svg.circle(viewBox='0 0 50 50')
+          circle.path(cx='25', cy='25', r='20', fill='none', stroke-width='3', stroke-miterlimit='10')
+
+  main#app-root
+  div#portal-root
+  script(src="/app.js")

@@ -1,0 +1,31 @@
+extends layout
+block content
+  main.background.container
+    .section-header
+      img#logo-council(src="/static/images/Cardiff-Council-Logo.svg", alt="Cardiff City Council logo")
+      img(src="/static/images/Cardiff-University-Logo.svg", alt="Cardiff University logo")
+      p Cardiff Council in partnership with the
+      p National Software Academy
+
+    .section-title
+      img(src="/static/images/App-Logo.svg", alt="")
+      h1 Cardiff Clean Air Project
+      h2 Working together for a better, healthier smart city.
+
+    .section-login
+      .card
+        .card-contents
+          h2
+            span Login or
+            span Create an Account
+          input#email(placeholder="Email" type="email")
+          input#password(placeholder="Password" type="password")
+          a#login.button() Login
+          a#register.button.button-white() Create Account
+          a(href="").sub Terms & Conditions
+        .loader-container.hidden
+          .loader
+            svg.circle(viewbox='0 0 50 50')
+              circle.path(cx='25' cy='25' r='20' fill='none' stroke-width='2' stroke-miterlimit='10')
+  script(src="/home.js")
+

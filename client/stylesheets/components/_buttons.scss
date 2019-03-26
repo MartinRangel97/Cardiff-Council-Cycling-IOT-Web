@@ -1,0 +1,106 @@
+// Button
+.btn {
+  margin: 6px 0;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background: $gradient-diagonal;
+  color: $color-white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: $shadow-low-elevation;
+  transition: opacity 200ms, box-shadow 200ms ease-out;
+  cursor: pointer;
+  &:focus {
+    outline: 0;
+  }
+  &:hover {
+    opacity: 0.85;
+    box-shadow: 0px 8px 20px rgba(76, 152, 255, 0.3);
+  }
+  &.danger {
+    background: $gradient-danger-diagonal;
+    &:hover {
+      box-shadow: 0px 8px 20px rgba(255, 77, 77, 0.3);
+    }
+  }
+}
+// Icon Button
+.icon-btn {
+  width: 46px;
+  height: 46px;
+  position: relative;
+  display: block;
+  border-radius: 100%;
+  cursor: pointer;
+  .hover-circle {
+    height: 46px;
+    width: 46px;
+    background: $color-primary;
+    border-radius: 100%;
+    opacity: 0;
+    transform: scale(0.75);
+    transition: opacity 150ms, transform 150ms;
+  }
+  .icon {
+    height: 18px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  &:hover {
+    .hover-circle {
+      opacity: 0.10;
+      transform: scale(1);
+    }
+  }
+}
+// Toggle
+.toggle {
+  display: block;
+  width: 45px;
+  cursor: pointer;
+  input {
+    display: none;
+  }
+  .slider {
+    display: block;
+    position: relative;
+    height: 24px;
+    width: 45px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: $color-light-grey;
+    box-shadow: $shadow-low-elevation;
+    .gradient {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: $gradient-diagonal;
+      opacity: 0;
+      transition: opacity 200ms;
+    }
+    .switch {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: $color-white;
+      border-radius: 100%;
+      margin: 4px;
+      box-shadow: $shadow-low-elevation;
+      transition: transform 200ms ease;
+    }
+  }
+  input:checked + .slider {
+    .gradient {
+      opacity: 1;
+    }
+    .switch {
+      transform: translateX(21px);
+    }
+  }
+}
