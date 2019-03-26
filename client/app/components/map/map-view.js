@@ -81,17 +81,13 @@ export default class MapView extends React.Component {
       }, 'road-label')
     })
 
-    this.map.on('click', (event) => {
+    this.map.on('click', 'trees-point', (event) => {
       this.props.onMapClick(event)
+      new mapboxgl.Popup()
+        .setLngLat(event.features[0].geometry.coordinates)
+        .setHTML('<b>DBH:</b> ' + event.features[0].properties.dbh)
+        .addTo(this.map)
     })
-
-    // Uncaught TypeError: Cannot read property 'on' of undefined
-    // this.map.on('click', 'trees-point', function (e) {
-    //   new mapboxgl.Popup()
-    //     .setLngLat(e.features[0].geometry.coordinates)
-    //     .setHTML('<b>DBH:</b> ' + e.features[0].properties.dbh)
-    //     .addTo(this.map)
-    // })
   }
 
   changeSelectedOverlay = (selection) => {
