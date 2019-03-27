@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { FormattedMessage } from 'react-intl'
 
 import Page from '../components/page/page'
 import Section from '../components/common/section'
@@ -21,7 +22,9 @@ export default class SettingsModal extends React.Component {
           <Card className={'p-0'}>
             <div className='setting'>
               <div className='details'>
-                <h1>Language</h1>
+                <h1>
+                  <FormattedMessage id='Settings.languageHeading' defaultMessage='Language' />
+                </h1>
                 <h2>Select your Language / Dewiswch eich iaith</h2>
               </div>
               <div className='action'>
