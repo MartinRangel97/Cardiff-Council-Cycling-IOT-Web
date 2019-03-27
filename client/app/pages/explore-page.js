@@ -26,7 +26,23 @@ export default class ExplorePage extends React.Component {
     }
   }
 
+  measurements () {
+    var request = new XMLHttpRequest()
+    request.open('GET', '/api/web/measurements', true)
+    console.log(request.status)
+    request.onload = (data) => {
+      console.log(request.status)
+      if (request.status === 200) {
+        console.log(request.response)
+      } else {
+        console.log('Failed')
+      }
+    }
+    request.send(null)
+  }
+
   render () {
+    this.measurements()
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} component={DetailsSubpage} />

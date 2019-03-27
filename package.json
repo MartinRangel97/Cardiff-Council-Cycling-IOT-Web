@@ -88,7 +88,8 @@
     "rc-calendar": "^9.11.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "sequelize": "^4.43.0"
+    "sequelize": "^4.43.0",
+    "sequelize-to-json": "^0.10.3"
   },
   "eslintConfig": {
     "plugins": [
