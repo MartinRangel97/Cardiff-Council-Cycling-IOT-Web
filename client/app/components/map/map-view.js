@@ -39,7 +39,7 @@ export default class MapView extends React.Component {
 
       // add circle layer here
       this.map.addLayer({
-        id: 'trees-point',
+        id: 'air',
         type: 'circle',
         source: 'trees',
         paint: {
@@ -48,10 +48,9 @@ export default class MapView extends React.Component {
             property: 'dbh',
             type: 'exponential',
             stops: [
-              [{ zoom: 15, value: 1 }, 5],
-              [{ zoom: 15, value: 62 }, 5],
-              [{ zoom: 22, value: 1 }, 20],
-              [{ zoom: 22, value: 62 }, 20]
+              [{ zoom: 11, value: 1 }, 1.5],
+              [{ zoom: 15, value: 1 }, 3],
+              [{ zoom: 22, value: 1 }, 10]
             ]
           },
           'circle-color': {
@@ -59,29 +58,19 @@ export default class MapView extends React.Component {
             type: 'exponential',
             stops: [
               // TODO: change stops to reflect AQI
-              [0, 'rgba(0, 228, 0, 0)'],
-              [10, 'rgb(0, 228, 0)'], // green - good
+              [0, 'rgb(0, 228, 0)'], // green - good
               [20, 'rgb(255, 255, 0)'], // yellow - moderate
               [30, 'rgb(255, 126, 0)'], // orange - unhealthy for sensitive groups
               [40, 'rgb(255, 0, 0)'], // red - unhealthy
               [50, 'rgb(143, 63, 151)'], // purple - very unhealthy
               [60, 'rgb(143, 63, 151)'] // maroon - hazardous
             ]
-          },
-          'circle-stroke-color': 'white',
-          'circle-stroke-width': 1,
-          'circle-opacity': {
-            stops: [
-              // Fade circles at zoom level
-              [14, 1],
-              [15, 1]
-            ]
           }
         }
       }, 'road-label')
     })
 
-    this.map.on('click', 'trees-point', (event) => {
+    this.map.on('click', 'air', (event) => {
       this.props.onMapClick(event)
       // Show point data when clicked
       new mapboxgl.Popup()
