@@ -17,3 +17,4 @@ INSERT INTO journey (`id`, `userId`,`startTime`, `endTime`) VALUES (4, 5, "2018-
 INSERT INTO journey (`id`, `userId`,`startTime`, `endTime`) VALUES (5, 8, "2019-01-17 07:25:06", "2019-01-17 08:59:30");
 
 INSERT INTO measurements (`userId`, `journeyId`, `dBReading`, `NO2Reading`, `PM10Reading`, `PM2.5Reading`, `timeTaken`, `longitude`, `latitude`) VALUES (4, 1, 60.9, 6, 3.5, 7, "2018-11-22 00:38:24",  107.80627000, -7.39755000);
+INSERT INTO measurements (`userId`, `journeyId`, `dBReading`, `NO2Reading`, `PM10Reading`, `PM2.5Reading`, `timeTaken`, `longitude`, `latitude`) VALUES (6, 3, 6.2, 60, 13.5, 70, "2018-04-06 01:39:42",  51.4866, -3.1789);
