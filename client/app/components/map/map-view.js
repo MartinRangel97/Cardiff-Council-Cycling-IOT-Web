@@ -11,7 +11,7 @@ export default class MapView extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedOverlay: 'none'
+      selectedOverlay: 'air'
     }
   }
 
@@ -101,8 +101,11 @@ export default class MapView extends React.Component {
           }
         }
       }, 'road-label')
+      // TODO: Is it possible to set visibility when adding layer?
+      this.map.setLayoutProperty('noise', 'visibility', 'none')
     })
 
+    // On click circle data point
     this.map.on('click', 'air', (event) => {
       this.props.onMapClick(event)
       // Show point data when clicked
@@ -112,12 +115,28 @@ export default class MapView extends React.Component {
         .addTo(this.map)
     })
 
-    // Add zoom and rotation controls to the map.
+    // Add zoom and rotation controls to the map
     this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
   }
 
+  // Filter data source
   changeSelectedOverlay = (selection) => {
     this.setState({ selectedOverlay: selection })
+
+    switch (selection) {
+      case 'none':
+        this.map.setLayoutProperty('noise', 'visibility', 'none')
+        this.map.setLayoutProperty('air', 'visibility', 'none')
+        break
+      case 'noise':
+        this.map.setLayoutProperty('air', 'visibility', 'none')
+        this.map.setLayoutProperty('noise', 'visibility', 'visible')
+        break
+      case 'air':
+        this.map.setLayoutProperty('noise', 'visibility', 'none')
+        this.map.setLayoutProperty('air', 'visibility', 'visible')
+        break
+    }
   }
 
   componentWillUnmount () {
