@@ -31,17 +31,50 @@ export default class MapView extends React.Component {
     // Prepare event listeners
     this.map.on('load', () => {
       this.props.onMapLoad()
-      this.map.addSource('trees', {
+      this.map.addSource('air', {
         type: 'geojson',
         data: '/static/trees.geojson'
       })
-      // add heatmap layer here
-
-      // add circle layer here
+      this.map.addSource('noise', {
+        type: 'geojson',
+        data: '/static/noise.geojson'
+      })
+      // add air layer here
       this.map.addLayer({
         id: 'air',
         type: 'circle',
-        source: 'trees',
+        source: 'air',
+        paint: {
+          // increase the radius of the circle as the zoom level and dbh value increases
+          'circle-radius': {
+            property: 'dbh',
+            type: 'exponential',
+            stops: [
+              [{ zoom: 11, value: 1 }, 1.5],
+              [{ zoom: 15, value: 1 }, 3],
+              [{ zoom: 22, value: 1 }, 10]
+            ]
+          },
+          'circle-color': {
+            property: 'dbh',
+            type: 'exponential',
+            stops: [
+              // TODO: change stops to reflect AQI
+              [0, 'rgb(0, 228, 0)'], // green - good
+              [20, 'rgb(255, 255, 0)'], // yellow - moderate
+              [30, 'rgb(255, 126, 0)'], // orange - unhealthy for sensitive groups
+              [40, 'rgb(255, 0, 0)'], // red - unhealthy
+              [50, 'rgb(143, 63, 151)'], // purple - very unhealthy
+              [60, 'rgb(143, 63, 151)'] // maroon - hazardous
+            ]
+          }
+        }
+      }, 'road-label')
+      // add noise layer here
+      this.map.addLayer({
+        id: 'noise',
+        type: 'circle',
+        source: 'noise',
         paint: {
           // increase the radius of the circle as the zoom level and dbh value increases
           'circle-radius': {
