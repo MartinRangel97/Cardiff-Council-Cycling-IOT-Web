@@ -2,7 +2,9 @@ var express = require('express')
 var router = express.Router()
 const database = require('../../database')
 const Serializer = require('sequelize-to-json')
+const { Op } = require('sequelize')
 var GeoJSON = require('geojson')
+const moment = require('moment')
 // const moment = require('moment')
 
 // Example Route
@@ -22,12 +24,12 @@ router.get('/measurements', function (req, res, next) {
   }
 
   database.getDatabase().measurement.findAll({
-    // where: {
-    //   updatedAt: {
-    //     $gt: moment().subtract(1, 'days').toDate()
-    //   }
-    // },
-    // orderBy: [['timeTaken', 'DESC']]
+    where: {
+      timeTaken: {
+        [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
+      }
+    },
+    orderBy: [['timeTaken', 'DESC']]
   }).then(function (posts) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
     res.json(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
