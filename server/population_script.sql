@@ -1,5 +1,5 @@
 USE CleanAir;
-INSERT INTO user (`id`, `email`, `password`. `shareReadings`) VALUES (1, "test@test.com", "$2b$08$FMuuWmg06wmwwvHxRkwXzOis0VhdbkGO2P6BFXmmaXyGSTSONfeni", 1);
+INSERT INTO user (`id`, `email`, `password`,`shareReadings`) VALUES (1, "test@test.com", "$2b$08$FMuuWmg06wmwwvHxRkwXzOis0VhdbkGO2P6BFXmmaXyGSTSONfeni", 1);
 
 INSERT INTO journey (`id`, `userId`,`startTime`, `endTime`) VALUES (1, 1, "2018-11-22 11:21:46", "2018-11-22 11:59:30");
 INSERT INTO journey (`id`, `userId`,`startTime`, `endTime`) VALUES (2, 1, "2018-12-22 11:30:46", "2018-12-22 12:59:31");
