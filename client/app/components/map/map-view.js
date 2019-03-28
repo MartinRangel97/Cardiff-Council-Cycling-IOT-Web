@@ -164,20 +164,21 @@ export default class MapView extends React.Component {
 
       // Check if circle already exists -> update data : create source and layer
       if (this.map.getSource('clickRadius')) {
-        this.map.getSource('clickRadius').setData(this.createRadius(coordinates, radius))
-      } else {
-        this.map.addSource('clickRadius', this.createRadius(coordinates, radius))
-        this.map.addLayer({
-          'id': 'clickRadius',
-          'type': 'fill',
-          'source': 'clickRadius',
-          'layout': {},
-          'paint': {
-            'fill-color': '#4c9cff',
-            'fill-opacity': 0.5
-          }
-        })
+        this.map.removeLayer('clickRadius')
+        this.map.removeSource('clickRadius')
       }
+
+      this.map.addSource('clickRadius', this.createRadius(coordinates, radius))
+      this.map.addLayer({
+        'id': 'clickRadius',
+        'type': 'fill',
+        'source': 'clickRadius',
+        'layout': {},
+        'paint': {
+          'fill-color': '#4c9cff',
+          'fill-opacity': 0.5
+        }
+      })
     })
 
     // Add zoom and rotation controls to the map
