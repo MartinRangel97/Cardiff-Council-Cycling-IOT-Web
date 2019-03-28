@@ -29,8 +29,10 @@ function configure (host, user, password, database) {
     })
     // Require Models
     let UserModel = require('./models/user')(sequelize, DataTypes)
+    let MeasurementModel = require('./models/measurements')(sequelize, DataTypes)
     // Add the models
     db.user = UserModel
+    db.measurement = MeasurementModel
     // TODO: Add any associations here
     // Set the db Sequelize instance
     db.sequelize = sequelize

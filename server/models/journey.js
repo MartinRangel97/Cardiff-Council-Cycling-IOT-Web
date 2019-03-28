@@ -3,9 +3,10 @@
 module.exports = (sequelize, DataTypes) => {
   var Journey = sequelize.define('journey', {
     id: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     startTime: DataTypes.DATE,
-    endTime: DataTypes.DATE,
-    userId: DataTypes.INTEGER
+    endTime: DataTypes.DATE
+    
   })
 
   Journey.sync()
