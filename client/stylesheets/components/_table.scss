@@ -1,0 +1,27 @@
+// Table shadow
+div.jss9 {
+    box-shadow: none;
+}
+
+// Checkbox
+.jss139 svg.jss171 {
+    color: #4c9cff;
+}
+
+// Search bar border
+div.jss86:hover:not(.jss85):not(.jss84):not(.jss87):before {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+}
+
+div.jss86:before {
+    transition: color-primary 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+div.jss86:after {
+    border-bottom: 2px solid $color-primary;
+}
+
+// th
+th.jss154 {
+    padding: 4px 0px 4px 24px
+}
