@@ -4,6 +4,7 @@ import mapboxgl from 'mapbox-gl'
 
 import Searchbar from './searchbar'
 import OverlayPicker from './overlay-picker'
+import GEOJSON from 'geojson'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uYXRoYW5wZXRlcmNvbGUiLCJhIjoiY2p0YmkzanVwMGtyNTN5bzNydTNpYjB2OSJ9.ac1RTVcnsO8Ek-rgVeQe3g'
 
@@ -11,17 +12,39 @@ export default class MapView extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedOverlay: 'air'
+      selectedOverlay: 'air',
+      measurement: [[]]
     }
+  }
+
+  measurements () {
+    let request = new XMLHttpRequest()
+    request.responseType = 'json'
+    request.open('GET', '/api/web/measurements', true)
+    console.log(request.status)
+    request.onload = (data) => {
+      console.log(request.status)
+      if (request.status === 200) {
+        // console.log(request.response)
+        // console.log(GEOJSON.parse(request.response, { Point: ['longitude', 'latitude'] }))
+        this.setState({
+          measurement: request.response
+        })
+      } else {
+        console.log('Failed')
+      }
+    }
+    request.send(null)
   }
 
   componentDidMount () {
     // Public Style URL:
     // https://api.mapbox.com/styles/v1/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3.html?fresh=true&title=true&access_token=pk.eyJ1Ijoiam9uYXRoYW5wZXRlcmNvbGUiLCJhIjoiY2p0YWhqaTRrMGFydjQzcWQ1NWR5aTk3dCJ9.V7HyWXQG5lpWtgk-17y6yw#13.5/51.480233/-3.152327/0
+    this.measurements()
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3',
-      center: [-79.999732, 40.4374],
+      center: [-3.181049629732371, 51.489130476354376],
       zoom: 11
       // Cardiff
       // center: [-3.175559, 51.480802],
@@ -31,9 +54,10 @@ export default class MapView extends React.Component {
     // Prepare event listeners
     this.map.on('load', () => {
       this.props.onMapLoad()
+      console.log(this.state.measurement)
       this.map.addSource('air', {
         type: 'geojson',
-        data: '/static/trees.geojson'
+        data: this.state.measurement
       })
       this.map.addSource('noise', {
         type: 'geojson',
@@ -106,13 +130,9 @@ export default class MapView extends React.Component {
     })
 
     // On click circle data point
-    this.map.on('click', 'air', (event) => {
+    this.map.on('click', (event) => {
       this.props.onMapClick(event)
       // Show point data when clicked
-      new mapboxgl.Popup()
-        .setLngLat(event.features[0].geometry.coordinates)
-        .setHTML('<b>DBH:</b> ' + event.features[0].properties.dbh)
-        .addTo(this.map)
     })
 
     // Add zoom and rotation controls to the map

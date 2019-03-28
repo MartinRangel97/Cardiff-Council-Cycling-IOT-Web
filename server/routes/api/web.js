@@ -2,6 +2,8 @@ var express = require('express')
 var router = express.Router()
 const database = require('../../database')
 const Serializer = require('sequelize-to-json')
+var GeoJSON = require('geojson')
+// const moment = require('moment')
 
 // Example Route
 router.get('/example', function (req, res, next) {
@@ -9,6 +11,8 @@ router.get('/example', function (req, res, next) {
 })
 
 router.get('/measurements', function (req, res, next) {
+
+  // sets a template for the JSON
   const scheme = {
     include: ['@all'],
     exclude: ['@pk', '@fk'],
@@ -17,9 +21,18 @@ router.get('/measurements', function (req, res, next) {
     }
   }
 
-  database.getDatabase().measurement.findAll().then(function (posts) {
+  database.getDatabase().measurement.findAll({
+    // where: {
+    //   updatedAt: {
+    //     $gt: moment().subtract(1, 'days').toDate()
+    //   }
+    // },
+    // orderBy: [['timeTaken', 'DESC']]
+  }).then(function (posts) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
-    res.send(postsAsJSON)
+    res.json(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
+    res.send()
+    // res.send(postsAsJSON)
   })
 })
 
