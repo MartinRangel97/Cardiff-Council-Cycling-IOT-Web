@@ -13,6 +13,56 @@ export default class MapView extends React.Component {
     this.state = {
       selectedOverlay: 'air'
     }
+    this.createRadius = this.createRadius.bind(this)
+  }
+
+  /*
+    TODO: Function purpose
+    center: Expects an array [[long], [lat]]
+    radius: Radius in miles
+    points: Number of points plotted, higher values create a smoother radius
+  */
+  createRadius = (center, radius, points) => {
+    if (!points) {
+      points = 48
+    }
+
+    // Ref: https://gist.github.com/chriswhong/694779bc1f1e5d926e47bab7205fa559
+    const coordinates = {
+      longitude: center[0],
+      latitude: center[1]
+    }
+
+    let output = []
+    const distanceX = radius / (69.2 * Math.cos(coordinates.latitude * Math.PI / 180))
+    const distanceY = radius / 68.707
+
+    // Plot points in a circle
+    let theta, x, y
+    for (var i = 0; i < points; i++) {
+      theta = (i / points) * (2 * Math.PI)
+      x = distanceX * Math.cos(theta)
+      y = distanceY * Math.sin(theta)
+
+      output.push([coordinates.longitude + x, coordinates.latitude + y])
+    }
+    // Push all points into first array
+    output.push(output[0])
+
+    // Return geojson object with calculated coordinates
+    return {
+      'type': 'geojson',
+      'data': {
+        'type': 'FeatureCollection',
+        'features': [{
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Polygon',
+            'coordinates': [output]
+          }
+        }]
+      }
+    }
   }
 
   componentDidMount () {
@@ -108,11 +158,26 @@ export default class MapView extends React.Component {
     // On click circle data point
     this.map.on('click', 'air', (event) => {
       this.props.onMapClick(event)
-      // Show point data when clicked
-      new mapboxgl.Popup()
-        .setLngLat(event.features[0].geometry.coordinates)
-        .setHTML('<b>DBH:</b> ' + event.features[0].properties.dbh)
-        .addTo(this.map)
+
+      let coordinates = [event.features[0].geometry.coordinates[0], event.features[0].geometry.coordinates[1]]
+      let radius = 1
+
+      // Check if circle already exists -> update data : create source and layer
+      if (this.map.getSource('clickRadius')) {
+        this.map.getSource('clickRadius').setData(this.createRadius(coordinates, radius))
+      } else {
+        this.map.addSource('clickRadius', this.createRadius(coordinates, radius))
+        this.map.addLayer({
+          'id': 'clickRadius',
+          'type': 'fill',
+          'source': 'clickRadius',
+          'layout': {},
+          'paint': {
+            'fill-color': '#4c9cff',
+            'fill-opacity': 0.5
+          }
+        })
+      }
     })
 
     // Add zoom and rotation controls to the map
