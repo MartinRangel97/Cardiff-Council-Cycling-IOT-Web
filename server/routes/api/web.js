@@ -24,6 +24,7 @@ router.get('/user', function (req, res, next) {
 router.get('/journey', function (req, res, next) {
   const scheme = {
     include: ['@all'],
+    exclude: ['@pk', '@fk'],
     assoc: {
       include: ['id', 'userId', 'startTime', 'endTime', 'timeTaken']
     }
