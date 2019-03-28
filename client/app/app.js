@@ -2,6 +2,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Route, Redirect } from 'react-router-dom'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { withLocalize } from 'react-localize-redux'
+import globalTranslations from '../translations/global.json'
 
 // Components
 import Layout from './components/layout/layout'
@@ -18,9 +21,19 @@ import SearchPage from './pages/search-page'
 import AveragesPage from './pages/explore-page/averages-page'
 import SettingsPage from './pages/settings-page'
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor (props) {
     super(props)
+
+    this.props.initialize({
+      languages: [
+        { name: 'English', code: 'en' },
+        { name: 'Welsh', code: 'cy' }
+      ],
+      translation: globalTranslations,
+      options: { renderToStaticMarkup }
+    })
+
     this.state = {
       showSidebar: true,
       showLogoutConfirmation: false,
@@ -98,5 +111,8 @@ export default class App extends React.Component {
 
 App.propTypes = {
   match: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
+  initialize: PropTypes.object
 }
+
+export default withLocalize(App)

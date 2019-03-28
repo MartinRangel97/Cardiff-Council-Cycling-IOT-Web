@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import { Translate, withLocalize } from 'react-localize-redux'
+import settingsTranslations from '../../translations/settings-page.json'
 
 import Page from '../components/page/page'
 import Section from '../components/common/section'
@@ -9,12 +10,16 @@ import Button from '../components/common/button'
 import IconButton from '../components/common/icon-button'
 import Toggle from '../components/common/toggle'
 import Divider from '../components/common/divider'
+import LanguageSelector from '../Language-Selector'
 
 // Icons
-import EnglishFlag from './settings-page/icons/England.svg'
-import WelshFlag from './settings-page/icons/Wales.svg'
 
-export default class SettingsModal extends React.Component {
+class SettingsModal extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.props.addTranslation(settingsTranslations)
+  }
   render () {
     return (
       <Page className='settings-modal' title='Settings' path={this.props.path} canGoBack>
@@ -23,15 +28,28 @@ export default class SettingsModal extends React.Component {
             <div className='setting'>
               <div className='details'>
                 <h1>
-                  <FormattedMessage id='Settings.languageHeading' defaultMessage='Language' />
+                  <Translate id='settings.languageTitle' />
                 </h1>
-                <h2>Select your Language / Dewiswch eich iaith</h2>
+                <h2>
+                  <Translate id='settings.languageDetails' />
+                </h2>
               </div>
               <div className='action'>
-                <IconButton icon={WelshFlag} />
+                <LanguageSelector />
               </div>
-              <div className='action'>
-                <IconButton icon={EnglishFlag} />
+            </div>
+            <Divider />
+            <div className='setting'>
+              <div className='details'>
+                <h1>
+                  <Translate id='settings.csvTitle' />
+                </h1>
+                <h2>
+                  <Translate id='settings.csvDetails' />
+                </h2>
+              </div>
+              <div className='actions'>
+                <Button text='Export' />
               </div>
             </div>
           </Card>
@@ -40,9 +58,15 @@ export default class SettingsModal extends React.Component {
           <Card className={'p-0'}>
             <div className='setting'>
               <div className='details'>
-                <h1>Share Readings Publicly</h1>
-                <h2>Your readings are currently shown on the public map.</h2>
-                <h2>These readings are anonymous and your trips are not public.</h2>
+                <h1>
+                  <Translate id='settings.readingsTitle' />
+                </h1>
+                <h2>
+                  <Translate id='settings.readingsDetails1' />
+                </h2>
+                <h2>
+                  <Translate id='settings.readingsDetails2' />
+                </h2>
               </div>
               <div className='action'>
                 <Toggle />
@@ -54,8 +78,12 @@ export default class SettingsModal extends React.Component {
           <Card className={'p-0'}>
             <div className='setting'>
               <div className='details'>
-                <h1>Email</h1>
-                <h2>Change your account email.</h2>
+                <h1>
+                  <Translate id='settings.emailTitle' />
+                </h1>
+                <h2>
+                  <Translate id='settings.emailDetails' />
+                </h2>
               </div>
               <div className='action'>
                 <Button text='Change Email' />
@@ -64,8 +92,12 @@ export default class SettingsModal extends React.Component {
             <Divider />
             <div className='setting'>
               <div className='details'>
-                <h1>Password</h1>
-                <h2>Change your account Password.</h2>
+                <h1>
+                  <Translate id='settings.passwordTitle' />
+                </h1>
+                <h2>
+                  <Translate id='settings.passwordDetails' />
+                </h2>
               </div>
               <div className='actions'>
                 <Button text='Change Password' />
@@ -74,8 +106,12 @@ export default class SettingsModal extends React.Component {
             <Divider />
             <div className='setting'>
               <div className='details'>
-                <h1>Delete Account</h1>
-                <h2>Careful, this cannot be undone.</h2>
+                <h1>
+                  <Translate id='settings.deleteTitle' />
+                </h1>
+                <h2>
+                  <Translate id='settings.deleteDetails' />
+                </h2>
               </div>
               <div className='actions'>
                 <Button text='Delete Account' danger />
@@ -91,3 +127,5 @@ export default class SettingsModal extends React.Component {
 SettingsModal.propTypes = {
   path: PropTypes.string
 }
+
+export default withLocalize(SettingsModal)
