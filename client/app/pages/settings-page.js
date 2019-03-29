@@ -20,6 +20,11 @@ class SettingsModal extends React.Component {
 
     this.props.addTranslation(settingsTranslations)
   }
+
+  downloadExportedData = () => {
+    window.open('/api/web/export', '_blank')
+  }
+
   render () {
     return (
       <Page className='settings-modal' title='Settings' path={this.props.path} canGoBack>
@@ -49,7 +54,7 @@ class SettingsModal extends React.Component {
                 </h2>
               </div>
               <div className='actions'>
-                <Button text='Export' />
+                <Button text='Export' onClick={this.downloadExportedData} />
               </div>
             </div>
           </Card>
