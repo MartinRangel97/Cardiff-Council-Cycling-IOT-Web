@@ -4,7 +4,6 @@ import mapboxgl from 'mapbox-gl'
 
 import Searchbar from './searchbar'
 import OverlayPicker from './overlay-picker'
-import GEOJSON from 'geojson'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9uYXRoYW5wZXRlcmNvbGUiLCJhIjoiY2p0YmkzanVwMGtyNTN5bzNydTNpYjB2OSJ9.ac1RTVcnsO8Ek-rgVeQe3g'
 
@@ -21,12 +20,8 @@ export default class MapView extends React.Component {
     let request = new XMLHttpRequest()
     request.responseType = 'json'
     request.open('GET', '/api/web/measurements', true)
-    console.log(request.status)
     request.onload = (data) => {
-      console.log(request.status)
       if (request.status === 200) {
-        // console.log(request.response)
-        // console.log(GEOJSON.parse(request.response, { Point: ['longitude', 'latitude'] }))
         this.setState({
           measurement: request.response
         })
@@ -54,14 +49,13 @@ export default class MapView extends React.Component {
     // Prepare event listeners
     this.map.on('load', () => {
       this.props.onMapLoad()
-      console.log(this.state.measurement)
       this.map.addSource('air', {
         type: 'geojson',
         data: this.state.measurement
       })
       this.map.addSource('noise', {
         type: 'geojson',
-        data: '/static/noise.geojson'
+        data: this.state.measurement
       })
       // add air layer here
       this.map.addLayer({
@@ -71,7 +65,7 @@ export default class MapView extends React.Component {
         paint: {
           // increase the radius of the circle as the zoom level and dbh value increases
           'circle-radius': {
-            property: 'dbh',
+            property: 'PM10Reading',
             type: 'exponential',
             stops: [
               [{ zoom: 11, value: 1 }, 1.5],
@@ -80,7 +74,7 @@ export default class MapView extends React.Component {
             ]
           },
           'circle-color': {
-            property: 'dbh',
+            property: 'PM10Reading',
             type: 'exponential',
             stops: [
               // TODO: change stops to reflect AQI
@@ -102,7 +96,7 @@ export default class MapView extends React.Component {
         paint: {
           // increase the radius of the circle as the zoom level and dbh value increases
           'circle-radius': {
-            property: 'dbh',
+            property: 'dBReading',
             type: 'exponential',
             stops: [
               [{ zoom: 11, value: 1 }, 1.5],
@@ -111,7 +105,7 @@ export default class MapView extends React.Component {
             ]
           },
           'circle-color': {
-            property: 'dbh',
+            property: 'dBReading',
             type: 'exponential',
             stops: [
               // TODO: change stops to reflect AQI

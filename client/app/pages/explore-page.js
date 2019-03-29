@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
+import axios from 'axios'
 
 import SidebarPageManager from '../components/sidebar/sidebar-page-manager'
 import SidebarPage from '../components/sidebar/sidebar-page'
@@ -13,6 +14,13 @@ import IconAirPollution from './explore-page/icons/air-pollution.svg'
 import IconNoise from './explore-page/icons/noise.svg'
 
 export default class ExplorePage extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      noiseAverage: 1.11
+    }
+  }
+
   componentDidUpdate (prevProps) {
     // If the map was clicked, show the details page
     if (prevProps.mapState !== this.props.mapState) {
@@ -26,7 +34,21 @@ export default class ExplorePage extends React.Component {
     }
   }
 
+  getNoiseAverage = () => {
+    axios.get('/api/web/noiseAverage')
+      .then((response) => {
+        console.log(response.data)
+        this.setState({
+          noiseAverage: response.data.toFixed(0)
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   render () {
+    this.getNoiseAverage()
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} component={DetailsSubpage} />
@@ -44,7 +66,7 @@ export default class ExplorePage extends React.Component {
                 <IconNoise className='icon' />
                 <div className='details'>
                   <h1>Noise</h1>
-                  <span className='value'>58 dB</span>
+                  <span className='value'>{this.state.noiseAverage} dB</span>
                 </div>
               </Card>
             </Section>
