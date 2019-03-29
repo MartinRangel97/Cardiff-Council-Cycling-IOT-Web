@@ -39,6 +39,7 @@ function configure (host, user, password, database) {
     // Set the db Sequelize instance
     db.sequelize = sequelize
     db.Sequelize = Sequelize
+    db.Sequelize = Sequelize
     resolve()
   })
 }
