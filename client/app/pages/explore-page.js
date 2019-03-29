@@ -17,7 +17,8 @@ export default class ExplorePage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      noiseAverage: 1.11
+      noiseAverage: 0,
+      NO2Average: 0
     }
   }
 
@@ -37,7 +38,7 @@ export default class ExplorePage extends React.Component {
   getNoiseAverage = () => {
     axios.get('/api/web/noiseAverage')
       .then((response) => {
-        console.log(response.data)
+        console.log('Noise' + response.data)
         this.setState({
           noiseAverage: response.data.toFixed(0)
         })
@@ -47,8 +48,25 @@ export default class ExplorePage extends React.Component {
       })
   }
 
-  render () {
+  getNO2Average = () => {
+    axios.get('/api/web/NO2Average')
+      .then((response) => {
+        console.log('NO2 ' + response.data)
+        this.setState({
+          noiseAverage: response.data.toFixed(0)
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  componentWillMount () {
     this.getNoiseAverage()
+    this.getNO2Average()
+  }
+
+  render () {
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} render={(props) =>
