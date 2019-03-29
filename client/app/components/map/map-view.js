@@ -17,47 +17,12 @@ export default class MapView extends React.Component {
     this.createRadius = this.createRadius.bind(this)
   }
 
-  componentDidUpdate (prevProps) {
-    // Check if the mapstate changed
-    if (prevProps.mapState !== this.props.mapState) {
-      // Check if current radius is not null
-      if (this.props.mapState.currentRadius) {
-        // Get the coordinates from mapstate
-        let coordinates = [parseFloat(this.props.mapState.currentRadius.lng), parseFloat(this.props.mapState.currentRadius.lat)]
-        let radius = 1
-
-        // If a circle exists, remove it
-        if (this.map.getSource('clickRadius')) {
-          this.map.removeLayer('clickRadius')
-          this.map.removeSource('clickRadius')
-        }
-
-        this.map.addSource('clickRadius', this.createRadius(coordinates, radius))
-        this.map.addLayer({
-          'id': 'clickRadius',
-          'type': 'fill',
-          'source': 'clickRadius',
-          'layout': {},
-          'paint': {
-            'fill-color': '#4c9cff',
-            'fill-opacity': 0.5
-          }
-        })
-      } else {
-        // If a circle exists, remove it
-        if (this.map.getSource('clickRadius')) {
-          this.map.removeLayer('clickRadius')
-          this.map.removeSource('clickRadius')
-        }
-      }
-    }
-  }
-
-  /*
-    TODO: Function purpose
-    center: Expects an array [[long], [lat]]
-    radius: Radius in miles
-    points: Number of points plotted, higher values create a smoother radius
+  /**
+  * Create a geojson polygon centered around longitude and latitude values
+  * @param {[[float], [float]]} center Center longitude and latitude value of circle
+  * @param {int} radius Distance in miles
+  * @param {int} [points=48] Number of points plotted to create a polygon, higher values create a smoother circle radius
+  * @return {GeoJsonObject} Return geojson polygon type
   */
   createRadius = (center, radius, points) => {
     if (!points) {
@@ -102,7 +67,31 @@ export default class MapView extends React.Component {
     }
   }
 
-  measurements () {
+  /**
+  * Show selected mapbox layer, hide other layers
+  * @param {string} selection ID of desired mapbox layer
+  * @returns {void}
+  */
+  changeSelectedOverlay = (selection) => {
+    this.setState({ selectedOverlay: selection })
+
+    switch (selection) {
+      case 'none':
+        this.map.setLayoutProperty('noise', 'visibility', 'none')
+        this.map.setLayoutProperty('air', 'visibility', 'none')
+        break
+      case 'noise':
+        this.map.setLayoutProperty('air', 'visibility', 'none')
+        this.map.setLayoutProperty('noise', 'visibility', 'visible')
+        break
+      case 'air':
+        this.map.setLayoutProperty('noise', 'visibility', 'none')
+        this.map.setLayoutProperty('air', 'visibility', 'visible')
+        break
+    }
+  }
+
+  getMeasurements () {
     let request = new XMLHttpRequest()
     request.responseType = 'json'
     request.open('GET', '/api/web/measurements', true)
@@ -121,7 +110,7 @@ export default class MapView extends React.Component {
   componentDidMount () {
     // Public Style URL:
     // https://api.mapbox.com/styles/v1/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3.html?fresh=true&title=true&access_token=pk.eyJ1Ijoiam9uYXRoYW5wZXRlcmNvbGUiLCJhIjoiY2p0YWhqaTRrMGFydjQzcWQ1NWR5aTk3dCJ9.V7HyWXQG5lpWtgk-17y6yw#13.5/51.480233/-3.152327/0
-    this.measurements()
+    this.getMeasurements()
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3',
@@ -217,23 +206,39 @@ export default class MapView extends React.Component {
     this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
   }
 
-  // Filter data source
-  changeSelectedOverlay = (selection) => {
-    this.setState({ selectedOverlay: selection })
+  componentDidUpdate (prevProps) {
+    // Check if the mapstate changed
+    if (prevProps.mapState !== this.props.mapState) {
+      // Check if current radius is not null
+      if (this.props.mapState.currentRadius) {
+        // Get the coordinates from mapstate
+        let coordinates = [parseFloat(this.props.mapState.currentRadius.lng), parseFloat(this.props.mapState.currentRadius.lat)]
+        let radius = 1
 
-    switch (selection) {
-      case 'none':
-        this.map.setLayoutProperty('noise', 'visibility', 'none')
-        this.map.setLayoutProperty('air', 'visibility', 'none')
-        break
-      case 'noise':
-        this.map.setLayoutProperty('air', 'visibility', 'none')
-        this.map.setLayoutProperty('noise', 'visibility', 'visible')
-        break
-      case 'air':
-        this.map.setLayoutProperty('noise', 'visibility', 'none')
-        this.map.setLayoutProperty('air', 'visibility', 'visible')
-        break
+        // If a circle exists, remove it
+        if (this.map.getSource('clickRadius')) {
+          this.map.removeLayer('clickRadius')
+          this.map.removeSource('clickRadius')
+        }
+
+        this.map.addSource('clickRadius', this.createRadius(coordinates, radius))
+        this.map.addLayer({
+          'id': 'clickRadius',
+          'type': 'fill',
+          'source': 'clickRadius',
+          'layout': {},
+          'paint': {
+            'fill-color': '#4c9cff',
+            'fill-opacity': 0.5
+          }
+        })
+      } else {
+        // If a circle exists, remove it
+        if (this.map.getSource('clickRadius')) {
+          this.map.removeLayer('clickRadius')
+          this.map.removeSource('clickRadius')
+        }
+      }
     }
   }
 
