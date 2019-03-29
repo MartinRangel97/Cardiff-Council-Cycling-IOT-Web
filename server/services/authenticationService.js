@@ -13,10 +13,9 @@ exports.createUser = function (email, password) {
         database.getDatabase().user.create({
           email: email,
           password: password
+        }).then(user => {
+          resolve(user)
         })
-          .then(() => {
-            resolve('Account Successfully Created')
-          })
       }
     }).catch((err) => {
       reject(new Error(`Error: ${err.message}`))
