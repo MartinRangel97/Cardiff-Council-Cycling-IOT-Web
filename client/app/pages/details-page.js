@@ -5,7 +5,6 @@ import Page from '../components/page/page'
 import Section from '../components/common/section'
 import Card from '../components/common/card'
 import Button from '../components/common/button'
-import IconButton from '../components/common/icon-button'
 import Toggle from '../components/common/toggle'
 
 export default class DetailsModal extends React.Component {

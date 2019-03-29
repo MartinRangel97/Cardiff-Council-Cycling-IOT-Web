@@ -12,6 +12,23 @@ export default class DetailssPage extends React.Component {
     return { lng: params.get('lng'), lat: params.get('lat') }
   }
 
+  componentWillMount () {
+    // Set the radius
+    this.props.setRadius(this.getLngLat())
+  }
+
+  componentDidUpdate (prevProps) {
+    // If the location changed (new coordinates), update the radius
+    if (prevProps.location !== this.props.location) {
+      this.props.setRadius(this.getLngLat())
+    }
+  }
+
+  componentWillUnmount () {
+    // Remove the radius
+    this.props.setRadius(null)
+  }
+
   render () {
     return (
       <SidebarPage title='Details' canGoBack>
@@ -29,5 +46,6 @@ export default class DetailssPage extends React.Component {
 }
 
 DetailssPage.propTypes = {
-  location: PropTypes.object
+  location: PropTypes.object,
+  setRadius: PropTypes.func
 }

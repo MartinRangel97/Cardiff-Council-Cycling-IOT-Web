@@ -16,6 +16,42 @@ export default class MapView extends React.Component {
     this.createRadius = this.createRadius.bind(this)
   }
 
+  componentDidUpdate (prevProps) {
+    // Check if the mapstate changed
+    if (prevProps.mapState !== this.props.mapState) {
+      // Check if current radius is not null
+      if (this.props.mapState.currentRadius) {
+        // Get the coordinates from mapstate
+        let coordinates = [parseFloat(this.props.mapState.currentRadius.lng), parseFloat(this.props.mapState.currentRadius.lat)]
+        let radius = 1
+
+        // If a circle exists, remove it
+        if (this.map.getSource('clickRadius')) {
+          this.map.removeLayer('clickRadius')
+          this.map.removeSource('clickRadius')
+        }
+
+        this.map.addSource('clickRadius', this.createRadius(coordinates, radius))
+        this.map.addLayer({
+          'id': 'clickRadius',
+          'type': 'fill',
+          'source': 'clickRadius',
+          'layout': {},
+          'paint': {
+            'fill-color': '#4c9cff',
+            'fill-opacity': 0.5
+          }
+        })
+      } else {
+        // If a circle exists, remove it
+        if (this.map.getSource('clickRadius')) {
+          this.map.removeLayer('clickRadius')
+          this.map.removeSource('clickRadius')
+        }
+      }
+    }
+  }
+
   /*
     TODO: Function purpose
     center: Expects an array [[long], [lat]]
@@ -158,27 +194,6 @@ export default class MapView extends React.Component {
     // On click circle data point
     this.map.on('click', 'air', (event) => {
       this.props.onMapClick(event)
-
-      let coordinates = [event.features[0].geometry.coordinates[0], event.features[0].geometry.coordinates[1]]
-      let radius = 1
-
-      // Check if circle already exists -> update data : create source and layer
-      if (this.map.getSource('clickRadius')) {
-        this.map.removeLayer('clickRadius')
-        this.map.removeSource('clickRadius')
-      }
-
-      this.map.addSource('clickRadius', this.createRadius(coordinates, radius))
-      this.map.addLayer({
-        'id': 'clickRadius',
-        'type': 'fill',
-        'source': 'clickRadius',
-        'layout': {},
-        'paint': {
-          'fill-color': '#4c9cff',
-          'fill-opacity': 0.5
-        }
-      })
     })
 
     // Add zoom and rotation controls to the map
@@ -230,5 +245,6 @@ export default class MapView extends React.Component {
 MapView.propTypes = {
   sidebarToggle: PropTypes.func,
   onMapLoad: PropTypes.func,
-  onMapClick: PropTypes.func
+  onMapClick: PropTypes.func,
+  mapState: PropTypes.object
 }

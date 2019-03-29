@@ -46,7 +46,17 @@ export default class App extends React.Component {
   onMapClick = (event) => {
     this.setState({
       showSidebar: true,
-      mapState: { clickLocation: event.lngLat }
+      mapState: {
+        clickLocation: event.lngLat
+      }
+    })
+  }
+
+  setMapCurrentRadius = (point) => {
+    this.setState({
+      mapState: {
+        currentRadius: point
+      }
     })
   }
 
@@ -72,11 +82,14 @@ export default class App extends React.Component {
         <MapView
           onMapLoad={this.onMapLoad}
           onMapClick={this.onMapClick}
+          mapState={this.state.mapState}
           sidebarToggle={this.toggleSidebar} />
         <Sidebar showSidebar={this.state.showSidebar}>
           <SidebarPageManager>
             <Redirect exact from={this.props.match.path} to='/app/explore' />
-            <Route path={`${this.props.match.path}/explore`} render={(props) => <ExplorePage {...props} mapState={this.state.mapState} />} />
+            <Route path={`${this.props.match.path}/explore`} render={(props) =>
+              <ExplorePage {...props} mapState={this.state.mapState} setMapCurrentRadius={this.setMapCurrentRadius} />
+            } />
             <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
             <Route path={`${this.props.match.path}/search`} render={(props) => <SearchPage {...props} />} />

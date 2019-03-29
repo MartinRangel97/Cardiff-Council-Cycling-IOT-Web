@@ -45,7 +45,9 @@ export default class ExplorePage extends React.Component {
     this.measurements()
     return (
       <SidebarPageManager>
-        <Route path={`${this.props.match.path}/details`} component={DetailsSubpage} />
+        <Route path={`${this.props.match.path}/details`} render={(props) =>
+          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} />
+        } />
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Explore'>
             <Section title='24 Hour Averages'>
@@ -80,5 +82,6 @@ export default class ExplorePage extends React.Component {
 ExplorePage.propTypes = {
   history: PropTypes.object,
   match: PropTypes.object,
-  mapState: PropTypes.object
+  mapState: PropTypes.object,
+  setMapCurrentRadius: PropTypes.func
 }
