@@ -119,7 +119,7 @@ export default class MapView extends React.Component {
       this.props.onMapLoad()
       this.map.addSource('air', {
         type: 'geojson',
-        data: '/static/trees.geojson'
+        data: '/static/air.geojson'
       })
       this.map.addSource('noise', {
         type: 'geojson',
@@ -133,7 +133,7 @@ export default class MapView extends React.Component {
         paint: {
           // increase the radius of the circle as the zoom level and dbh value increases
           'circle-radius': {
-            property: 'dbh',
+            property: 'PM10Reading',
             type: 'exponential',
             stops: [
               [{ zoom: 11, value: 1 }, 1.5],
@@ -142,7 +142,7 @@ export default class MapView extends React.Component {
             ]
           },
           'circle-color': {
-            property: 'dbh',
+            property: 'PM10Reading',
             type: 'exponential',
             stops: [
               // TODO: change stops to reflect AQI
@@ -164,7 +164,7 @@ export default class MapView extends React.Component {
         paint: {
           // increase the radius of the circle as the zoom level and dbh value increases
           'circle-radius': {
-            property: 'dbh',
+            property: 'dBA',
             type: 'exponential',
             stops: [
               [{ zoom: 11, value: 1 }, 1.5],
@@ -173,13 +173,12 @@ export default class MapView extends React.Component {
             ]
           },
           'circle-color': {
-            property: 'dbh',
+            property: 'dBA',
             type: 'exponential',
             stops: [
               // TODO: change stops to reflect AQI
-              [0, 'rgb(0, 228, 0)'], // green - good
-              [20, 'rgb(255, 255, 0)'], // yellow - moderate
-              [30, 'rgb(255, 126, 0)'], // orange - unhealthy for sensitive groups
+              [-10, 'rgb(0, 228, 0)'], // green - good
+              [20, 'rgb(255, 126, 0)'], // orange - unhealthy for sensitive groups
               [40, 'rgb(255, 0, 0)'], // red - unhealthy
               [50, 'rgb(143, 63, 151)'], // purple - very unhealthy
               [60, 'rgb(143, 63, 151)'] // maroon - hazardous
