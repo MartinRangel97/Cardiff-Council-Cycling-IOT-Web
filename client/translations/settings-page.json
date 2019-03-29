@@ -1,0 +1,56 @@
+{
+    "settings": {
+        "languageTitle": [
+            "Language",
+            "Iaith"
+        ],
+        "languageDetails": [
+            "Select your Language",
+            "Dewiswch eich iaith"
+        ],
+        "csvTitle": [
+            "Export to csv",
+            "Allforio i csv"
+        ],
+        "csvDetails": [
+            "Export your data to a csv file",
+            "Allforiwch eich data i ffeil csv"
+        ],
+        "readingsTitle": [
+            "Share Readings Publicly",
+            "Rhannu Darlleniadau Yn Gyhoeddus"
+        ],
+        "readingsDetails1": [
+            "Your readings are currently shown on the public map.",
+            "Dangosir eich darlleniadau ar y map cyhoeddus ar hyn o bryd."
+        ],
+        "readingsDetails2": [
+            "These readings are anonymous and your trips are not public.",
+            "Mae'r darlleniadau hyn yn ddienw ac nid yw eich teithiau'n gyhoeddus."
+        ],
+        "emailTitle": [
+            "Email",
+            "E-bost"
+        ],
+        "emailDetails": [
+            "Change your account email.",
+            "Newidiwch e-bost eich cyfrif."
+        ],
+        "passwordTitle": [
+            "Password",
+            "Cyfrinair"
+        ],
+        "passwordDetails": [
+            "Change your account Password.",
+            "Newid cyfrinair eich cyfrif."
+        ],
+        "deleteTitle": [
+            "Delete Account",
+            "Dileu Cyfrif"
+        ],
+        "deleteDetails": [
+            "Careful, this cannot be undone.",
+            "Yn ofalus, ni ellir dadwneud hyn."
+        ]
+    }
+}
