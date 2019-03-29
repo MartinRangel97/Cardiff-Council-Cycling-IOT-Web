@@ -11,7 +11,8 @@ export default class MapView extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedOverlay: 'air'
+      selectedOverlay: 'air',
+      measurement: [[]]
     }
     this.createRadius = this.createRadius.bind(this)
   }
@@ -101,13 +102,30 @@ export default class MapView extends React.Component {
     }
   }
 
+  measurements () {
+    let request = new XMLHttpRequest()
+    request.responseType = 'json'
+    request.open('GET', '/api/web/measurements', true)
+    request.onload = (data) => {
+      if (request.status === 200) {
+        this.setState({
+          measurement: request.response
+        })
+      } else {
+        console.log('Failed')
+      }
+    }
+    request.send(null)
+  }
+
   componentDidMount () {
     // Public Style URL:
     // https://api.mapbox.com/styles/v1/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3.html?fresh=true&title=true&access_token=pk.eyJ1Ijoiam9uYXRoYW5wZXRlcmNvbGUiLCJhIjoiY2p0YWhqaTRrMGFydjQzcWQ1NWR5aTk3dCJ9.V7HyWXQG5lpWtgk-17y6yw#13.5/51.480233/-3.152327/0
+    this.measurements()
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3',
-      center: [-79.999732, 40.4374],
+      center: [-3.181049629732371, 51.489130476354376],
       zoom: 11
       // Cardiff
       // center: [-3.175559, 51.480802],
@@ -119,11 +137,11 @@ export default class MapView extends React.Component {
       this.props.onMapLoad()
       this.map.addSource('air', {
         type: 'geojson',
-        data: '/static/air.geojson'
+        data: this.state.measurement
       })
       this.map.addSource('noise', {
         type: 'geojson',
-        data: '/static/noise.geojson'
+        data: this.state.measurement
       })
       // add air layer here
       this.map.addLayer({
@@ -164,7 +182,7 @@ export default class MapView extends React.Component {
         paint: {
           // increase the radius of the circle as the zoom level and dbh value increases
           'circle-radius': {
-            property: 'dBA',
+            property: 'dBReading',
             type: 'exponential',
             stops: [
               [{ zoom: 11, value: 1 }, 1.5],
@@ -173,7 +191,7 @@ export default class MapView extends React.Component {
             ]
           },
           'circle-color': {
-            property: 'dBA',
+            property: 'dBReading',
             type: 'exponential',
             stops: [
               // TODO: change stops to reflect AQI
@@ -191,7 +209,7 @@ export default class MapView extends React.Component {
     })
 
     // On click circle data point
-    this.map.on('click', 'air', (event) => {
+    this.map.on('click', (event) => {
       this.props.onMapClick(event)
     })
 
