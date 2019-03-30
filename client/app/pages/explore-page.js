@@ -116,7 +116,7 @@ export default class ExplorePage extends React.Component {
                 <IconNoise className='icon' />
                 <div className='details'>
                   <h1>Noise</h1>
-                  <span className='value'>{this.state.noiseAverage} dB</span>
+                  <span className='value'>{this.state.noiseAverage} dBA</span>
                 </div>
               </Card>
             </Section>

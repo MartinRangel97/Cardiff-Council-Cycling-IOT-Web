@@ -55,7 +55,7 @@ export default class DetailssPage extends React.Component {
             <IconNoise className='icon' />
             <div className='details'>
               <h1>Noise</h1>
-              <span className='value'>00 dB</span>
+              <span className='value'>00 dBA</span>
             </div>
           </Card>
         </Section>
