@@ -3,7 +3,7 @@ var router = express.Router()
 const database = require('../../database')
 const Serializer = require('sequelize-to-json')
 const { Op, sequelize } = require('sequelize')
-var GeoJSON = require('geojson')
+var GeoJSON = require('geojson') //converts JSON into GEOJSON
 const moment = require('moment')
 
 // Example Route
@@ -37,19 +37,16 @@ function distance (lat1, lon1, lat2, lon2) {
   return dist
 }
 
-router.post('/test', function (req, res, next) {
-  var test = req.body.test
-
-  res.send(test)
-})
-
+// gets the averages of the readings within the radius of a location
 router.post('/circleAverage', function (req, res, next) {
   var lat = req.body.latitude
   var lon = req.body.longitude
   var rad = req.body.radius
 
+  // this is used to store how many rows of data fit the criteria
   var count = 0
 
+  // store the averages in a JSON
   var averages = {
     dB: 0,
     NO2: 0,
@@ -90,7 +87,11 @@ router.get('/noiseAverage', function (req, res, next) {
   var noiseAve = 0
 
   database.getDatabase().measurement.findAll({
-    // TODO add a WHERE condition to get all points in the last 24 hrs
+    where: {
+      timeTaken: {
+        [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
+      }
+    }
   }).then(async function (posts) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
     postsAsJSON.forEach((reading) => {
@@ -106,7 +107,11 @@ router.get('/NO2Average', function (req, res, next) {
   var NO2Ave = 0
 
   database.getDatabase().measurement.findAll({
-    // TODO add a WHERE condition to get all points
+    where: {
+      timeTaken: {
+        [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
+      }
+    }
   }).then(async function (posts) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
     postsAsJSON.forEach((reading) => {
@@ -122,7 +127,11 @@ router.get('/PM10Average', function (req, res, next) {
   var PM10Ave = 0
 
   database.getDatabase().measurement.findAll({
-    // TODO add a WHERE condition to get all points
+    where: {
+      timeTaken: {
+        [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
+      }
+    }
   }).then(async function (posts) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
     postsAsJSON.forEach((reading) => {
@@ -138,7 +147,11 @@ router.get('/PM25Average', function (req, res, next) {
   var PM25Ave = 0
 
   database.getDatabase().measurement.findAll({
-    // TODO add a WHERE condition to get all points
+    where: {
+      timeTaken: {
+        [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
+      }
+    }
   }).then(async function (posts) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
     postsAsJSON.forEach((reading) => {
@@ -149,19 +162,16 @@ router.get('/PM25Average', function (req, res, next) {
   })
 })
 
-router.get('/measurements', function (req, res, next) {
-  // sets a template for the JSON
+router.get('/allReadings', function (req, res, next) {
   database.getDatabase().measurement.findAll({
     where: {
       timeTaken: {
         [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
       }
-    },
-    orderBy: [['timeTaken', 'DESC']]
+    }
   }).then(async function (posts) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
     res.send(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
-    // res.send(postsAsJSON)
   })
 })
 
