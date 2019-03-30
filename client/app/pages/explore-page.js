@@ -199,11 +199,27 @@ export default class ExplorePage extends React.Component {
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Explore'>
             <Section title='24 Hour Averages'>
-              <Card className='average' link={`${this.props.match.path}/averages/air`}>
-                <IconAirPollution className='icon' />
-                <div className='details'>
-                  <h1>Air Pollution</h1>
-                  <span className='value'>{this.state.airQualityIndex}</span>
+              <Card link={`${this.props.match.path}/averages/air`}>
+                <div className='average'>
+                  <IconAirPollution className='icon' />
+                  <div className='details'>
+                    <h1>Air Pollution</h1>
+                    <span className='value'>{this.state.airQualityIndex}</span>
+                  </div>
+                </div>
+                <div className='pill-container'>
+                  <div className='pill'>
+                    <h2>NO2</h2>
+                    <span>{this.state.NO2Average} µg/m³</span>
+                  </div>
+                  <div className='pill'>
+                    <h2>PM2.5</h2>
+                    <span>{this.state.PM25Average} µgm-3</span>
+                  </div>
+                  <div className='pill'>
+                    <h2>PM10</h2>
+                    <span>{this.state.PM10Average} µg/m³</span>
+                  </div>
                 </div>
               </Card>
               <Card className='average' link={`${this.props.match.path}/averages/noise`}>
