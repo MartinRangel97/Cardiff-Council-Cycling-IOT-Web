@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 
 import SidebarPage from '../../components/sidebar/sidebar-page'
 import Section from '../../components/common/section'
@@ -27,6 +28,20 @@ export default class DetailssPage extends React.Component {
   componentWillUnmount () {
     // Remove the radius
     this.props.setRadius(null)
+  }
+
+  getCircleAverage = (lat, lon, rad) => {
+    axios.post('/api/web/circleAverage', {
+      latitude: lat,
+      longitude: lon,
+      radius: rad
+    })
+      .then((response) => {
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   render () {
