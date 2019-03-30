@@ -5,6 +5,9 @@ import SidebarPage from '../../components/sidebar/sidebar-page'
 import Section from '../../components/common/section'
 import Card from '../../components/common/card'
 
+import IconAirPollution from './icons/air-pollution.svg'
+import IconNoise from './icons/noise.svg'
+
 export default class DetailssPage extends React.Component {
   getLngLat = () => {
     // Get the longitude and latitude from the URL
@@ -38,6 +41,22 @@ export default class DetailssPage extends React.Component {
             {this.getLngLat().lng}
             <h1>Latitude:</h1>
             {this.getLngLat().lat}
+          </Card>
+        </Section>
+        <Section title='Area 24 Hour Averages'>
+          <Card className='average' link={``}>
+            <IconAirPollution className='icon' />
+            <div className='details'>
+              <h1>Air Pollution</h1>
+              <span className='value'>Moderate</span>
+            </div>
+          </Card>
+          <Card className='average' link={``}>
+            <IconNoise className='icon' />
+            <div className='details'>
+              <h1>Noise</h1>
+              <span className='value'>00 dBA</span>
+            </div>
           </Card>
         </Section>
       </SidebarPage>
