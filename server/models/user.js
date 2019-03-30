@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   })
+  User.associate = models => {
+    models.User.hasMany(models.measurement)
+    models.User.hasMany(models.journey)
+  }
 
   User.sync()
     .then(() => console.log('User table created successfully'))

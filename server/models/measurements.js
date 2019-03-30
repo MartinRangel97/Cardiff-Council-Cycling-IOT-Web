@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     longitude: DataTypes.FLOAT,
     latitude: DataTypes.FLOAT
   })
+  Measurement.associate = models => {
+    models.Measurement.belongsToMany(models.journey)
+    models.Measurement.belongsToMany(models.user)
+  }
 
   Measurement.sync()
     .then(() => console.log('Measurement table created successfully'))
