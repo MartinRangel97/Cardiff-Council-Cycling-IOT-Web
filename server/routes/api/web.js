@@ -20,6 +20,7 @@ const scheme = {
   }
 }
 
+// Averages for decibel readings in Cardiff
 router.get('/noiseAverage', function (req, res, next) {
   var noiseAve = 0
 
@@ -35,6 +36,7 @@ router.get('/noiseAverage', function (req, res, next) {
   })
 })
 
+// Averages for NO2 readings in Cardiff
 router.get('/NO2Average', function (req, res, next) {
   var NO2Ave = 0
 
@@ -47,6 +49,38 @@ router.get('/NO2Average', function (req, res, next) {
     })
     NO2Ave = NO2Ave / postsAsJSON.length
     res.send(NO2Ave.toString())
+  })
+})
+
+// Averages for PM10 readings in Cardiff
+router.get('/PM10Average', function (req, res, next) {
+  var PM10Ave = 0
+
+  database.getDatabase().measurement.findAll({
+    // TODO add a WHERE condition to get all points in cardiff
+  }).then(async function (posts) {
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
+    postsAsJSON.forEach((reading) => {
+      PM10Ave += reading.PM10Reading
+    })
+    PM10Ave = PM10Ave / postsAsJSON.length
+    res.send(PM10Ave.toString())
+  })
+})
+
+// Averages for PM2.5 readings in Cardiff
+router.get('/PM25Average', function (req, res, next) {
+  var PM25Ave = 0
+
+  database.getDatabase().measurement.findAll({
+    // TODO add a WHERE condition to get all points in cardiff
+  }).then(async function (posts) {
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
+    postsAsJSON.forEach((reading) => {
+      PM25Ave += reading.PM25Reading
+    })
+    PM25Ave = PM25Ave / postsAsJSON.length
+    res.send(PM25Ave.toString())
   })
 })
 

@@ -18,7 +18,9 @@ export default class ExplorePage extends React.Component {
     super(props)
     this.state = {
       noiseAverage: 0,
-      NO2Average: 0
+      NO2Average: 0,
+      PM10Average: 0,
+      PM25Average: 0
     }
   }
 
@@ -53,7 +55,33 @@ export default class ExplorePage extends React.Component {
       .then((response) => {
         console.log('NO2 ' + response.data)
         this.setState({
-          noiseAverage: response.data.toFixed(0)
+          NO2Average: response.data.toFixed(0)
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  getPM10Average = () => {
+    axios.get('/api/web/PM10Average')
+      .then((response) => {
+        console.log('PM10 ' + response.data)
+        this.setState({
+          PM10Average: response.data.toFixed(0)
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  getPM25Average = () => {
+    axios.get('/api/web/PM25Average')
+      .then((response) => {
+        console.log('PM2.5 ' + response.data)
+        this.setState({
+          PM25Average: response.data.toFixed(0)
         })
       })
       .catch((error) => {
@@ -64,6 +92,8 @@ export default class ExplorePage extends React.Component {
   componentWillMount () {
     this.getNoiseAverage()
     this.getNO2Average()
+    this.getPM10Average()
+    this.getPM25Average()
   }
 
   render () {
