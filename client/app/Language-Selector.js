@@ -1,16 +1,21 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { withLocalize } from 'react-localize-redux'
+import IconButton from './components/common/icon-button'
 
-const LanguageToggle = ({ languages, activeLanguage, setActiveLanguage }) => (
-  <ul className='selector'>
-    {languages.map(lang => (
-      <li key={lang.code}>
-        <button onClick={() => setActiveLanguage(lang.code)}>
-          {lang.name}
-        </button>
-      </li>
-    ))}
-  </ul>
+// Icons
+import England from './pages/settings-page/icons/England.svg'
+import Wales from './pages/settings-page/icons/Wales.svg'
+
+const LanguageToggle = ({ setActiveLanguage }) => (
+  <div className='containter'>
+    <IconButton icon={England} onClick={() => setActiveLanguage('en')} />
+    <IconButton icon={Wales} onClick={() => setActiveLanguage('cy')} />
+  </div>
 )
+
+LanguageToggle.propTypes = {
+  setActiveLanguage: PropTypes.object
+}
 
 export default withLocalize(LanguageToggle)
