@@ -20,12 +20,12 @@ const scheme = {
   }
 }
 
-// Averages for decibel readings in Cardiff
+// Averages for decibel readings
 router.get('/noiseAverage', function (req, res, next) {
   var noiseAve = 0
 
   database.getDatabase().measurement.findAll({
-    // TODO add a WHERE condition to get all points in cardiff in the last 24 hrs
+    // TODO add a WHERE condition to get all points in the last 24 hrs
   }).then(async function (posts) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
     postsAsJSON.forEach((reading) => {
@@ -36,12 +36,12 @@ router.get('/noiseAverage', function (req, res, next) {
   })
 })
 
-// Averages for NO2 readings in Cardiff
+// Averages for all NO2 readings
 router.get('/NO2Average', function (req, res, next) {
   var NO2Ave = 0
 
   database.getDatabase().measurement.findAll({
-    // TODO add a WHERE condition to get all points in cardiff
+    // TODO add a WHERE condition to get all points
   }).then(async function (posts) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
     postsAsJSON.forEach((reading) => {
@@ -52,12 +52,12 @@ router.get('/NO2Average', function (req, res, next) {
   })
 })
 
-// Averages for PM10 readings in Cardiff
+// Averages for all PM10 readings
 router.get('/PM10Average', function (req, res, next) {
   var PM10Ave = 0
 
   database.getDatabase().measurement.findAll({
-    // TODO add a WHERE condition to get all points in cardiff
+    // TODO add a WHERE condition to get all points
   }).then(async function (posts) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
     postsAsJSON.forEach((reading) => {
@@ -68,12 +68,12 @@ router.get('/PM10Average', function (req, res, next) {
   })
 })
 
-// Averages for PM2.5 readings in Cardiff
+// Averages for PM2.5 readings
 router.get('/PM25Average', function (req, res, next) {
   var PM25Ave = 0
 
   database.getDatabase().measurement.findAll({
-    // TODO add a WHERE condition to get all points in cardiff
+    // TODO add a WHERE condition to get all points
   }).then(async function (posts) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
     postsAsJSON.forEach((reading) => {
