@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
+import axios from 'axios'
 
 import SidebarPageManager from '../components/sidebar/sidebar-page-manager'
 import SidebarPage from '../components/sidebar/sidebar-page'
@@ -12,7 +13,37 @@ import IconNoise from './explore-page/icons/noise.svg'
 import IconBike from './settings-page/icons/bike.svg'
 
 export default class ProfilePage extends React.Component {
+
+  getJourneys = (userId) => {
+    axios.get('/api/web/journeys/' + userId)
+      .then((response) => {
+        console.log('Journeys: ' + response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  // Statistics
+  getTotalDistanceTravelled = (journey) => {}
+
+  getAverageAir = (journey) => {}
+
+  getAverageNoise = (journey) => {}
+
+  // Trips
+  getJourneyMonth = (journey) => {}
+
+  getJourneyDay = (journey) => {}
+
+  getJourneyStartTime = (journey) => {}
+
+  getJourneyEndTime = (journey) => {}
+
+  getJourneyDistance = (journey) => {}
+
   render () {
+    this.getJourneys(1)
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/subpage`} render={() =>

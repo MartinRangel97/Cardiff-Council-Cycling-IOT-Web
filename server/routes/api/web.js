@@ -20,6 +20,13 @@ const scheme = {
   }
 }
 
+const journeyScheme = {
+  include: ['@all'],
+  assoc: {
+    include: ['startTime', 'endTime', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken', 'longitude', 'latitude']
+  }
+}
+
 // Averages for decibel readings
 router.get('/noiseAverage', function (req, res, next) {
   var noiseAve = 0
@@ -97,6 +104,22 @@ router.get('/measurements', function (req, res, next) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
     res.send(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
     // res.send(postsAsJSON)
+  })
+})
+
+// WORK IN PROGRESS
+
+router.get('/journeys/:userId', function (req, res, next) {
+  console.log(req.params)
+  database.getDatabase().journey.findAll({
+    where: { userId: req.params.userId },
+    include: [{
+      model: database.getDatabase().measurement,
+      where: { userId: req.params.userId }
+    }]
+  }).then(posts => {
+    let postsAsJSON = Serializer.serializeMany(posts, journeyScheme)
+    res.send(postsAsJSON)
   })
 })
 

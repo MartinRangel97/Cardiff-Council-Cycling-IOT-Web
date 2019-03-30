@@ -49,6 +49,7 @@ function login () {
     if (request.status === 200) {
       location.href = '/app'
       console.log('Success')
+      console.log(request)
     } else {
       console.log('Failed')
       location.href = '/'
