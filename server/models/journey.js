@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
     endTime: DataTypes.DATE
   })
   Journey.associate = models => {
-    models.Journey.hasMany(models.measurement, { targetKey: 'id', foreignKey: 'journeyId' })
-    models.Journey.belongsTo(models.user, { foreignKey: 'userId' })
+    Journey.hasMany(models.measurement, { targetKey: 'id', foreignKey: 'journeyId' })
+    Journey.belongsTo(models.user, { foreignKey: 'userId' })
   }
 
   Journey.sync()

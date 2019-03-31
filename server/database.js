@@ -36,6 +36,12 @@ function configure (host, user, password, database) {
     db.measurement = MeasurementModel
     db.journey = JourneyModel
     // TODO: Add any associations here
+    Object.keys(db).forEach(function (modelName) {
+      if (db[modelName].associate) {
+        console.log(db[modelName])
+        db[modelName].associate(db)
+      }
+    })
     // Set the db Sequelize instance
     db.sequelize = sequelize
     db.Sequelize = Sequelize

@@ -23,7 +23,7 @@ const scheme = {
 const journeyScheme = {
   include: ['@all'],
   assoc: {
-    include: ['startTime', 'endTime', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken', 'longitude', 'latitude']
+    include: ['startTime', 'endTime']
   }
 }
 
@@ -107,19 +107,15 @@ router.get('/measurements', function (req, res, next) {
   })
 })
 
-// WORK IN PROGRESS
-
 router.get('/journeys/:userId', function (req, res, next) {
-  console.log(req.params)
   database.getDatabase().journey.findAll({
-    where: { userId: req.params.userId },
-    include: [{
-      model: database.getDatabase().measurement,
-      where: { userId: req.params.userId }
-    }]
+    where: { userId: req.params.userId }
   }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, journeyScheme)
+    // Bug: Only getting first reading?
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
     res.send(postsAsJSON)
+    console.log(postsAsJSON)
+    // database.getDatabase().journey.findAll({where: { userId: req.params.userId}, raw: true}
   })
 })
 

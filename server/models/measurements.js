@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     latitude: DataTypes.FLOAT
   })
   Measurement.associate = models => {
-    models.Measurement.belongsToMany(models.journey)
-    models.Measurement.belongsToMany(models.user)
+    Measurement.belongsTo(models.journey, { foreignKey: 'journeyId' })
+    Measurement.belongsTo(models.user, { foreignKey: 'userId' })
   }
 
   Measurement.sync()

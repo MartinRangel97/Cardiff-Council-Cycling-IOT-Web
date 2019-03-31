@@ -21,8 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
   User.associate = models => {
-    models.User.hasMany(models.measurement)
-    models.User.hasMany(models.journey)
+    User.hasMany(models.measurement, { targetKey: 'id', foreignKey: 'userId' })
+    User.hasMany(models.journey, { targetKey: 'id', foreignKey: 'userId' })
   }
 
   User.sync()

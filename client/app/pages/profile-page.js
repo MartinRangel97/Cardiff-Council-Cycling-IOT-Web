@@ -13,11 +13,23 @@ import IconNoise from './explore-page/icons/noise.svg'
 import IconBike from './settings-page/icons/bike.svg'
 
 export default class ProfilePage extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      journeys: []
+    }
+  }
+
+  componentWillMount () {
+    this.setState({
+      journeys: this.getJourneys(1)
+    })
+  }
 
   getJourneys = (userId) => {
     axios.get('/api/web/journeys/' + userId)
       .then((response) => {
-        console.log('Journeys: ' + response.data)
+        return response.data
       })
       .catch((error) => {
         console.log(error)
@@ -43,7 +55,6 @@ export default class ProfilePage extends React.Component {
   getJourneyDistance = (journey) => {}
 
   render () {
-    this.getJourneys(1)
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/subpage`} render={() =>
