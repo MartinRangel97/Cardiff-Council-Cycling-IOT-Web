@@ -107,15 +107,29 @@ router.get('/measurements', function (req, res, next) {
   })
 })
 
-router.get('/journeys/:userId', function (req, res, next) {
+/*
+   Profile page
+*/
+// Get all journeys belonging to :userId
+router.get('/:userId/journeys/', function (req, res, next) {
   database.getDatabase().journey.findAll({
     where: { userId: req.params.userId }
   }).then(posts => {
-    // Bug: Only getting first reading?
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
     res.send(postsAsJSON)
-    console.log(postsAsJSON)
-    // database.getDatabase().journey.findAll({where: { userId: req.params.userId}, raw: true}
+  })
+})
+
+// Get all measurements of :journeyId belonging to :userId
+router.get('/:userId/journeys/:journeyId/measurements', function (req, res, next) {
+  database.getDatabase().measurement.findAll({
+    where: {
+      userId: req.params.userId,
+      journeyId: req.params.journeyId
+    }
+  }).then(posts => {
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, journeyScheme)
+    res.send(postsAsJSON)
   })
 })
 

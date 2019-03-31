@@ -23,11 +23,19 @@ export default class ProfilePage extends React.Component {
   componentWillMount () {
     this.setState({
       journeys: this.getJourneys(1)
+    }, () => {
+      console.log(this.state.journeys[0])
+      console.log(this.state.journeys[1])
     })
   }
+  // }, () => {
+  //   for (let i = 0; i < this.state.journeys.length; i++) {
+  //     console.log(this.getJourneyAirAverage(i))
+  //   }
+  // })
 
   getJourneys = (userId) => {
-    axios.get('/api/web/journeys/' + userId)
+    axios.get('/api/web/' + userId + '/journeys')
       .then((response) => {
         return response.data
       })
@@ -36,12 +44,12 @@ export default class ProfilePage extends React.Component {
       })
   }
 
+  getTotalAirAverage = () => {}
+
+  getTotalNoiseAverage = () => {}
+
   // Statistics
   getTotalDistanceTravelled = (journey) => {}
-
-  getAverageAir = (journey) => {}
-
-  getAverageNoise = (journey) => {}
 
   // Trips
   getJourneyMonth = (journey) => {}
@@ -53,6 +61,22 @@ export default class ProfilePage extends React.Component {
   getJourneyEndTime = (journey) => {}
 
   getJourneyDistance = (journey) => {}
+
+  getJourneyAirAverage = (journey) => {
+    let userId = journey.userId
+    let journeyId = journey.journeyId
+    // Get journey array
+    axios.get('api/web' + userId + 'journeys' / journeyId)
+      .then((response) => {
+        // TODO: Average air here
+        return response.data
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  getJourneyNoiseAverage = (journey) => {}
 
   render () {
     return (
