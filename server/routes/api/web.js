@@ -67,11 +67,16 @@ router.post('/circleAverage', function (req, res, next) {
         averages.PM10 += reading.PM10Reading
         averages.PM25 += reading.PM25Reading
       })
-      // calculate the averages
-      averages.dB = averages.dB / postsAsJSON.length
-      averages.NO2 = averages.NO2 / postsAsJSON.length
-      averages.PM10 = averages.PM10 / postsAsJSON.length
-      averages.PM25 = averages.PM25 / postsAsJSON.length
+      console.log(averages)
+      if (postsAsJSON.length > 0) {
+        // calculate the averages
+        averages.dB = averages.dB / postsAsJSON.length
+        averages.NO2 = averages.NO2 / postsAsJSON.length
+        averages.PM10 = averages.PM10 / postsAsJSON.length
+        averages.PM25 = averages.PM25 / postsAsJSON.length
+      }
+
+      console.log(averages)
       res.send(averages)
     })
 })

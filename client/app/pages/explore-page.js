@@ -12,7 +12,7 @@ import DetailsSubpage from './explore-page/details-subpage'
 
 import IconAirPollution from './explore-page/icons/air-pollution.svg'
 import IconNoise from './explore-page/icons/noise.svg'
-import { isNull } from 'util';
+import { isNull } from 'util'
 
 export default class ExplorePage extends React.Component {
   constructor (props) {
@@ -56,27 +56,11 @@ export default class ExplorePage extends React.Component {
       'radius': rad
     })
       .then((response) => {
-        // console.log(isNull(response.data))
-        if (response.data.dB !== null) {
-          this.setState({
-            circleAverages: {
-              dB: response.data.dB.toFixed(0),
-              NO2: response.data.NO2.toFixed(0),
-              PM10: response.data.PM10.toFixed(0),
-              PM25: response.data.PM25.toFixed(0)
-            }
-          })
-        } else {
-          this.setState({
-            circleAverages: {
-              dB: 0,
-              NO2: 0,
-              PM10: 0,
-              PM25: 0
-            }
-          })
-        }
-      })
+        this.setState({
+          circleAverages: response.data
+        })
+      }
+      )
       .catch((error) => {
         console.log(error)
       })
