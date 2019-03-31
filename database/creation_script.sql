@@ -26,8 +26,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS journey (
 	`id` INT NOT NULL AUTO_INCREMENT,
     `userId` INT NOT NULL,
-    `startTime` DATETIME NOT NULL,
-    `endTime` DATETIME NOT NULL,
 		PRIMARY KEY (`id`),
 		FOREIGN KEY (`userId`)
         REFERENCES user (`id`)
