@@ -29,7 +29,7 @@ router.post('/signup',
     check('password')
       .isLength({ min: 8 })
       .withMessage('Must be a minimum of 8 characters')
-      .matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
+      .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&?*]{8,16}$/)
       .withMessage('Must contain 1 lowercase, 1 uppercase, 1 number and 1 special character')
   ],
   (req, res) => {
