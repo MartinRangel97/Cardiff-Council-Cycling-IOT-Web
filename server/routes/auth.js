@@ -29,28 +29,28 @@ router.post('/signup',
       .isLength({ min: 8 })
       .withMessage('Must be a minimum of 8 characters')
       .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&?*]{8,16}$/)
-      .withMessage('Must contain 1 lowercase, 1 uppercase, 1 number and 1 special character')
+      .withMessage('Must contain 1 lowercase, 1 uppercase, and 1 number')
   ],
   (req, res) => {
     // if there is an error in the validation process it sends a 422
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() })
+      return res.status(422).send({ errors: errors.array() })
     }
     // authentication  services checks the email is availble and will create the account with a hashed password
-    console.log(req.body)
     authenicationService.createUser(req.body.email, req.body.password)
       .then(user => {
         // Get the token and send it to the client
         const payload = { id: user.id }
-        const token = jwt.sign(payload, keys.secretOrKey)
+        const token = jwt.sign(payload, keys.secretOrKey, { expiresIn: 2592000 }) // 30 days (seconds)
+        const expiryDate = new Date(Number(new Date()) + 2592000000) // expires the cookie in 30 days (miliseconds)
         res.status(200)
-          .json({ token: token, msg: 'Account Created' })
-          .cookie('token', token, { httpOnly: true })
-          .send()
+          .cookie('token', token, { expires: expiryDate, httpOnly: true })
+          .send({ token: token })
       })
       .catch((error) => {
-        res.status(400).json({ msg: error.toString() }).send()
+        console.log('ERROR ', error)
+        res.status(400).send({ msg: error.toString() })
       })
   })
 
@@ -66,7 +66,7 @@ router.post('/login', async function (req, res) {
   }).then(user => {
   // Check if user exists
     if (!user) {
-      return res.status(404).json({ emailnotfound: 'Email not found' }).send()
+      return res.status(404).send({ emailnotfound: 'Email not found' })
     }
     // Check password
     bcrypt.compare(password, user.password)
@@ -74,17 +74,17 @@ router.post('/login', async function (req, res) {
         if (isMatch) {
           // Get the token and send it to the client
           const payload = { id: user.id }
-          const token = jwt.sign(payload, keys.secretOrKey)
+          const token = jwt.sign(payload, keys.secretOrKey, { expiresIn: 2592000 }) // 30 days (seconds)
+          const expiryDate = new Date(Number(new Date()) + 2592000000) // expires the cookie in 30 days (miliseconds)
           res.status(200)
-            .json({ token: token })
-            .cookie('token', token, { httpOnly: true })
-            .send()
+            .cookie('token', token, { expires: expiryDate, httpOnly: true })
+            .send({ token: token })
         } else {
-          res.status(401).json({ msg: 'Incorrect Password' }).send()
+          res.status(401).send({ msg: 'Incorrect Password' })
         }
       })
       .catch(() => {
-        res.status(401).json({ msg: 'Incorrect Password' }).send()
+        res.status(401).send({ msg: 'Incorrect Password' })
       })
   })
 })
