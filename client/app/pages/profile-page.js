@@ -25,6 +25,7 @@ export default class ProfilePage extends React.Component {
     this.getJourneys(1)
     this.getTotalAverages(1)
     this.getJourneyMonth(1)
+    this.getJourneyDay(1)
   }
   // }, () => {
   //   for (let i = 0; i < this.state.journeys.length; i++) {
@@ -61,7 +62,7 @@ export default class ProfilePage extends React.Component {
 
   // Trips
   getJourneyMonth = (journeyId) => {
-    axios.get('/api/web/journeys/' + journeyId)
+    axios.get('/api/web/journeys/' + journeyId + '/month')
       .then((response) => {
         return response.data
       })
@@ -70,7 +71,15 @@ export default class ProfilePage extends React.Component {
       })
   }
 
-  getJourneyDay = (journeyId) => {}
+  getJourneyDay = (journeyId) => {
+    axios.get('/api/web/journeys/' + journeyId + '/day')
+      .then((response) => {
+        return response.data
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   getJourneyStartTime = (journeyId) => {}
 
