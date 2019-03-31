@@ -21,7 +21,8 @@ export default class ExplorePage extends React.Component {
       NO2Average: 0,
       PM10Average: 0,
       PM25Average: 0,
-      airQualityIndex: 'N/A'
+      airQualityIndex: 'N/A',
+      circleAverages: {}
     }
   }
 
@@ -54,7 +55,10 @@ export default class ExplorePage extends React.Component {
       'radius': rad
     })
       .then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
+        this.setState({
+          circleAverages: response.data
+        })
       })
       .catch((error) => {
         console.log(error)
@@ -209,7 +213,7 @@ export default class ExplorePage extends React.Component {
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} render={(props) =>
-          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} />
+          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.state.circleAverages} />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Explore'>

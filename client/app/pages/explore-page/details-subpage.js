@@ -55,7 +55,7 @@ export default class DetailssPage extends React.Component {
             <IconNoise className='icon' />
             <div className='details'>
               <h1>Noise</h1>
-              <span className='value'>00 dBA</span>
+              <span className='value'>{this.props.circleAverages.dB} dBA</span>
             </div>
           </Card>
         </Section>
@@ -66,5 +66,7 @@ export default class DetailssPage extends React.Component {
 
 DetailssPage.propTypes = {
   location: PropTypes.object,
-  setRadius: PropTypes.func
+  setRadius: PropTypes.func,
+  circleAverages: PropTypes.object
 }
+  
