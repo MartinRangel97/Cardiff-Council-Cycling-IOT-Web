@@ -11,7 +11,7 @@ export default class MapView extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedOverlay: 'none'
+      selectedOverlay: 'air'
     }
   }
 
@@ -21,20 +21,122 @@ export default class MapView extends React.Component {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3',
-      center: [-3.175559, 51.480802],
-      zoom: 13.75
+      center: [-79.999732, 40.4374],
+      zoom: 11
+      // Cardiff
+      // center: [-3.175559, 51.480802],
+      // zoom: 13.75
     })
+
     // Prepare event listeners
     this.map.on('load', () => {
       this.props.onMapLoad()
+      this.map.addSource('air', {
+        type: 'geojson',
+        data: '/static/trees.geojson'
+      })
+      this.map.addSource('noise', {
+        type: 'geojson',
+        data: '/static/noise.geojson'
+      })
+      // add air layer here
+      this.map.addLayer({
+        id: 'air',
+        type: 'circle',
+        source: 'air',
+        paint: {
+          // increase the radius of the circle as the zoom level and dbh value increases
+          'circle-radius': {
+            property: 'dbh',
+            type: 'exponential',
+            stops: [
+              [{ zoom: 11, value: 1 }, 1.5],
+              [{ zoom: 15, value: 1 }, 3],
+              [{ zoom: 22, value: 1 }, 10]
+            ]
+          },
+          'circle-color': {
+            property: 'dbh',
+            type: 'exponential',
+            stops: [
+              // TODO: change stops to reflect AQI
+              [0, 'rgb(0, 228, 0)'], // green - good
+              [20, 'rgb(255, 255, 0)'], // yellow - moderate
+              [30, 'rgb(255, 126, 0)'], // orange - unhealthy for sensitive groups
+              [40, 'rgb(255, 0, 0)'], // red - unhealthy
+              [50, 'rgb(143, 63, 151)'], // purple - very unhealthy
+              [60, 'rgb(143, 63, 151)'] // maroon - hazardous
+            ]
+          }
+        }
+      }, 'road-label')
+      // add noise layer here
+      this.map.addLayer({
+        id: 'noise',
+        type: 'circle',
+        source: 'noise',
+        paint: {
+          // increase the radius of the circle as the zoom level and dbh value increases
+          'circle-radius': {
+            property: 'dbh',
+            type: 'exponential',
+            stops: [
+              [{ zoom: 11, value: 1 }, 1.5],
+              [{ zoom: 15, value: 1 }, 3],
+              [{ zoom: 22, value: 1 }, 10]
+            ]
+          },
+          'circle-color': {
+            property: 'dbh',
+            type: 'exponential',
+            stops: [
+              // TODO: change stops to reflect AQI
+              [0, 'rgb(0, 228, 0)'], // green - good
+              [20, 'rgb(255, 255, 0)'], // yellow - moderate
+              [30, 'rgb(255, 126, 0)'], // orange - unhealthy for sensitive groups
+              [40, 'rgb(255, 0, 0)'], // red - unhealthy
+              [50, 'rgb(143, 63, 151)'], // purple - very unhealthy
+              [60, 'rgb(143, 63, 151)'] // maroon - hazardous
+            ]
+          }
+        }
+      }, 'road-label')
+      // TODO: Is it possible to set visibility when adding layer?
+      this.map.setLayoutProperty('noise', 'visibility', 'none')
     })
-    this.map.on('click', (event) => {
+
+    // On click circle data point
+    this.map.on('click', 'air', (event) => {
       this.props.onMapClick(event)
+      // Show point data when clicked
+      new mapboxgl.Popup()
+        .setLngLat(event.features[0].geometry.coordinates)
+        .setHTML('<b>DBH:</b> ' + event.features[0].properties.dbh)
+        .addTo(this.map)
     })
+
+    // Add zoom and rotation controls to the map
+    this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
   }
 
+  // Filter data source
   changeSelectedOverlay = (selection) => {
     this.setState({ selectedOverlay: selection })
+
+    switch (selection) {
+      case 'none':
+        this.map.setLayoutProperty('noise', 'visibility', 'none')
+        this.map.setLayoutProperty('air', 'visibility', 'none')
+        break
+      case 'noise':
+        this.map.setLayoutProperty('air', 'visibility', 'none')
+        this.map.setLayoutProperty('noise', 'visibility', 'visible')
+        break
+      case 'air':
+        this.map.setLayoutProperty('noise', 'visibility', 'none')
+        this.map.setLayoutProperty('air', 'visibility', 'visible')
+        break
+    }
   }
 
   componentWillUnmount () {
