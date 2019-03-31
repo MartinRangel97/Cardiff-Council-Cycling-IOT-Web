@@ -18,7 +18,6 @@ export default class DetailssPage extends React.Component {
   componentWillMount () {
     // Set the radius
     this.props.setRadius(this.getLngLat())
-    this.props.getAirQualityIndex(this.props.circleAverages.NO2, this.props.circleAverages.PM10, this.props.circleAverages.PM25)
   }
 
   componentDidUpdate (prevProps) {
@@ -50,7 +49,7 @@ export default class DetailssPage extends React.Component {
               <IconAirPollution className='icon' />
               <div className='details'>
                 <h1>Air Pollution</h1>
-                <span className='value'>{this.props.airQualityIndex}</span>
+                <span className='value'>Low</span>
               </div>
             </div>
             <div className='pill-container'>
@@ -84,7 +83,5 @@ export default class DetailssPage extends React.Component {
 DetailssPage.propTypes = {
   location: PropTypes.object,
   setRadius: PropTypes.func,
-  circleAverages: PropTypes.object,
-  airQualityIndex: PropTypes.string,
-  getAirQualityIndex: PropTypes.func
+  circleAverages: PropTypes.object
 }

@@ -232,9 +232,7 @@ export default class ExplorePage extends React.Component {
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} render={(props) =>
-          <DetailsSubpage getAirQualityIndex={this.getAirQualityIndex} {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.state.circleAverages}
-            airQualityIndex={this.state.airQualityIndex}
-          />
+          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.state.circleAverages} />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Explore'>
@@ -287,7 +285,5 @@ ExplorePage.propTypes = {
   history: PropTypes.object,
   match: PropTypes.object,
   mapState: PropTypes.object,
-  setMapCurrentRadius: PropTypes.func,
-  getAirQualityIndex: PropTypes.func,
-  airQualityIndex: PropTypes.string
+  setMapCurrentRadius: PropTypes.func
 }
