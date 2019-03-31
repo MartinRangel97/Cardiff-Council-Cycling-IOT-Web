@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = (sequelize, DataTypes) => {
-  var Measurement = sequelize.define('measurements', {
+  var Reading = sequelize.define('Reading', {
     userId: DataTypes.INTEGER,
     journeyId: DataTypes.INTEGER,
     dBReading: DataTypes.FLOAT,
@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
     latitude: DataTypes.FLOAT
   })
 
-  Measurement.sync()
-    .then(() => console.log('Measurement table created successfully'))
+  Reading.sync()
+    .then(() => console.log('Reading table created successfully'))
     .catch(err => console.log('Wrong database credentials entered: ', err))
 
-  return Measurement
+  return Reading
 }
