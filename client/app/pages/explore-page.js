@@ -12,7 +12,6 @@ import DetailsSubpage from './explore-page/details-subpage'
 
 import IconAirPollution from './explore-page/icons/air-pollution.svg'
 import IconNoise from './explore-page/icons/noise.svg'
-import { isNull } from 'util';
 
 export default class ExplorePage extends React.Component {
   constructor (props) {
@@ -56,7 +55,6 @@ export default class ExplorePage extends React.Component {
       'radius': rad
     })
       .then((response) => {
-        // console.log(isNull(response.data))
         if (response.data.dB !== null) {
           this.setState({
             circleAverages: {
