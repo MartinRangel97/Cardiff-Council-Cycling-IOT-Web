@@ -141,10 +141,10 @@ router.get('/:userId/measurements', function (req, res, next) {
       averages.PM10 += reading.PM10Reading
       averages.PM25 += reading.PM25Reading
     })
-    averages.dBA += averages.dBA / postsAsJSON.length
-    averages.NO2 += averages.NO2 / postsAsJSON.length
-    averages.PM10 += averages.PM10 / postsAsJSON.length
-    averages.PM25 += averages.PM25 / postsAsJSON.length
+    averages.dBA = averages.dBA / postsAsJSON.length
+    averages.NO2 = averages.NO2 / postsAsJSON.length
+    averages.PM10 = averages.PM10 / postsAsJSON.length
+    averages.PM25 = averages.PM25 / postsAsJSON.length
 
     res.send(averages)
   })
