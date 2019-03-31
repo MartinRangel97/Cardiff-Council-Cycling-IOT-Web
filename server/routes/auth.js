@@ -66,8 +66,9 @@ router.post('/login', async function (req, res) {
       .then(isMatch => {
         if (isMatch) {
           const payload = { id: user.id }
-          const token = jwt.sign(payload, keys.secretOrKey)
-          res.cookie('token', token, { httpOnly: true }).sendStatus(200)
+          const token = jwt.sign(payload, keys.secretOrKey, { expiresIn: 600 }) // 10 minutes
+          const expiryDate = new Date(Number(new Date()) + 600000) // expires the cookie in 10 minutes
+          res.cookie('token', token, { expires: expiryDate, httpOnly: true }).sendStatus(200)
         } else {
           res.status(401).json({ msg: 'Incorrect Password' })
         }
