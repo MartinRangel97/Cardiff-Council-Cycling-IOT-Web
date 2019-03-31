@@ -1,4 +1,4 @@
-USE CleanAir;
+USE clean_air;
 -- The password is Test!234 for user 1
 
 INSERT INTO user (`id`, `email`, `password`,`shareReadings`) VALUES (1, "test@test.com", "$2b$08$FMuuWmg06wmwwvHxRkwXzOis0VhdbkGO2P6BFXmmaXyGSTSONfeni", 1);

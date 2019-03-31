@@ -1,5 +1,13 @@
 {
     "settings": {
+        "settings": [
+            "Settings",
+            "Lleoliadau"
+        ],
+        "general": [
+            "General",
+            "Cyffredinol"
+        ],
         "languageTitle": [
             "Language",
             "Iaith"
@@ -16,6 +24,14 @@
             "Export your data to a csv file",
             "Allforiwch eich data i ffeil csv"
         ],
+        "exportButton": [
+            "Export",
+            "Allforio"
+        ],
+        "privacy": [
+            "Privacy",
+            "Preifatrwydd"
+        ],
         "readingsTitle": [
             "Share Readings Publicly",
             "Rhannu Darlleniadau Yn Gyhoeddus"
@@ -28,6 +44,10 @@
             "These readings are anonymous and your trips are not public.",
             "Mae'r darlleniadau hyn yn ddienw ac nid yw eich teithiau'n gyhoeddus."
         ],
+        "account": [
+            "Account",
+            "Cyfrif"
+        ],
         "emailTitle": [
             "Email",
             "E-bost"
@@ -35,6 +55,10 @@
         "emailDetails": [
             "Change your account email.",
             "Newidiwch e-bost eich cyfrif."
+        ],
+        "emailButton": [
+            "Change Email",
+            "Newid E-bost"
         ],
         "passwordTitle": [
             "Password",
@@ -44,6 +68,10 @@
             "Change your account Password.",
             "Newid cyfrinair eich cyfrif."
         ],
+        "buttonPassword": [
+            "Change Password",
+            "Newid cyfrinair"
+        ],
         "deleteTitle": [
             "Delete Account",
             "Dileu Cyfrif"
@@ -51,6 +79,10 @@
         "deleteDetails": [
             "Careful, this cannot be undone.",
             "Yn ofalus, ni ellir dadwneud hyn."
+        ],
+        "deleteButton": [
+            "Delete Account",
+            "Dileu Cyfrif"
         ]
     }
 }

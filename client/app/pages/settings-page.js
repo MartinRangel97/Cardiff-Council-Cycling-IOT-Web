@@ -7,12 +7,9 @@ import Page from '../components/page/page'
 import Section from '../components/common/section'
 import Card from '../components/common/card'
 import Button from '../components/common/button'
-import IconButton from '../components/common/icon-button'
 import Toggle from '../components/common/toggle'
 import Divider from '../components/common/divider'
-import LanguageSelector from '../Language-Selector'
-
-// Icons
+import LanguageSelector from './settings-page/language-toggle'
 
 class SettingsModal extends React.Component {
   constructor (props) {
@@ -27,8 +24,8 @@ class SettingsModal extends React.Component {
 
   render () {
     return (
-      <Page className='settings-modal' title='Settings' path={this.props.path} canGoBack>
-        <Section title='General'>
+      <Page className='settings-modal' title={<Translate id='settings.settings' />} path={this.props.path} canGoBack>
+        <Section title={<Translate id='settings.general' />} >
           <Card className={'p-0'}>
             <div className='setting'>
               <div className='details'>
@@ -54,12 +51,12 @@ class SettingsModal extends React.Component {
                 </h2>
               </div>
               <div className='actions'>
-                <Button text='Export' onClick={this.downloadExportedData} />
+                <Button text={<Translate id='settings.exportButton' />} onClick={this.downloadExportedData} />
               </div>
             </div>
           </Card>
         </Section>
-        <Section title='Privacy'>
+        <Section title={<Translate id='settings.privacy' />} >
           <Card className={'p-0'}>
             <div className='setting'>
               <div className='details'>
@@ -79,7 +76,7 @@ class SettingsModal extends React.Component {
             </div>
           </Card>
         </Section>
-        <Section title='Account'>
+        <Section title={<Translate id='settings.account' />}>
           <Card className={'p-0'}>
             <div className='setting'>
               <div className='details'>
@@ -91,7 +88,7 @@ class SettingsModal extends React.Component {
                 </h2>
               </div>
               <div className='action'>
-                <Button text='Change Email' />
+                <Button text={<Translate id='settings.emailButton' />} />
               </div>
             </div>
             <Divider />
@@ -105,7 +102,7 @@ class SettingsModal extends React.Component {
                 </h2>
               </div>
               <div className='actions'>
-                <Button text='Change Password' />
+                <Button text={<Translate id='settings.buttonPassword' />} />
               </div>
             </div>
             <Divider />
@@ -119,7 +116,7 @@ class SettingsModal extends React.Component {
                 </h2>
               </div>
               <div className='actions'>
-                <Button text='Delete Account' danger />
+                <Button text={<Translate id='settings.deleteButton' />} danger />
               </div>
             </div>
           </Card>
@@ -130,7 +127,8 @@ class SettingsModal extends React.Component {
 }
 
 SettingsModal.propTypes = {
-  path: PropTypes.string
+  path: PropTypes.string,
+  addTranslation: PropTypes.object
 }
 
 export default withLocalize(SettingsModal)

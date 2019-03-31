@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     startTime: DataTypes.DATE,
     endTime: DataTypes.DATE
-    
+
   })
 
   Journey.sync()

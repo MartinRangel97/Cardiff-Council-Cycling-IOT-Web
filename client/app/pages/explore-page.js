@@ -41,21 +41,21 @@ export default class ExplorePage extends React.Component {
     request.send(null)
   }
 
-  journey() {
+  journey () {
     var request = new XMLHttpRequest()
     request.open('GET', '/api/web/journey', true)
     console.log(request.status)
     request.onload = (data) => {
-        console.log(request.status)
-        if (request.status === 200) {
-            this.setState({ 
-                journey: request.response
-            })
-        }else {
-            console.log('Failed')
-        }
+      console.log(request.status)
+      if (request.status === 200) {
+        this.setState({
+          journey: request.response
+        })
+      } else {
+        console.log('Failed')
+      }
     }
-}
+  }
 
   render () {
     this.measurements()
