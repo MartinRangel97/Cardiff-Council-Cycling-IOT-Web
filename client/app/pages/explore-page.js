@@ -21,7 +21,8 @@ export default class ExplorePage extends React.Component {
       NO2Average: 0,
       PM10Average: 0,
       PM25Average: 0,
-      airQualityIndex: 'N/A'
+      airQualityIndex: 'N/A',
+      circleAverages: {}
     }
   }
 
@@ -42,10 +43,28 @@ export default class ExplorePage extends React.Component {
           search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
             'lat=' + this.props.mapState.clickLocation.lat
         })
+        this.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
       }
     }
   }
 
+  getCircleAverage = (lat, lon, rad) => {
+    axios.post('/api/web/circleAverage', {
+      'latitude': lat,
+      'longitude': lon,
+      'radius': rad
+    })
+      .then((response) => {
+        // console.log(response.data)
+        this.setState({
+          circleAverages: response.data
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  
   getAirQualityIndex = (no2, pm25, pm10) => {
     let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
     let aqi
@@ -141,7 +160,7 @@ export default class ExplorePage extends React.Component {
   getNoiseAverage = () => {
     axios.get('/api/web/noiseAverage')
       .then((response) => {
-        console.log('Noise' + response.data)
+        // console.log(response)
         this.setState({
           noiseAverage: response.data.toFixed(0)
         })
@@ -154,7 +173,7 @@ export default class ExplorePage extends React.Component {
   getNO2Average = () => {
     axios.get('/api/web/NO2Average')
       .then((response) => {
-        console.log('NO2 ' + response.data)
+        // console.log('NO2 ' + response.data)
         this.setState({
           NO2Average: response.data.toFixed(0)
         })
@@ -167,7 +186,7 @@ export default class ExplorePage extends React.Component {
   getPM10Average = () => {
     axios.get('/api/web/PM10Average')
       .then((response) => {
-        console.log('PM10 ' + response.data)
+        // console.log('PM10 ' + response.data)
         this.setState({
           PM10Average: response.data.toFixed(0)
         })
@@ -180,7 +199,7 @@ export default class ExplorePage extends React.Component {
   getPM25Average = () => {
     axios.get('/api/web/PM25Average')
       .then((response) => {
-        console.log('PM2.5 ' + response.data)
+        // console.log('PM2.5 ' + response.data)
         this.setState({
           PM25Average: response.data.toFixed(0)
         })
@@ -194,7 +213,7 @@ export default class ExplorePage extends React.Component {
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} render={(props) =>
-          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} />
+          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.state.circleAverages} />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Explore'>

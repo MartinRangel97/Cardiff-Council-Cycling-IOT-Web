@@ -91,15 +91,16 @@ export default class MapView extends React.Component {
     }
   }
 
-  getMeasurements () {
+  getReadings () {
     let request = new XMLHttpRequest()
     request.responseType = 'json'
-    request.open('GET', '/api/web/measurements', true)
+    request.open('GET', '/api/web/allReadings', true)
     request.onload = (data) => {
       if (request.status === 200) {
         this.setState({
           measurement: request.response
         })
+        console.log(request.response)
       } else {
         console.log('Failed')
       }
@@ -110,7 +111,7 @@ export default class MapView extends React.Component {
   componentDidMount () {
     // Public Style URL:
     // https://api.mapbox.com/styles/v1/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3.html?fresh=true&title=true&access_token=pk.eyJ1Ijoiam9uYXRoYW5wZXRlcmNvbGUiLCJhIjoiY2p0YWhqaTRrMGFydjQzcWQ1NWR5aTk3dCJ9.V7HyWXQG5lpWtgk-17y6yw#13.5/51.480233/-3.152327/0
-    this.getMeasurements()
+    this.getReadings()
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3',

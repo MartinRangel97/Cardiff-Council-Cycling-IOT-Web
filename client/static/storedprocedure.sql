@@ -1,5 +1,7 @@
 delete FROM measurements where id >= 1;
 
+INSERT INTO `cleanair`.`journey` (`userId`, `startTime`, `endTime`) VALUES ('1', NOW(), NOW());
+
 DELIMITER $$
 CREATE PROCEDURE insert_test_data()
 BEGIN
