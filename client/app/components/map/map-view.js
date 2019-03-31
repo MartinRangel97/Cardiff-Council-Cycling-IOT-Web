@@ -100,6 +100,7 @@ export default class MapView extends React.Component {
         this.setState({
           measurement: request.response
         })
+        console.log(request.response)
       } else {
         console.log('Failed')
       }
