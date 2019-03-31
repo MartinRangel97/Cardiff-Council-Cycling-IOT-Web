@@ -55,7 +55,6 @@ export default class ExplorePage extends React.Component {
       'radius': rad
     })
       .then((response) => {
-        // console.log(response.data)
         this.setState({
           circleAverages: response.data
         })
@@ -64,7 +63,7 @@ export default class ExplorePage extends React.Component {
         console.log(error)
       })
   }
-  
+
   getAirQualityIndex = (no2, pm25, pm10) => {
     let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
     let aqi
@@ -160,7 +159,6 @@ export default class ExplorePage extends React.Component {
   getNoiseAverage = () => {
     axios.get('/api/web/noiseAverage')
       .then((response) => {
-        // console.log(response)
         this.setState({
           noiseAverage: response.data.toFixed(0)
         })
@@ -173,7 +171,6 @@ export default class ExplorePage extends React.Component {
   getNO2Average = () => {
     axios.get('/api/web/NO2Average')
       .then((response) => {
-        // console.log('NO2 ' + response.data)
         this.setState({
           NO2Average: response.data.toFixed(0)
         })
@@ -186,7 +183,6 @@ export default class ExplorePage extends React.Component {
   getPM10Average = () => {
     axios.get('/api/web/PM10Average')
       .then((response) => {
-        // console.log('PM10 ' + response.data)
         this.setState({
           PM10Average: response.data.toFixed(0)
         })
@@ -199,7 +195,6 @@ export default class ExplorePage extends React.Component {
   getPM25Average = () => {
     axios.get('/api/web/PM25Average')
       .then((response) => {
-        // console.log('PM2.5 ' + response.data)
         this.setState({
           PM25Average: response.data.toFixed(0)
         })
