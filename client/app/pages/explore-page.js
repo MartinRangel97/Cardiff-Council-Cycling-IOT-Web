@@ -159,9 +159,11 @@ export default class ExplorePage extends React.Component {
   getNoiseAverage = () => {
     axios.get('/api/web/noiseAverage')
       .then((response) => {
-        this.setState({
-          noiseAverage: response.data.toFixed(0)
-        })
+        if (response.data !== 'NaN') {
+          this.setState({
+            noiseAverage: response.data.toFixed(0)
+          })
+        }
       })
       .catch((error) => {
         console.log(error)
@@ -171,9 +173,11 @@ export default class ExplorePage extends React.Component {
   getNO2Average = () => {
     axios.get('/api/web/NO2Average')
       .then((response) => {
-        this.setState({
-          NO2Average: response.data.toFixed(0)
-        })
+        if (response.data !== 'NaN') {
+          this.setState({
+            NO2Average: response.data.toFixed(0)
+          })
+        }
       })
       .catch((error) => {
         console.log(error)
@@ -183,9 +187,11 @@ export default class ExplorePage extends React.Component {
   getPM10Average = () => {
     axios.get('/api/web/PM10Average')
       .then((response) => {
-        this.setState({
-          PM10Average: response.data.toFixed(0)
-        })
+        if (response.data !== 'NaN') {
+          this.setState({
+            PM10Average: response.data.toFixed(0)
+          })
+        }
       })
       .catch((error) => {
         console.log(error)
@@ -195,9 +201,11 @@ export default class ExplorePage extends React.Component {
   getPM25Average = () => {
     axios.get('/api/web/PM25Average')
       .then((response) => {
-        this.setState({
-          PM25Average: response.data.toFixed(0)
-        })
+        if (response.data !== 'NaN') {
+          this.setState({
+            PM25Average: response.data.toFixed(0)
+          })
+        }
       })
       .catch((error) => {
         console.log(error)
