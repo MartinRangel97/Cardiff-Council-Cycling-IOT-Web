@@ -28,7 +28,7 @@ router.post('/signup',
     check('password')
       .isLength({ min: 8 })
       .withMessage('Must be a minimum of 8 characters')
-      .matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
+      .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&?*]{8,16}$/)
       .withMessage('Must contain 1 lowercase, 1 uppercase, 1 number and 1 special character')
   ],
   (req, res) => {
@@ -38,9 +38,16 @@ router.post('/signup',
       return res.status(422).json({ errors: errors.array() })
     }
     // authentication  services checks the email is availble and will create the account with a hashed password
+    console.log(req.body)
     authenicationService.createUser(req.body.email, req.body.password)
-      .then(() => {
-        res.status(200).json({ msg: 'Account Created' }).send()
+      .then(user => {
+        // Get the token and send it to the client
+        const payload = { id: user.id }
+        const token = jwt.sign(payload, keys.secretOrKey)
+        res.status(200)
+          .json({ token: token, msg: 'Account Created' })
+          .cookie('token', token, { httpOnly: true })
+          .send()
       })
       .catch((error) => {
         res.status(400).json({ msg: error.toString() }).send()
@@ -52,84 +59,34 @@ router.post('/signup',
 */
 router.post('/login', async function (req, res) {
   const { email, password } = req.body
-
-  database.getDatabase().user.findOne({ email }).then(user => {
+  database.getDatabase().user.findOne({
+    where: {
+      email: email
+    }
+  }).then(user => {
   // Check if user exists
     if (!user) {
-      return res.status(404).json({ emailnotfound: 'Email not found' })
+      return res.status(404).json({ emailnotfound: 'Email not found' }).send()
     }
     // Check password
-    bcrypt.compare(password, user.password).then(isMatch => {
-      if (email && isMatch) {
-        const payload = { id: user.id }
-        const token = jwt.sign(payload, keys.secretOrKey)
-        res.cookie('token', token, { httpOnly: true }).sendStatus(200)
-      } else {
-        res.status(401).json({ msg: 'Incorrect Password' })
-      }
-    })
+    bcrypt.compare(password, user.password)
+      .then(isMatch => {
+        if (isMatch) {
+          // Get the token and send it to the client
+          const payload = { id: user.id }
+          const token = jwt.sign(payload, keys.secretOrKey)
+          res.status(200)
+            .json({ token: token })
+            .cookie('token', token, { httpOnly: true })
+            .send()
+        } else {
+          res.status(401).json({ msg: 'Incorrect Password' }).send()
+        }
+      })
+      .catch(() => {
+        res.status(401).json({ msg: 'Incorrect Password' }).send()
+      })
   })
 })
-
-router.post('/app/login', async function (req, res) {
-  // Login and return the token as JSON for the app
-  const { email, password } = req.body
-  database.getDatabase().user.findOne({ email }).then(user => {
-  // Check if user exists
-    if (!user) {
-      return res.status(404).json({ emailnotfound: 'Email not found' })
-    }
-    // Check password
-    bcrypt.compare(password, user.password).then(isMatch => {
-      if (email && isMatch) {
-        const payload = { id: user.id }
-        const token = jwt.sign(payload, keys.secretOrKey)
-        res.status(200).json({ token: token }).send()
-      } else {
-        res.status(401).json({ msg: 'Incorrect Password' })
-      }
-    })
-  })
-})
-
-router.post('/app/register',
-  [
-    // checks that the users email is in an email format
-    check('email')
-      .isEmail()
-      .withMessage('Must be an email. E.g: example@example.com'),
-    // checks that the users password is using the correct password convetions
-    check('password')
-      .isLength({ min: 8 })
-      .withMessage('Must be a minimum of 8 characters')
-      .matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
-      .withMessage('Must contain 1 lowercase, 1 uppercase, 1 number and 1 special character')
-  ],
-  async function (req, res) {
-    // Register, then login and return the token as JSON for the app
-    // if there is an error in the validation process it sends a 422
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() })
-    }
-    // authentication  services checks the email is availble and will create the account with a hashed password
-    authenicationService.createUser(req.body.email, req.body.password)
-      .then(user => {
-        const payload = { id: user.id }
-        const token = jwt.sign(payload, keys.secretOrKey)
-        res.status(200).json({ token: token }).send()
-      })
-      .catch(error => {
-        res.status(400).json({ msg: error.toString() }).send()
-      })
-  }
-)
-
-/*
-* Logout
-*/
-// router.get('/logout', (req, res, next) => {
-
-// })
 
 module.exports = router
