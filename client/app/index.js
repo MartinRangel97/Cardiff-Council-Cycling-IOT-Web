@@ -6,6 +6,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter, Route } from 'react-router-dom'
+import { LocalizeProvider } from 'react-localize-redux'
 
 // App
 import App from './app'
@@ -18,10 +19,12 @@ import 'typeface-poppins'
 
 // Render
 render(
-  <div className='container'>
-    <BrowserRouter>
-      <Route path='/app' render={(props) => <App {...props} />} />
-    </BrowserRouter>
-  </div>,
+  <LocalizeProvider>
+    <div className='container'>
+      <BrowserRouter>
+        <Route path='/app' render={(props) => <App {...props} />} />
+      </BrowserRouter>
+    </div>
+  </LocalizeProvider>,
   document.getElementById('app-root')
 )

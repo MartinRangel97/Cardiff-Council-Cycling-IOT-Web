@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
 const bcrypt = require('bcrypt')
 
 // Service
@@ -71,12 +70,5 @@ router.post('/login', async function (req, res) {
     })
   })
 })
-
-/*
-* Logout
-*/
-// router.get('/logout', (req, res, next) => {
-
-// })
 
 module.exports = router
