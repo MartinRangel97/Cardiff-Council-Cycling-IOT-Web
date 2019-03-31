@@ -21,8 +21,10 @@ export default class ProfilePage extends React.Component {
   }
 
   componentWillMount () {
+    // testing the functions
     this.getJourneys(1)
-    this.getTotalAirAverage(1)
+    this.getTotalAverages(1)
+    this.getJourneyMonth(1)
   }
   // }, () => {
   //   for (let i = 0; i < this.state.journeys.length; i++) {
@@ -33,7 +35,10 @@ export default class ProfilePage extends React.Component {
   getJourneys = (userId) => {
     axios.get('/api/web/' + userId + '/journeys')
       .then((response) => {
-        return response.data
+        this.setState({
+          journeys: response.data
+        })
+        console.log(this.state.journeys)
       })
       .catch((error) => {
         console.log(error)
@@ -55,15 +60,23 @@ export default class ProfilePage extends React.Component {
   getTotalDistanceTravelled = (journey) => {}
 
   // Trips
-  getJourneyMonth = (journey) => {}
+  getJourneyMonth = (journeyId) => {
+    axios.get('/api/web/journeys/' + journeyId)
+      .then((response) => {
+        return response.data
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
-  getJourneyDay = (journey) => {}
+  getJourneyDay = (journeyId) => {}
 
-  getJourneyStartTime = (journey) => {}
+  getJourneyStartTime = (journeyId) => {}
 
-  getJourneyEndTime = (journey) => {}
+  getJourneyEndTime = (journeyId) => {}
 
-  getJourneyDistance = (journey) => {}
+  getJourneyDistance = (journeyId) => {}
 
   getJourneyAirAverage = (journey) => {
     let userId = journey.userId

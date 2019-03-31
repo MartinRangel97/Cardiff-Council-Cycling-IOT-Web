@@ -164,15 +164,15 @@ router.get('/:userId/journeys/:journeyId/measurements', function (req, res, next
 })
 
 // Get the date of a journey based on user and journey id 
-router.get('/:userId/journeys/:journeyId', function (req, res, next) {
-  database.getDatabase().measurement.findAll({
+router.get('/journeys/:journeyId', function (req, res, next) {
+  database.getDatabase().journey.findAll({
     where: {
-      userId: req.params.userId,
-      journeyId: req.params.journeyId
+      id: req.params.journeyId
     }
   }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, journeyScheme)
-    res.send(postsAsJSON.startTime)
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
+    var month = new Date(postsAsJSON[0].startTime)
+    res.send(month.getMonth())
   })
 })
 
