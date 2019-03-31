@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
 const bcrypt = require('bcrypt')
 
 // Service
@@ -29,7 +28,7 @@ router.post('/signup',
     check('password')
       .isLength({ min: 8 })
       .withMessage('Must be a minimum of 8 characters')
-      .matches(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
+      .matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&?*]{8,16}$/)
       .withMessage('Must contain 1 lowercase, 1 uppercase, 1 number and 1 special character')
   ],
   (req, res) => {
@@ -53,30 +52,31 @@ router.post('/signup',
 */
 router.post('/login', async function (req, res) {
   const { email, password } = req.body
-
-  database.getDatabase().user.findOne({ email }).then(user => {
+  database.getDatabase().user.findOne({
+    where: {
+      email: email
+    }
+  }).then(user => {
   // Check if user exists
     if (!user) {
       return res.status(404).json({ emailnotfound: 'Email not found' })
     }
     // Check password
-    bcrypt.compare(password, user.password).then(isMatch => {
-      if (email && isMatch) {
-        const payload = { id: user.id }
-        const token = jwt.sign(payload, keys.secretOrKey)
-        res.cookie('token', token, { httpOnly: true }).sendStatus(200)
-      } else {
+    bcrypt.compare(password, user.password)
+      .then(isMatch => {
+        if (isMatch) {
+          const payload = { id: user.id }
+          const token = jwt.sign(payload, keys.secretOrKey, { expiresIn: 2592000 }) // 30 days (seconds)
+          const expiryDate = new Date(Number(new Date()) + 2592000000) // expires the cookie in 30 days (miliseconds)
+          res.cookie('token', token, { expires: expiryDate, httpOnly: true }).sendStatus(200)
+        } else {
+          res.status(401).json({ msg: 'Incorrect Password' })
+        }
+      })
+      .catch(() => {
         res.status(401).json({ msg: 'Incorrect Password' })
-      }
-    })
+      })
   })
 })
-
-/*
-* Logout
-*/
-// router.get('/logout', (req, res, next) => {
-
-// })
 
 module.exports = router

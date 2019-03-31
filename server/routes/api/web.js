@@ -1,16 +1,12 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
 const database = require('../../database')
 const Serializer = require('sequelize-to-json')
 const { Op } = require('sequelize')
 const Sequelize = require('sequelize')
-var GeoJSON = require('geojson') // converts JSON into GEOJSON
+const GeoJSON = require('geojson') // converts JSON into GEOJSON
 const moment = require('moment')
-
-// Example Route
-router.get('/example', function (req, res, next) {
-  res.send({ example: 'JSON' })
-})
+const { parse } = require('json2csv')
 
 // sets a template for the JSON
 const scheme = {
@@ -20,6 +16,25 @@ const scheme = {
   //   include: ['dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken', 'longitude', 'latitude', 'distance']
   // }
 }
+
+router.get('/export', function (req, res, next) {
+  const measurementsScheme = {
+    include: ['@all'],
+    assoc: {
+      include: ['id', 'userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken', 'longitude', 'latitude']
+    }
+  }
+  database.getDatabase().measurement.findAll().then((measurements) => {
+    let measurementsJSON = Serializer.serializeMany(measurements, database.getDatabase().measurement, measurementsScheme)
+    try {
+      res.attachment('export.csv')
+      res.send(parse(measurementsJSON))
+    } catch (err) {
+      console.log(err)
+      res.sendStatus(400)
+    }
+  })
+})
 
 // gets the averages of the readings within the radius of a location
 router.post('/circleAverage', function (req, res, next) {
