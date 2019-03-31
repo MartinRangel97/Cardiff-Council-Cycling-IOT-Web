@@ -50,7 +50,13 @@ router.post('/circleAverage', function (req, res, next) {
       distance: {
         [Op.lte]: rad
       }
+    },
+    where: {
+      timeTaken: {
+        [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
+      }
     }
+
   })
     .then(async function (posts) {
       let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
