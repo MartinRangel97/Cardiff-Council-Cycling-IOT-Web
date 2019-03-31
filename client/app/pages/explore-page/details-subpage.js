@@ -18,6 +18,7 @@ export default class DetailssPage extends React.Component {
   componentWillMount () {
     // Set the radius
     this.props.setRadius(this.getLngLat())
+    this.props.getAirQualityIndex(this.props.circleAverages.NO2, this.props.circleAverages.PM10, this.props.circleAverages.PM25)
   }
 
   componentDidUpdate (prevProps) {
@@ -44,11 +45,27 @@ export default class DetailssPage extends React.Component {
           </Card>
         </Section>
         <Section title='Area 24 Hour Averages'>
-          <Card className='average' link={``}>
-            <IconAirPollution className='icon' />
-            <div className='details'>
-              <h1>Air Pollution</h1>
-              <span className='value'>Moderate</span>
+          <Card>
+            <div className='average'>
+              <IconAirPollution className='icon' />
+              <div className='details'>
+                <h1>Air Pollution</h1>
+                <span className='value'>{this.props.airQualityIndex}</span>
+              </div>
+            </div>
+            <div className='pill-container'>
+              <div className='pill'>
+                <h2>NO2</h2>
+                <span>{this.props.circleAverages.NO2} µg/m³</span>
+              </div>
+              <div className='pill'>
+                <h2>PM2.5</h2>
+                <span>{this.props.circleAverages.PM25} µgm-3</span>
+              </div>
+              <div className='pill'>
+                <h2>PM10</h2>
+                <span>{this.props.circleAverages.PM10} µg/m³</span>
+              </div>
             </div>
           </Card>
           <Card className='average' link={``}>
@@ -67,6 +84,7 @@ export default class DetailssPage extends React.Component {
 DetailssPage.propTypes = {
   location: PropTypes.object,
   setRadius: PropTypes.func,
-  circleAverages: PropTypes.object
+  circleAverages: PropTypes.object,
+  airQualityIndex: PropTypes.string,
+  getAirQualityIndex: PropTypes.func
 }
-  

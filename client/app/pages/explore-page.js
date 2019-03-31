@@ -38,12 +38,12 @@ export default class ExplorePage extends React.Component {
     // If the map was clicked, show the details page
     if (prevProps.mapState !== this.props.mapState) {
       if (this.props.mapState.clickLocation) {
+        this.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
         this.props.history.push({
           pathname: `${this.props.match.path}/details`,
           search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
             'lat=' + this.props.mapState.clickLocation.lat
         })
-        this.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
       }
     }
   }
@@ -216,7 +216,9 @@ export default class ExplorePage extends React.Component {
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} render={(props) =>
-          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.state.circleAverages} />
+          <DetailsSubpage getAirQualityIndex={this.getAirQualityIndex} {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.state.circleAverages}
+            airQualityIndex={this.state.airQualityIndex}
+          />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Explore'>
@@ -269,5 +271,7 @@ ExplorePage.propTypes = {
   history: PropTypes.object,
   match: PropTypes.object,
   mapState: PropTypes.object,
-  setMapCurrentRadius: PropTypes.func
+  setMapCurrentRadius: PropTypes.func,
+  getAirQualityIndex: PropTypes.func,
+  airQualityIndex: PropTypes.string
 }
