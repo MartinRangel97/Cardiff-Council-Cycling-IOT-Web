@@ -20,6 +20,7 @@ import HistoryPage from './pages/history-page'
 import SearchPage from './pages/search-page'
 import AveragesPage from './pages/explore-page/averages-page'
 import SettingsPage from './pages/settings-page'
+import DetailsPage from './pages/details-page'
 
 class App extends React.Component {
   constructor (props) {
@@ -96,6 +97,7 @@ class App extends React.Component {
         </Sidebar>
         <AveragesPage path={`${this.props.match.path}/explore/averages/:type`} />
         <SettingsPage path={`${this.props.match.path}/settings`} />
+        <DetailsPage path={`${this.props.match.path}/history/view/details`} />
         <ConfirmationModal
           show={this.state.showLogoutConfirmation}
           close={this.toggleLogoutConfirmation}

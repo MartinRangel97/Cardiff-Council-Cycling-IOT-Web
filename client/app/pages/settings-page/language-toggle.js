@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withLocalize } from 'react-localize-redux'
-import IconButton from './components/common/icon-button'
+import IconButton from '../../components/common/icon-button'
 
 // Icons
-import England from './pages/settings-page/icons/England.svg'
-import Wales from './pages/settings-page/icons/Wales.svg'
+import England from './icons/England.svg'
+import Wales from './icons/Wales.svg'
 
 const LanguageToggle = ({ setActiveLanguage }) => (
   <div className='containter'>

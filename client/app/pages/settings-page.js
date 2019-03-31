@@ -9,7 +9,7 @@ import Card from '../components/common/card'
 import Button from '../components/common/button'
 import Toggle from '../components/common/toggle'
 import Divider from '../components/common/divider'
-import LanguageSelector from '../Language-Selector'
+import LanguageSelector from './settings-page/language-toggle'
 
 class SettingsModal extends React.Component {
   constructor (props) {
@@ -17,6 +17,11 @@ class SettingsModal extends React.Component {
 
     this.props.addTranslation(settingsTranslations)
   }
+
+  downloadExportedData = () => {
+    window.open('/api/web/export', '_blank')
+  }
+
   render () {
     return (
       <Page className='settings-modal' title={<Translate id='settings.settings' />} path={this.props.path} canGoBack>
@@ -46,7 +51,7 @@ class SettingsModal extends React.Component {
                 </h2>
               </div>
               <div className='actions'>
-                <Button text={<Translate id='settings.exportButton' />} />
+                <Button text={<Translate id='settings.exportButton' />} onClick={this.downloadExportedData} />
               </div>
             </div>
           </Card>

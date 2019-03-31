@@ -25,8 +25,8 @@ export default class OverlayPicker extends React.Component {
           <a className={this.getClassName('noise')} onClick={() => { this.props.onChange('noise') }}>
             Noise
           </a>
-          <a className={this.getClassName('pollution')} onClick={() => { this.props.onChange('pollution') }}>
-            Pollution
+          <a className={this.getClassName('air')} onClick={() => { this.props.onChange('air') }}>
+            Air
           </a>
         </div>
       </div>
