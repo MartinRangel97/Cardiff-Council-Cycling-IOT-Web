@@ -168,13 +168,13 @@ export default class ProfilePage extends React.Component {
                   <div className='date'>
                     {
                       // Bug: returns undefined
-                      console.log('render: ' + this.getJourneyMonth(i + 1))
+                      console.log('render: ' + this.getJourneyMonth(journey.id))
                     }
-                    <h1>{this.getJourneyMonth(i + 1)}</h1>
-                    <span>{this.getJourneyDay(i + 1)}</span>
+                    <h1>{this.getJourneyMonth(journey.id)}</h1>
+                    <span>{this.getJourneyDay(journey.id)}</span>
                   </div>
                   <div className='details'>
-                    <h1>{this.getJourneyStartTime(i + 1)} - {this.getJourneyEndTime(i + 1)}</h1>
+                    <h1>{this.getJourneyStartTime(journey.id)} - {this.getJourneyEndTime(journey.id)}</h1>
                     <span className='value'>5 Miles</span>
                   </div>
                 </Card>
