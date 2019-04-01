@@ -14,7 +14,6 @@ import LanguageSelector from './settings-page/language-toggle'
 class SettingsModal extends React.Component {
   constructor (props) {
     super(props)
-
     this.props.addTranslation(settingsTranslations)
   }
 

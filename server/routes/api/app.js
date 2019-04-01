@@ -1,9 +1,18 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
 
-// Example Route
-router.get('/example', function (req, res, next) {
-  res.send({ example: 'JSON' })
+const syncService = require('../../services/sync/syncService')
+
+router.post('/sync/journeys', async (req, res, next) => {
+  // Sync and return the new journeys
+  let syncedJourneys = await syncService.syncJourneys(req.userID, req.body.journeys)
+  res.send({ 'journeys': syncedJourneys })
+})
+
+router.post('/sync/readings', async (req, res, next) => {
+  // Sync and return the new journeys
+  let syncedReadings = await syncService.syncReadings(req.userID, req.body.readings)
+  res.send({ 'readings': syncedReadings })
 })
 
 module.exports = router
