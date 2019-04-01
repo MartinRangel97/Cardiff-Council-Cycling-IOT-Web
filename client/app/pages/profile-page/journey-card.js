@@ -20,11 +20,11 @@ const Journey = props => {
 
 Journey.propTypes = {
   month: PropTypes.string,
-  day: PropTypes.string,
+  day: PropTypes.number,
   startTime: PropTypes.string,
   endTime: PropTypes.string,
   distanceTravelled: PropTypes.string,
-  link: PropTypes.link
+  link: PropTypes.string
 }
 
 export default Journey

@@ -42,7 +42,6 @@ export default class ProfilePage extends React.Component {
         this.setState({
           journeys: response.data
         })
-        console.log(this.state.journeys)
       })
       .catch((error) => {
         console.log(error)
@@ -146,7 +145,7 @@ x
               {this.state.journeys.map((journey, i) =>
                 <Journey
                   key={i}
-                  link={'/journey/' + i}
+                  link={`${this.props.match.path}/journey/' + i`}
                   day={this.getJourneyDay(journey)}
                   month={this.getJourneyMonth(journey)}
                   startTime={this.getJourneyStartTime(journey)}
