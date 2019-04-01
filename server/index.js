@@ -17,6 +17,9 @@ const authRouter = require('./routes/auth')
 const appApiRouter = require('./routes/api/app')
 const webApiRouter = require('./routes/api/web')
 
+// Auth
+const withAuth = require('./services/authentication/authMiddleware')
+
 // Prepare express
 const app = express()
 const server = http.Server(app)
@@ -59,8 +62,8 @@ async function startServer () {
   // Routes
   app.use('/', pagesRouter)
   app.use('/auth', authRouter)
-  app.use('/api/app', appApiRouter)
-  app.use('/api/web', webApiRouter)
+  app.use('/api/app', withAuth, appApiRouter)
+  app.use('/api/web', withAuth, webApiRouter)
 
   // Listen
   server.listen(config.server.port)

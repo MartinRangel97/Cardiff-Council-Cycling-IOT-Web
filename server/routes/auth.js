@@ -3,7 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 
 // Service
-const authenicationService = require('../services/authenticationService')
+const authenicationService = require('../services/authentication/authService')
 
 // Jwt Token and keys
 const jwt = require('jsonwebtoken')

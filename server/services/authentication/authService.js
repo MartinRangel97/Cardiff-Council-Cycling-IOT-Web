@@ -1,4 +1,4 @@
-const database = require('../database')
+const database = require('../../database')
 const bcrypt = require('bcrypt')
 
 exports.createUser = async (email, password) => {
