@@ -64,12 +64,12 @@ export default class ProfilePage extends React.Component {
   // Trips
   getJourneyMonth = (journeyId) => {
     axios.get('/api/web/journeys/' + journeyId + '/month')
+      .catch((error) => {
+        console.log(error)
+      })
       .then((response) => {
         console.log('month: ' + response.data)
         return response.data
-      })
-      .catch((error) => {
-        console.log(error)
       })
   }
 
@@ -166,11 +166,15 @@ export default class ProfilePage extends React.Component {
               {this.state.journeys.map((journey, i) =>
                 <Card className='average' link={``} key={i}>
                   <div className='date'>
+                    {
+                      // Bug: returns undefined
+                      console.log('render: ' + this.getJourneyMonth(i + 1))
+                    }
                     <h1>{this.getJourneyMonth(i + 1)}</h1>
                     <span>{this.getJourneyDay(i + 1)}</span>
                   </div>
                   <div className='details'>
-                    <h1>9:35 - 11:58</h1>
+                    <h1>{this.getJourneyStartTime(i + 1)} - {this.getJourneyEndTime(i + 1)}</h1>
                     <span className='value'>5 Miles</span>
                   </div>
                 </Card>

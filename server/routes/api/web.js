@@ -198,7 +198,11 @@ router.get('/journeys/:journeyId/startTime', function (req, res, next) {
     }
   }).then(posts => {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
-    res.send(postsAsJSON[0].startTime)
+    let dateTime = new Date(postsAsJSON[0].startTime)
+    let hh = dateTime.getHours()
+    let mm = dateTime.getMinutes()
+    let time = hh + ':' + mm
+    res.send(time)
   })
 })
 
@@ -210,7 +214,11 @@ router.get('/journeys/:journeyId/endTime', function (req, res, next) {
     }
   }).then(posts => {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
-    res.send(postsAsJSON[0].endTime)
+    let dateTime = new Date(postsAsJSON[0].endTime)
+    let hh = dateTime.getHours()
+    let mm = dateTime.getMinutes()
+    let time = hh + ':' + mm
+    res.send(time)
   })
 })
 
