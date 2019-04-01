@@ -65,6 +65,7 @@ export default class ProfilePage extends React.Component {
   getJourneyMonth = (journeyId) => {
     return axios.get('/api/web/journeys/' + journeyId + '/month')
       .then((response) => {
+        console.log('month: ' + response.data)
         return response.data
       })
       .catch((error) => {
@@ -75,6 +76,7 @@ export default class ProfilePage extends React.Component {
   getJourneyDay = (journeyId) => {
     axios.get('/api/web/journeys/' + journeyId + '/day')
       .then((response) => {
+        console.log('day: ' + response.data)
         return response.data
       })
       .catch((error) => {
@@ -166,36 +168,18 @@ export default class ProfilePage extends React.Component {
               </Card>
             </Section>
             <Section title='Your Trips'>
-              <Card className='average' link={``}>
-                <div className='date'>
-                  <h1>March</h1>
-                  <span>30</span>
-                </div>
-                <div className='details'>
-                  <h1>6:45 - 7:30</h1>
-                  <span className='value'>3 Miles</span>
-                </div>
-              </Card>
-              <Card className='average' link={``}>
-                <div className='date'>
-                  <h1>January</h1>
-                  <span>16</span>
-                </div>
-                <div className='details'>
-                  <h1>10:32 - 11:02</h1>
-                  <span className='value'>1 Mile</span>
-                </div>
-              </Card>
-              <Card className='average' link={``}>
-                <div className='date'>
-                  <h1>March</h1>
-                  <span>02</span>
-                </div>
-                <div className='details'>
-                  <h1>9:35 - 11:58</h1>
-                  <span className='value'>5 Miles</span>
-                </div>
-              </Card>
+              {this.state.journeys.map((journey, i) =>
+                <Card className='average' link={``} key={i}>
+                  <div className='date'>
+                    <h1>{this.getJourneyMonth(i + 1)}</h1>
+                    <span>{this.getJourneyDay(i + 1)}</span>
+                  </div>
+                  <div className='details'>
+                    <h1>9:35 - 11:58</h1>
+                    <span className='value'>5 Miles</span>
+                  </div>
+                </Card>
+              )}
             </Section>
           </SidebarPage>
         } />
