@@ -163,7 +163,7 @@ router.get('/:userId/journeys/:journeyId/measurements', function (req, res, next
   })
 })
 
-// Get the month the journey was taken which is based on journey id 
+// Get the month the journey was taken which is based on journey id
 router.get('/journeys/:journeyId/month', function (req, res, next) {
   database.getDatabase().journey.findAll({
     where: {
@@ -172,11 +172,12 @@ router.get('/journeys/:journeyId/month', function (req, res, next) {
   }).then(posts => {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
     var month = new Date(postsAsJSON[0].startTime)
-    res.send(month.getMonth())
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
+    res.send(months[month.getMonth()])
   })
 })
 
-// Get the month the journey was taken which is based on journey id 
+// Get the month the journey was taken which is based on journey id
 router.get('/journeys/:journeyId/day', function (req, res, next) {
   database.getDatabase().journey.findAll({
     where: {
@@ -185,7 +186,7 @@ router.get('/journeys/:journeyId/day', function (req, res, next) {
   }).then(posts => {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
     var day = new Date(postsAsJSON[0].startTime)
-    res.send(day.getDate())
+    res.send(day.getDate().toString())
   })
 })
 

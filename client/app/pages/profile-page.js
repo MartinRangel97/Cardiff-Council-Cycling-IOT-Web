@@ -64,6 +64,7 @@ export default class ProfilePage extends React.Component {
   getJourneyMonth = (journeyId) => {
     axios.get('/api/web/journeys/' + journeyId + '/month')
       .then((response) => {
+        console.log('month: ' + response.data)
         return response.data
       })
       .catch((error) => {
@@ -74,6 +75,7 @@ export default class ProfilePage extends React.Component {
   getJourneyDay = (journeyId) => {
     axios.get('/api/web/journeys/' + journeyId + '/day')
       .then((response) => {
+        console.log('day: ' + response.data)
         return response.data
       })
       .catch((error) => {
