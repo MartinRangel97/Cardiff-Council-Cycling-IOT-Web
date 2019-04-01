@@ -49,7 +49,7 @@ export default class ExplorePage extends React.Component {
   getAirQualityIndex = (no2, pm25, pm10) => {
     let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
     let aqi
-    if (highestIndex <= 3) {
+    if ( highestIndex < 0 <= 3) {
       aqi = 'Low'
     } else if (highestIndex <= 6) {
       aqi = 'Moderate'

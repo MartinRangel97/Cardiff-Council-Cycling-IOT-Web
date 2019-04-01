@@ -79,7 +79,7 @@ x
   }
 
   getJourneyStartTime = (journey) => {
-    return new Date(journey.startTime).getHours().toString().concat(':', new Date(journey.endTime).getMinutes().toString())
+    return new Date(journey.startTime).getHours().toString().concat(':', new Date(journey.startTime).getMinutes().toString())
   }
 
   getJourneyEndTime = (journey) => {
@@ -138,22 +138,11 @@ x
                 <IconNoise className='icon' />
                 <div className='details'>
                   <h1>Average Noise Pollution Exposure</h1>
-                  <span className='value'>{this.state.dBA} dBA</span>
+                  <span className='value'>{this.state.noiseAverage} dBA</span>
                 </div>
               </Card>
             </Section>
             <Section title='Your Trips'>
-              <Card className='average' link={``}>
-                <div className='date'>
-                  <h1>January</h1>
-                  <span>16</span>
-                </div>
-                <div className='details'>
-                  <h1>10:32 - 11:02</h1>
-                  <span className='value'>1 Mile</span>
-                </div>
-              </Card>
-
               {this.state.journeys.map((journey, i) =>
                 <Journey
                   key={i}
