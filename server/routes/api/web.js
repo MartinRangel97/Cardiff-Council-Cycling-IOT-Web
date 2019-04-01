@@ -176,7 +176,7 @@ router.get('/journeys/:journeyId/month', function (req, res, next) {
   })
 })
 
-// Get the month the journey was taken which is based on journey id 
+// Get the day(not weekday) the journey was taken which is based on journey id 
 router.get('/journeys/:journeyId/day', function (req, res, next) {
   database.getDatabase().journey.findAll({
     where: {
@@ -186,6 +186,30 @@ router.get('/journeys/:journeyId/day', function (req, res, next) {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
     var day = new Date(postsAsJSON[0].startTime)
     res.send(day.getDate())
+  })
+})
+
+// Get the startTime of the journey which is based on journey id 
+router.get('/journeys/:journeyId/startTime', function (req, res, next) {
+  database.getDatabase().journey.findAll({
+    where: {
+      id: req.params.journeyId
+    }
+  }).then(posts => {
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
+    res.send(postsAsJSON[0].startTime)
+  })
+})
+
+// Get the endTime of the journey which is based on journey id 
+router.get('/journeys/:journeyId/endTime', function (req, res, next) {
+  database.getDatabase().journey.findAll({
+    where: {
+      id: req.params.journeyId
+    }
+  }).then(posts => {
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
+    res.send(postsAsJSON[0].endTime)
   })
 })
 
