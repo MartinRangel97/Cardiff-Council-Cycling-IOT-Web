@@ -28,12 +28,12 @@ export default class ProfilePage extends React.Component {
     this.getJourneyDay(1)
     this.getJourneyStartTime(1)
     this.getJourneyEndTime(1)
+    this.getJourneyDistance(1)
   }
-  // }, () => {
-  //   for (let i = 0; i < this.state.journeys.length; i++) {
-  //     console.log(this.getJourneyAirAverage(i))
-  //   }
-  // })
+
+  fetchData = (data) => {
+    return data
+  }
 
   getJourneys = (userId) => {
     axios.get('/api/web/' + userId + '/journeys')
@@ -63,7 +63,7 @@ export default class ProfilePage extends React.Component {
 
   // Trips
   getJourneyMonth = (journeyId) => {
-    axios.get('/api/web/journeys/' + journeyId + '/month')
+    return axios.get('/api/web/journeys/' + journeyId + '/month')
       .then((response) => {
         return response.data
       })
@@ -85,7 +85,6 @@ export default class ProfilePage extends React.Component {
   getJourneyStartTime = (journeyId) => {
     axios.get('/api/web/journeys/' + journeyId + '/startTime')
       .then((response) => {
-        console.log('Start Time: ' + response.data)
         return response.data
       })
       .catch((error) => {
@@ -96,7 +95,6 @@ export default class ProfilePage extends React.Component {
   getJourneyEndTime = (journeyId) => {
     axios.get('/api/web/journeys/' + journeyId + '/endTime')
       .then((response) => {
-        console.log('End Time: ' + response.data)
         return response.data
       })
       .catch((error) => {
@@ -104,7 +102,16 @@ export default class ProfilePage extends React.Component {
       })
   }
 
-  getJourneyDistance = (journeyId) => {}
+  getJourneyDistance = (journeyId) => {
+    axios.get('/api/web/journeys/' + journeyId + '/distance')
+      .then((response) => {
+        console.log('Distance' + response.data)
+        return response.data
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   getJourneyAirAverage = (journey) => {
     let userId = journey.userId
@@ -119,8 +126,6 @@ export default class ProfilePage extends React.Component {
         console.log(error)
       })
   }
-
-  getJourneyNoiseAverage = (journey) => {}
 
   render () {
     return (
