@@ -39,7 +39,7 @@ router.post('/sync/readings', async (req, res, next) => {
     // TODO: Add the current users ID
     await database.getDatabase().reading.create({
       userId: 1,
-      journeyId: reading.JourneyId,
+      journeyId: reading.JourneyRemoteId,
       dBReading: reading.NoiseReading,
       NO2Reading: reading.No2Reading,
       PM10Reading: reading.PM10Reading,
