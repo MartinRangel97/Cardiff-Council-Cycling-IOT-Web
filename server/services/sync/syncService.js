@@ -16,12 +16,12 @@ exports.syncJourneys = async (userID, journeys) => {
 }
 
 exports.syncReadings = async (userID, readings) => {
-  // Prepare an array to hold the synced reading IDs
+  // Prepare a arrays to hold the readings and synced reading IDs
+  let readingsArray = []
   let syncedReadings = []
-  // Loop through the readings
+  // Loop put the readings into recognisable objects
   for (var reading of readings) {
-    // Create the reading in the database
-    await database.getDatabase().reading.create({
+    readingsArray.push({
       userId: userID,
       journeyId: reading.JourneyRemoteId,
       dBReading: reading.NoiseReading,
@@ -31,9 +31,10 @@ exports.syncReadings = async (userID, readings) => {
       timeTaken: reading.TimeTaken,
       longitude: reading.Longitude,
       latitude: reading.Latitude
-    }).then(() => {
-      syncedReadings.push(reading.id)
     })
+    syncedReadings.push(reading.id)
   }
+  // Create the readings in the database
+  await database.getDatabase().reading.bulkCreate(readingsArray)
   return syncedReadings
 }
