@@ -18,9 +18,8 @@ export default class DetailssPage extends React.Component {
   componentWillMount () {
     // Set the radius
     this.props.setRadius(this.getLngLat())
-    console.log(this.props.airQualityIndex)
     this.props.getAirQualityIndex(this.props.circleAverages.NO2, this.props.circleAverages.PM10, this.props.circleAverages.PM25)
-    console.log('props details: ' + this.props.circleAverages.NO2, this.props.circleAverages.PM10, this.props.circleAverages.PM25)
+    console.log('details page props: ' + this.props.circleAverages.NO2, this.props.circleAverages.PM10, this.props.circleAverages.PM25)
   }
 
   componentDidUpdate (prevProps) {
