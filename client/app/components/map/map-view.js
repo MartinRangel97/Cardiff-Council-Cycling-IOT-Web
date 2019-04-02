@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
+import axios from 'axios'
 
 import Searchbar from './searchbar'
 import OverlayPicker from './overlay-picker'
@@ -92,25 +93,26 @@ export default class MapView extends React.Component {
   }
 
   getReadings () {
-    let request = new XMLHttpRequest()
-    request.responseType = 'json'
-    request.open('GET', '/api/web/allReadings', true)
-    request.onload = (data) => {
-      if (request.status === 200) {
+    axios.get('/api/web/allReadings')
+      .then((response) => {
+        console.log('Get all readings: ' + response.data)
         this.setState({
-          measurement: request.response
+          measurement: response.data
         })
-      } else {
-        console.log('Failed')
       }
-    }
-    request.send(null)
+      )
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  componentWillMount () {
+    this.getReadings()
   }
 
   componentDidMount () {
     // Public Style URL:
     // https://api.mapbox.com/styles/v1/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3.html?fresh=true&title=true&access_token=pk.eyJ1Ijoiam9uYXRoYW5wZXRlcmNvbGUiLCJhIjoiY2p0YWhqaTRrMGFydjQzcWQ1NWR5aTk3dCJ9.V7HyWXQG5lpWtgk-17y6yw#13.5/51.480233/-3.152327/0
-    this.getReadings()
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3',
@@ -124,6 +126,7 @@ export default class MapView extends React.Component {
     // Prepare event listeners
     this.map.on('load', () => {
       this.props.onMapLoad()
+      console.log('map: ' + this.state.measurement)
       this.map.addSource('air', {
         type: 'geojson',
         data: this.state.measurement
