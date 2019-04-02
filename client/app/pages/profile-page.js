@@ -11,8 +11,8 @@ import Card from '../components/common/card'
 import IconAirPollution from './explore-page/icons/air-pollution.svg'
 import IconNoise from './explore-page/icons/noise.svg'
 import IconBike from './settings-page/icons/bike.svg'
-import Journey from './profile-page/journey-card';
-import JourneySubpage from './profile-page/journey-subpage';
+import Journey from './profile-page/journey-card'
+import JourneySubpage from './profile-page/journey-subpage'
 
 export default class ProfilePage extends React.Component {
   constructor (props) {
