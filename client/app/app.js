@@ -106,13 +106,8 @@ export default class App extends React.Component {
   // Handle air quality index
   getAirQualityIndex = (no2, pm25, pm10) => {
     let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
-    console.log(highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10)))
     let aqi
-<<<<<<< HEAD
-    if (highestIndex > 0 || highestIndex <= 3) {
-=======
-    if (highestIndex > 0 <= 3) {
->>>>>>> 188db2543da18e94b1035b77b3cf8a3ada626636
+    if (highestIndex > 0 && highestIndex <= 3) {
       aqi = 'Low'
     } else if (highestIndex <= 6) {
       aqi = 'Moderate'
@@ -125,21 +120,21 @@ export default class App extends React.Component {
     } else {
       aqi = 'N/A'
     }
-
-    console.log('index' + highestIndex)
     console.log(aqi)
     this.setState({
       airQualityIndex: aqi
     })
-    console.log('function running: ' + this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
-    console.log('function highestIndex: ' + highestIndex)
+    // console.log('function running: ' + this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
+    // console.log('function highestIndex: ' + highestIndex)
     return aqi
   }
 
   getNO2Index = (no2) => {
-    if (no2 > 0 < 68) {
+    console.log('no2: ' + no2)
+    if (no2 > 0 && no2 < 68) {
       return 1
     } else if (no2 <= 134) {
+      console.log(no2 <= 134)
       return 2
     } else if (no2 <= 200) {
       return 3
@@ -165,7 +160,8 @@ export default class App extends React.Component {
   }
 
   getPM25Index = (pm25) => {
-    if (pm25 > 0 < 12) {
+    console.log('pm25: ' + pm25)
+    if (pm25 > 0 && pm25 < 12) {
       return 1
     } else if (pm25 <= 23) {
       return 2
@@ -193,7 +189,8 @@ export default class App extends React.Component {
   }
 
   getPM10Index = (pm10) => {
-    if (pm10 > 0 < 17) {
+    console.log('pm10: ' + pm10)
+    if (pm10 > 0 && pm10 < 17) {
       return 1
     } else if (pm10 <= 33) {
       return 2
@@ -213,7 +210,7 @@ export default class App extends React.Component {
       return 9
     } else if (pm10 > 101) {
       return 10
-    } else if (no2 === 0) {
+    } else if (pm10 === 0) {
       return 0
     } else {
       return 0
