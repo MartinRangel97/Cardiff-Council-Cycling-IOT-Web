@@ -234,9 +234,11 @@ export default class App extends React.Component {
             <Route path={`${this.props.match.path}/profile`} render={(props) =>
               <ProfilePage {...props}
                 mapState={this.state.mapState}
+                getCircleAverage={this.getCircleAverage}
                 setMapCurrentRadius={this.setMapCurrentRadius}
                 getAirQualityIndex={this.getAirQualityIndex}
                 airQualityIndex={this.state.airQualityIndex}
+                circleAverages={this.state.circleAverages}
               />
             } />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
