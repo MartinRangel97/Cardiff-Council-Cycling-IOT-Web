@@ -11,8 +11,7 @@ export default class MapView extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedOverlay: 'air',
-      measurement: [[]]
+      selectedOverlay: 'air'
     }
     this.createRadius = this.createRadius.bind(this)
   }
@@ -91,6 +90,13 @@ export default class MapView extends React.Component {
     }
   }
 
+  // componentWillUpdate (prevProps) {
+  //   if (prevProps.mapState !== this.props.mapState) {
+  //     this.map.getSource('air').setData(this.props.data)
+  //     this.map.getSource('noise').setData(this.props.data)
+  //   }
+  // }
+
   componentDidMount () {
     // Public Style URL:
     // https://api.mapbox.com/styles/v1/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3.html?fresh=true&title=true&access_token=pk.eyJ1Ijoiam9uYXRoYW5wZXRlcmNvbGUiLCJhIjoiY2p0YWhqaTRrMGFydjQzcWQ1NWR5aTk3dCJ9.V7HyWXQG5lpWtgk-17y6yw#13.5/51.480233/-3.152327/0
@@ -107,8 +113,6 @@ export default class MapView extends React.Component {
     // Prepare event listeners
     this.map.on('load', () => {
       this.props.onMapLoad()
-      console.log('map')
-      console.log(this.props.dat)
       this.map.addSource('air', {
         type: 'geojson',
         data: this.props.data
@@ -191,6 +195,15 @@ export default class MapView extends React.Component {
     this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.data !== nextProps.data) {
+      if (this.map.getSource('air') !== undefined) {
+        this.map.getSource('air').setData(nextProps.data)
+        this.map.getSource('noise').setData(nextProps.data)
+      }
+    }
+  }
+
   componentDidUpdate (prevProps) {
     // Check if the mapstate changed
     if (prevProps.mapState !== this.props.mapState) {
@@ -205,6 +218,9 @@ export default class MapView extends React.Component {
           this.map.removeLayer('clickRadius')
           this.map.removeSource('clickRadius')
         }
+
+        this.map.getSource('air').setData(this.props.data)
+        this.map.getSource('noise').setData(this.props.data)
 
         this.map.addSource('clickRadius', this.createRadius(coordinates, radius))
         this.map.addLayer({

@@ -33,12 +33,11 @@ export default class ProfilePage extends React.Component {
 
   componentWillMount () {
     // Functions to get data to pass onto the state
+    this.props.setData(2)
     this.getJourneys(1).then((response) => {
       this.getTotalDistanceTravelled()
     })
-    this.getTotalAverages(1).then((response) => {
-      this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM10Average, this.state.PM25Average)
-    })
+    this.getTotalAverages(1)
   }
 
   componentDidUpdate (prevProps) {
@@ -213,11 +212,13 @@ x
 }
 
 ProfilePage.propTypes = {
+  history: PropTypes.object,
   match: PropTypes.object,
   mapState: PropTypes.object,
   setMapCurrentRadius: PropTypes.func,
   getCircleAverage: PropTypes.func,
   getAirQualityIndex: PropTypes.func,
   airQualityIndex: PropTypes.string,
-  circleAverages: PropTypes.object
+  circleAverages: PropTypes.object,
+  setData: PropTypes.func
 }

@@ -27,8 +27,7 @@ export default class App extends React.Component {
       showSidebar: true,
       showLogoutConfirmation: false,
       mapState: null,
-      exploreReadings: [[]],
-      profileReadings: [[]],
+      readings: [[]],
       airQualityIndex: 'N/A',
       circleAverages: {
         dB: 0,
@@ -121,21 +120,16 @@ export default class App extends React.Component {
     } else {
       aqi = 'N/A'
     }
-    console.log(aqi)
     this.setState({
       airQualityIndex: aqi
     })
-    // console.log('function running: ' + this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
-    // console.log('function highestIndex: ' + highestIndex)
     return aqi
   }
 
   getNO2Index = (no2) => {
-    console.log('no2: ' + no2)
     if (no2 > 0 && no2 < 68) {
       return 1
     } else if (no2 <= 134) {
-      console.log(no2 <= 134)
       return 2
     } else if (no2 <= 200) {
       return 3
@@ -161,7 +155,6 @@ export default class App extends React.Component {
   }
 
   getPM25Index = (pm25) => {
-    console.log('pm25: ' + pm25)
     if (pm25 > 0 && pm25 < 12) {
       return 1
     } else if (pm25 <= 23) {
@@ -190,7 +183,6 @@ export default class App extends React.Component {
   }
 
   getPM10Index = (pm10) => {
-    console.log('pm10: ' + pm10)
     if (pm10 > 0 && pm10 < 17) {
       return 1
     } else if (pm10 <= 33) {
@@ -239,7 +231,7 @@ export default class App extends React.Component {
     axios.get('/api/web/allReadings')
       .then((response) => {
         this.setState({
-          exploreReadings: response.data
+          readings: response.data
         })
       })
       .catch((error) => {
@@ -251,7 +243,7 @@ export default class App extends React.Component {
     axios.get('/api/web/' + userId + '/readings')
       .then((response) => {
         this.setState({
-          profileReadings: response.data
+          readings: response.data
         })
       })
       .catch((error) => {
@@ -267,7 +259,7 @@ export default class App extends React.Component {
           onMapClick={this.onMapClick}
           mapState={this.state.mapState}
           sidebarToggle={this.toggleSidebar}
-          data={this.state.exploreReadings}
+          data={this.state.readings}
         />
         <Sidebar showSidebar={this.state.showSidebar}>
           <SidebarPageManager>
@@ -291,6 +283,7 @@ export default class App extends React.Component {
                 getAirQualityIndex={this.getAirQualityIndex}
                 airQualityIndex={this.state.airQualityIndex}
                 circleAverages={this.state.circleAverages}
+                setData={this.setProfileReadings}
               />
             } />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
