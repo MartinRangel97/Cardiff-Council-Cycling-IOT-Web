@@ -5,6 +5,7 @@ import { Route, Redirect } from 'react-router-dom'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { withLocalize } from 'react-localize-redux'
 import globalTranslations from '../translations/global.json'
+import axios from 'axios'
 
 // Components
 import Layout from './components/layout/layout'
@@ -38,7 +39,8 @@ class App extends React.Component {
     this.state = {
       showSidebar: true,
       showLogoutConfirmation: false,
-      mapState: null
+      mapState: null,
+      noiseAverage: 0
     }
   }
 
@@ -73,6 +75,20 @@ class App extends React.Component {
     })
   }
 
+  getdBAverage = () => {
+    axios.get('/api/web/noiseAverage')
+      .then((response) => {
+        if (response.data !== 'NaN') {
+          this.setState({
+            noiseAverage: response.data.toFixed(0)
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   toggleSidebar = (show) => {
     if (typeof show !== 'boolean') {
       this.setState({ showSidebar: !this.state.showSidebar })
@@ -101,7 +117,12 @@ class App extends React.Component {
           <SidebarPageManager>
             <Redirect exact from={this.props.match.path} to='/app/explore' />
             <Route path={`${this.props.match.path}/explore`} render={(props) =>
-              <ExplorePage {...props} mapState={this.state.mapState} setMapCurrentRadius={this.setMapCurrentRadius} />
+              <ExplorePage
+                {...props}
+                mapState={this.state.mapState}
+                setMapCurrentRadius={this.setMapCurrentRadius}
+                dBAverage={this.state.noiseAverage}
+                setdBAverage={this.getdBAverage} />
             } />
             <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />

@@ -27,7 +27,7 @@ export default class ExplorePage extends React.Component {
   }
 
   componentWillMount () {
-    this.getNoiseAverage()
+    this.props.setdBAverage()
     this.getNO2Average()
     this.getPM10Average()
     this.getPM25Average()
@@ -172,20 +172,6 @@ export default class ExplorePage extends React.Component {
     }
   }
 
-  getNoiseAverage = () => {
-    axios.get('/api/web/noiseAverage')
-      .then((response) => {
-        if (response.data !== 'NaN') {
-          this.setState({
-            noiseAverage: response.data.toFixed(0)
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-
   getNO2Average = () => {
     axios.get('/api/web/NO2Average')
       .then((response) => {
@@ -245,6 +231,8 @@ export default class ExplorePage extends React.Component {
   }
 
   render () {
+    console.log(this.state)
+    console.log(this.props)
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} render={(props) =>
@@ -280,7 +268,7 @@ export default class ExplorePage extends React.Component {
                 <IconNoise className='icon' />
                 <div className='details'>
                   <h1>Noise</h1>
-                  <span className='value'>{this.state.noiseAverage} dB</span>
+                  <span className='value'>{this.props.dBAverage} dB</span>
                 </div>
               </Card>
             </Section>
@@ -301,5 +289,7 @@ ExplorePage.propTypes = {
   history: PropTypes.object,
   match: PropTypes.object,
   mapState: PropTypes.object,
-  setMapCurrentRadius: PropTypes.func
+  setMapCurrentRadius: PropTypes.func,
+  dBAverage: PropTypes.number,
+  setdBAverage: PropTypes.func
 }
