@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Route, Redirect } from 'react-router-dom'
+import axios from 'axios'
 
 // Components
 import Layout from './components/layout/layout'
@@ -19,8 +20,6 @@ import AveragesPage from './pages/explore-page/averages-page'
 import SettingsPage from './pages/settings-page'
 import DetailsPage from './pages/details-page'
 
-import axios from 'axios'
-
 export default class App extends React.Component {
   constructor (props) {
     super(props)
@@ -28,6 +27,7 @@ export default class App extends React.Component {
       showSidebar: true,
       showLogoutConfirmation: false,
       mapState: null,
+      readings: [[]],
       airQualityIndex: 'N/A',
       circleAverages: {
         dB: 0,
@@ -36,6 +36,8 @@ export default class App extends React.Component {
         PM25: 0
       }
     }
+
+    this.setExploreReadings = this.setExploreReadings.bind(this)
   }
 
   hideSplash () {
@@ -104,11 +106,8 @@ export default class App extends React.Component {
   // Handle air quality index
   getAirQualityIndex = (no2, pm25, pm10) => {
     let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
-    console.log(highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10)))
     let aqi
-    if (highestIndex === 0) {
-      return 'N/A'
-    } else if (highestIndex > 0 && highestIndex <= 3) {
+    if (highestIndex > 0 && highestIndex <= 3) {
       aqi = 'Low'
     } else if (highestIndex <= 6) {
       aqi = 'Moderate'
@@ -119,20 +118,21 @@ export default class App extends React.Component {
     } else {
       aqi = 'N/A'
     }
+    console.log(aqi)
     this.setState({
       airQualityIndex: aqi
     })
-    console.log('function running: ' + this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
-    console.log('function highestIndex: ' + highestIndex)
+    // console.log('function running: ' + this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
+    // console.log('function highestIndex: ' + highestIndex)
     return aqi
   }
 
   getNO2Index = (no2) => {
-    if (no2 === 0) {
-      return 0
-    } else if (no2 > 0 && no2 < 68) {
+    console.log('no2: ' + no2)
+    if (no2 > 0 && no2 < 68) {
       return 1
     } else if (no2 <= 134) {
+      console.log(no2 <= 134)
       return 2
     } else if (no2 <= 200) {
       return 3
@@ -156,9 +156,8 @@ export default class App extends React.Component {
   }
 
   getPM25Index = (pm25) => {
-    if (pm25 === 0) {
-      return 0
-    } else if  (pm25 > 0 && pm25 < 12) {
+    console.log('pm25: ' + pm25)
+    if (pm25 > 0 && pm25 < 12) {
       return 1
     } else if (pm25 <= 23) {
       return 2
@@ -184,9 +183,8 @@ export default class App extends React.Component {
   }
 
   getPM10Index = (pm10) => {
-    if (pm10 === 0) {
-      return 0
-    } else if  (pm10 > 0 && pm10 < 17) {
+    console.log('pm10: ' + pm10)
+    if (pm10 > 0 && pm10 < 17) {
       return 1
     } else if (pm10 <= 33) {
       return 2
@@ -206,6 +204,8 @@ export default class App extends React.Component {
       return 9
     } else if (pm10 > 101) {
       return 10
+    } else if (pm10 === 0) {
+      return 0
     } else {
       return 0
     }
@@ -227,6 +227,19 @@ export default class App extends React.Component {
     this.setState({ showLogoutConfirmation: !this.state.showLogoutConfirmation })
   }
 
+  // Gets all of the readings in the last 24 hours
+  setExploreReadings () {
+    axios.get('/api/web/allReadings')
+      .then((response) => {
+        this.setState({
+          readings: response.data
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   render () {
     return (
       <Layout sidebarToggle={this.toggleSidebar} logout={this.toggleLogoutConfirmation} >
@@ -234,15 +247,18 @@ export default class App extends React.Component {
           onMapLoad={this.onMapLoad}
           onMapClick={this.onMapClick}
           mapState={this.state.mapState}
-          sidebarToggle={this.toggleSidebar} />
+          sidebarToggle={this.toggleSidebar}
+          data={this.state.readings}
+        />
         <Sidebar showSidebar={this.state.showSidebar}>
           <SidebarPageManager>
             <Redirect exact from={this.props.match.path} to='/app/explore' />
             <Route path={`${this.props.match.path}/explore`} render={(props) =>
               <ExplorePage {...props}
                 mapState={this.state.mapState}
-                getCircleAverage={this.getCircleAverage}
                 setMapCurrentRadius={this.setMapCurrentRadius}
+                setData={this.setExploreReadings}
+                getCircleAverage={this.getCircleAverage}
                 getAirQualityIndex={this.getAirQualityIndex}
                 airQualityIndex={this.state.airQualityIndex}
                 circleAverages={this.state.circleAverages}

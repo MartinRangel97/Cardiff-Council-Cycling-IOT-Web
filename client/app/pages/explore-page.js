@@ -26,14 +26,19 @@ export default class ExplorePage extends React.Component {
 
   componentWillMount () {
     this.getNoiseAverage()
-    this.getNO2Average()
-    this.getPM10Average()
-    this.getPM25Average()
-    this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM10Average, this.state.PM25Average)
+    this.getNO2Average().then(() => {
+      this.getPM10Average().then(() => {
+        this.getPM25Average().then(() => {
+          this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
+        })
+      })
+    })
+    this.props.setData()
+    // this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
   }
 
   componentDidUpdate (prevProps) {
-    // If the map was clicked, show the details page
+    // If the map Fas clicked, show the details page
     if (prevProps.mapState !== this.props.mapState) {
       if (this.props.mapState.clickLocation) {
         this.props.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
@@ -61,7 +66,7 @@ export default class ExplorePage extends React.Component {
   }
 
   getNO2Average = () => {
-    axios.get('/api/web/NO2Average')
+    return axios.get('/api/web/NO2Average')
       .then((response) => {
         if (response.data !== 'NaN') {
           this.setState({
@@ -75,7 +80,7 @@ export default class ExplorePage extends React.Component {
   }
 
   getPM10Average = () => {
-    axios.get('/api/web/PM10Average')
+    return axios.get('/api/web/PM10Average')
       .then((response) => {
         if (response.data !== 'NaN') {
           this.setState({
@@ -89,7 +94,7 @@ export default class ExplorePage extends React.Component {
   }
 
   getPM25Average = () => {
-    axios.get('/api/web/PM25Average')
+    return axios.get('/api/web/PM25Average')
       .then((response) => {
         if (response.data !== 'NaN') {
           this.setState({
@@ -165,6 +170,7 @@ ExplorePage.propTypes = {
   match: PropTypes.object,
   mapState: PropTypes.object,
   setMapCurrentRadius: PropTypes.func,
+  setData: PropTypes.func,
   getCircleAverage: PropTypes.func,
   getAirQualityIndex: PropTypes.func,
   airQualityIndex: PropTypes.string,

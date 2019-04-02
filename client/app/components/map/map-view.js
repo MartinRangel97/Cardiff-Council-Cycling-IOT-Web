@@ -91,26 +91,9 @@ export default class MapView extends React.Component {
     }
   }
 
-  getReadings () {
-    let request = new XMLHttpRequest()
-    request.responseType = 'json'
-    request.open('GET', '/api/web/allReadings', true)
-    request.onload = (data) => {
-      if (request.status === 200) {
-        this.setState({
-          measurement: request.response
-        })
-      } else {
-        console.log('Failed')
-      }
-    }
-    request.send(null)
-  }
-
   componentDidMount () {
     // Public Style URL:
     // https://api.mapbox.com/styles/v1/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3.html?fresh=true&title=true&access_token=pk.eyJ1Ijoiam9uYXRoYW5wZXRlcmNvbGUiLCJhIjoiY2p0YWhqaTRrMGFydjQzcWQ1NWR5aTk3dCJ9.V7HyWXQG5lpWtgk-17y6yw#13.5/51.480233/-3.152327/0
-    this.getReadings()
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3',
@@ -124,13 +107,15 @@ export default class MapView extends React.Component {
     // Prepare event listeners
     this.map.on('load', () => {
       this.props.onMapLoad()
+      console.log('map')
+      console.log(this.props.dat)
       this.map.addSource('air', {
         type: 'geojson',
-        data: this.state.measurement
+        data: this.props.data
       })
       this.map.addSource('noise', {
         type: 'geojson',
-        data: this.state.measurement
+        data: this.props.data
       })
       // add air layer here
       this.map.addLayer({
@@ -268,5 +253,6 @@ MapView.propTypes = {
   sidebarToggle: PropTypes.func,
   onMapLoad: PropTypes.func,
   onMapClick: PropTypes.func,
-  mapState: PropTypes.object
+  mapState: PropTypes.object,
+  data: PropTypes.object
 }
