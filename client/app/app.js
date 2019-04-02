@@ -21,6 +21,7 @@ import SearchPage from './pages/search-page'
 import AveragesPage from './pages/explore-page/averages-page'
 import SettingsPage from './pages/settings-page'
 import DetailsPage from './pages/details-page'
+import ChartsPage from './pages/charts-page'
 
 class App extends React.Component {
   constructor (props) {
@@ -93,6 +94,7 @@ class App extends React.Component {
             <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
             <Route path={`${this.props.match.path}/search`} render={(props) => <SearchPage {...props} />} />
+            <Route path={`${this.props.match.path}/charts`} render={(props) => <ChartsPage {...props} />} />
           </SidebarPageManager>
         </Sidebar>
         <AveragesPage path={`${this.props.match.path}/explore/averages/:type`} />
