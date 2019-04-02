@@ -92,3 +92,7 @@ git.key.pub
 aws.key
 aws.key.ppk
 aws.key.pub
+
+# IntelliJ
+.idea
+*.iml
