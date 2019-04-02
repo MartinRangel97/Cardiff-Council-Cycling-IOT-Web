@@ -21,7 +21,6 @@ export default class ExplorePage extends React.Component {
       NO2Average: 0,
       PM10Average: 0,
       PM25Average: 0,
-      airQualityIndex: 'N/A',
       circleAverages: {}
     }
   }
@@ -31,7 +30,7 @@ export default class ExplorePage extends React.Component {
     this.getNO2Average()
     this.getPM10Average()
     this.getPM25Average()
-    this.getAirQualityIndex(this.state.NO2Average, this.state.PM10Average, this.state.PM25Average)
+    this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM10Average, this.state.PM25Average)
   }
 
   componentDidUpdate (prevProps) {
@@ -78,98 +77,6 @@ export default class ExplorePage extends React.Component {
       .catch((error) => {
         console.log(error)
       })
-  }
-
-  getAirQualityIndex = (no2, pm25, pm10) => {
-    let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
-    let aqi
-    if ( highestIndex < 0 <= 3) {
-      aqi = 'Low'
-    } else if (highestIndex <= 6) {
-      aqi = 'Moderate'
-    } else if (highestIndex <= 9) {
-      aqi = 'High'
-    } else if (highestIndex > 9) {
-      aqi = 'Very High'
-    } else {
-      aqi = 'N/A'
-    }
-    this.setState({
-      airQualityIndex: aqi
-    })
-    return aqi
-  }
-
-  getNO2Index = (no2) => {
-    if (no2 < 68) {
-      return 1
-    } else if (no2 <= 134) {
-      return 2
-    } else if (no2 <= 200) {
-      return 3
-    } else if (no2 <= 267) {
-      return 4
-    } else if (no2 <= 334) {
-      return 5
-    } else if (no2 <= 400) {
-      return 6
-    } else if (no2 <= 467) {
-      return 7
-    } else if (no2 <= 534) {
-      return 8
-    } else if (no2 <= 535) {
-      return 9
-    } else if (no2 >= 536) {
-      return 10
-    }
-  }
-
-  getPM25Index = (pm25) => {
-    if (pm25 < 12) {
-      return 1
-    } else if (pm25 <= 23) {
-      return 2
-    } else if (pm25 <= 35) {
-      return 3
-    } else if (pm25 <= 41) {
-      return 4
-    } else if (pm25 <= 47) {
-      return 5
-    } else if (pm25 <= 53) {
-      return 6
-    } else if (pm25 <= 58) {
-      return 7
-    } else if (pm25 <= 64) {
-      return 8
-    } else if (pm25 <= 70) {
-      return 9
-    } else if (pm25 >= 71) {
-      return 10
-    }
-  }
-
-  getPM10Index = (pm10) => {
-    if (pm10 < 17) {
-      return 1
-    } else if (pm10 <= 33) {
-      return 2
-    } else if (pm10 <= 50) {
-      return 3
-    } else if (pm10 <= 58) {
-      return 4
-    } else if (pm10 <= 66) {
-      return 5
-    } else if (pm10 <= 75) {
-      return 6
-    } else if (pm10 <= 83) {
-      return 7
-    } else if (pm10 <= 91) {
-      return 8
-    } else if (pm10 <= 100) {
-      return 9
-    } else if (pm10 > 101) {
-      return 10
-    }
   }
 
   getNoiseAverage = () => {
@@ -242,7 +149,7 @@ export default class ExplorePage extends React.Component {
                   <IconAirPollution className='icon' />
                   <div className='details'>
                     <h1>Air Pollution</h1>
-                    <span className='value'>{this.state.airQualityIndex}</span>
+                    <span className='value'>{this.props.airQualityIndex}</span>
                   </div>
                 </div>
                 <div className='pill-container'>
@@ -285,5 +192,7 @@ ExplorePage.propTypes = {
   history: PropTypes.object,
   match: PropTypes.object,
   mapState: PropTypes.object,
-  setMapCurrentRadius: PropTypes.func
+  setMapCurrentRadius: PropTypes.func,
+  getAirQualityIndex: PropTypes.func,
+  airQualityIndex: PropTypes.string
 }

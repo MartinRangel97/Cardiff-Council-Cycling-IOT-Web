@@ -25,8 +25,7 @@ export default class ProfilePage extends React.Component {
       noiseAverage: 0,
       NO2Average: 0,
       PM10Average: 0,
-      PM25Average: 0,
-      airQualityIndex: 'N/A'
+      PM25Average: 0
     }
   }
 
@@ -36,6 +35,7 @@ export default class ProfilePage extends React.Component {
       this.getTotalDistanceTravelled()
     })
     this.getTotalAverages(1)
+    this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM10Average, this.state.PM25Average)
   }
 
   getJourneys = (userId) => {
@@ -141,7 +141,7 @@ x
                   <IconAirPollution className='icon' />
                   <div className='details'>
                     <h1>Average Air Pollution Exposure</h1>
-                    <span className='value'>{this.state.airQualityIndex}</span>
+                    <span className='value'>{this.props.airQualityIndex}</span>
                   </div>
                 </div>
                 <div className='pill-container'>
@@ -188,5 +188,7 @@ x
 }
 
 ProfilePage.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
+  getAirQualityIndex: PropTypes.func,
+  airQualityIndex: PropTypes.string
 }
