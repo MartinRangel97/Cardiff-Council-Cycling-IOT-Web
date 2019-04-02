@@ -31,15 +31,11 @@ export default class ProfilePage extends React.Component {
   }
 
   componentWillMount () {
-    // testing the functions
+    // Functions to get data to pass onto the state
     this.getJourneys(1).then((response) => {
       this.getTotalDistanceTravelled()
     })
     this.getTotalAverages(1)
-    this.getJourneyMonth(1)
-    this.getJourneyDay(1)
-    this.getJourneyStartTime(1)
-    this.getJourneyEndTime(1)
   }
 
   getJourneys = (userId) => {
@@ -71,7 +67,6 @@ export default class ProfilePage extends React.Component {
 x
   // Statistics
   getTotalDistanceTravelled = (response) => {
-    // console.log(this.state.journeys)
     this.state.journeys.forEach((journey) => {
       this.getJourneyDistance(journey.id).then((response) => {
         var listDistance = this.state.arrayDistance
@@ -113,7 +108,6 @@ x
   getJourneyDistance = (journeyId) => {
     return axios.get('/api/web/journeys/' + journeyId + '/distance')
       .then((response) => {
-        console.log('Distance' + response.data)
         this.setState({
           currentDistance: response.data
           // arrayDistance: this.arrayDistance.push(response.data)
@@ -125,7 +119,6 @@ x
   }
 
   render () {
-    console.log(this.state)
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/journey`} render={() =>

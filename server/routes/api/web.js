@@ -159,72 +159,23 @@ router.get('/:userId/journeys/:journeyId/measurements', function (req, res, next
     }
   }).then(posts => {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, journeyScheme)
-    res.send(postsAsJSON)
-  })
-})
-
-// Get the month the journey was taken which is based on journey id
-router.get('/journeys/:journeyId/month', function (req, res, next) {
-  database.getDatabase().journey.findAll({
-    where: {
-      id: req.params.journeyId
-    }
-  }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
-    var month = new Date(postsAsJSON[0].startTime)
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
-    res.send(months[month.getMonth()])
-  })
-})
-
-// Get the day (not weekday) the journey was taken which is based on journey id
-router.get('/journeys/:journeyId/day', function (req, res, next) {
-  database.getDatabase().journey.findAll({
-    where: {
-      id: req.params.journeyId
-    }
-  }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
-    var day = new Date(postsAsJSON[0].startTime)
-    res.send(day.getDate().toString())
-  })
-})
-
-// Get the startTime of the journey which is based on journey id
-router.get('/journeys/:journeyId/startTime', function (req, res, next) {
-  database.getDatabase().journey.findAll({
-    where: {
-      id: req.params.journeyId
-    }
-  }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
-    res.send(postsAsJSON[0].startTime)
-  })
-})
-
-// Get the endTime of the journey which is based on journey id
-router.get('/journeys/:journeyId/endTime', function (req, res, next) {
-  database.getDatabase().journey.findAll({
-    where: {
-      id: req.params.journeyId
-    }
-  }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().journey, journeyScheme)
-    res.send(postsAsJSON[0].endTime)
+    // send the data as a geojson for the map
+    res.send(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
   })
 })
 
 // https://snipplr.com/view/25479/calculate-distance-between-two-points-with-latitude-and-longitude-coordinates/
-var journeyDistance = (lon1, lat1, lon2, lat2) => {
+var journeyDistance = (lng1, lat1, lng2, lat2) => {
   var radius = 3958 // Miles
   var distanceLat = (lat2 - lat1) * Math.PI / 180
-  var distanceLon = (lon2 - lon1) * Math.PI / 180
+  var distanceLon = (lng2 - lng1) * Math.PI / 180
   var a = Math.sin(distanceLat / 2) * Math.sin(distanceLat / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(distanceLon / 2) * Math.sin(distanceLon / 2)
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
   var d = radius * c
   return d
 }
 
+// Gets measurements based on the journey ID
 router.get('/journeys/:journeyId/distance', function (req, res, next) {
   var distance = 0
   database.getDatabase().measurement.findAll({
@@ -233,6 +184,7 @@ router.get('/journeys/:journeyId/distance', function (req, res, next) {
     }
   }).then(posts => {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, journeyScheme)
+    // Loops through the records and calculates the distance between each measurement and adds it together
     for (var i = 1; i < postsAsJSON.length; i++) {
       distance += journeyDistance(postsAsJSON[i - 1].longitude, postsAsJSON[i - 1].latitude, postsAsJSON[i].longitude, postsAsJSON[i].latitude)
     }
