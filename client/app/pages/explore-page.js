@@ -106,7 +106,12 @@ export default class ExplorePage extends React.Component {
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} render={(props) =>
-          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.props.circleAverages} />
+          <DetailsSubpage {...props}
+            setRadius={this.props.setMapCurrentRadius}
+            circleAverages={this.props.circleAverages}
+            airQualityIndex={this.props.airQualityIndex}
+            getAirQualityIndex={this.props.getAirQualityIndex}
+          />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Explore'>
