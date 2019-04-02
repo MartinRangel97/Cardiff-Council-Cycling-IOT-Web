@@ -221,11 +221,10 @@ router.get('/:userId/measurements', function (req, res, next) {
 })
 
 // Get all measurements of :journeyId belonging to :userId
-router.get('/:userId/journeys/:journeyId/measurements', function (req, res, next) {
+router.get('/:userId/readings', function (req, res, next) {
   database.getDatabase().measurement.findAll({
     where: {
-      userId: req.params.userId,
-      journeyId: req.params.journeyId
+      userId: req.params.userId
     }
   }).then(posts => {
     let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, journeyScheme)

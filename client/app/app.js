@@ -27,7 +27,8 @@ export default class App extends React.Component {
       showSidebar: true,
       showLogoutConfirmation: false,
       mapState: null,
-      readings: [[]],
+      exploreReadings: [[]],
+      profileReadings: [[]],
       airQualityIndex: 'N/A',
       circleAverages: {
         dB: 0,
@@ -234,11 +235,23 @@ export default class App extends React.Component {
   }
 
   // Gets all of the readings in the last 24 hours
-  setExploreReadings () {
+  setExploreReadings = () => {
     axios.get('/api/web/allReadings')
       .then((response) => {
         this.setState({
-          readings: response.data
+          exploreReadings: response.data
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  setProfileReadings = (userId) => {
+    axios.get('/api/web/' + userId + '/readings')
+      .then((response) => {
+        this.setState({
+          profileReadings: response.data
         })
       })
       .catch((error) => {
@@ -254,7 +267,7 @@ export default class App extends React.Component {
           onMapClick={this.onMapClick}
           mapState={this.state.mapState}
           sidebarToggle={this.toggleSidebar}
-          data={this.state.readings}
+          data={this.state.exploreReadings}
         />
         <Sidebar showSidebar={this.state.showSidebar}>
           <SidebarPageManager>
