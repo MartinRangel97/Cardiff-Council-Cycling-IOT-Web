@@ -68,6 +68,8 @@ x
   getTotalDistanceTravelled = (journey) => {}
 
   // Trips
+  checkLeadingZero = (date) => ((date.toString().length === 1) ? '0' : '') + date.toString()
+
   getJourneyMonth = (journey) => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
     let month = months[new Date(journey.startTime).getMonth()]
@@ -75,15 +77,19 @@ x
   }
 
   getJourneyDay = (journey) => {
-    return new Date(journey.startTime).getDate()
+    return this.checkLeadingZero(new Date(journey.startTime).getDate())
   }
 
   getJourneyStartTime = (journey) => {
-    return new Date(journey.startTime).getHours().toString().concat(':', new Date(journey.startTime).getMinutes().toString())
+    let hours = this.checkLeadingZero(new Date(journey.startTime).getHours())
+    let minutes = this.checkLeadingZero(new Date(journey.startTime).getMinutes())
+    return (hours + ':' + minutes)
   }
 
   getJourneyEndTime = (journey) => {
-    return new Date(journey.endTime).getHours() + ':' + new Date(journey.endTime).getMinutes()
+    let hours = this.checkLeadingZero(new Date(journey.endTime).getHours())
+    let minutes = this.checkLeadingZero(new Date(journey.endTime).getMinutes())
+    return (hours + ':' + minutes)
   }
 
   getJourneyDistance = (journeyId) => {}
