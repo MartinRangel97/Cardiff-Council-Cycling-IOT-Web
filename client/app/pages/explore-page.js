@@ -31,11 +31,12 @@ export default class ExplorePage extends React.Component {
     this.getNO2Average()
     this.getPM10Average()
     this.getPM25Average()
+    this.props.setData()
     this.getAirQualityIndex(this.state.NO2Average, this.state.PM10Average, this.state.PM25Average)
   }
 
   componentDidUpdate (prevProps) {
-    // If the map was clicked, show the details page
+    // If the map Fas clicked, show the details page
     if (prevProps.mapState !== this.props.mapState) {
       if (this.props.mapState.clickLocation) {
         this.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
@@ -285,5 +286,6 @@ ExplorePage.propTypes = {
   history: PropTypes.object,
   match: PropTypes.object,
   mapState: PropTypes.object,
-  setMapCurrentRadius: PropTypes.func
+  setMapCurrentRadius: PropTypes.func,
+  setData: PropTypes.func
 }

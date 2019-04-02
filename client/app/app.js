@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Route, Redirect } from 'react-router-dom'
+import axios from 'axios'
 
 // Components
 import Layout from './components/layout/layout'
@@ -25,8 +26,11 @@ export default class App extends React.Component {
     this.state = {
       showSidebar: true,
       showLogoutConfirmation: false,
-      mapState: null
+      mapState: null,
+      readings: [[]]
     }
+
+    this.setExploreReadings = this.setExploreReadings.bind(this)
   }
 
   hideSplash () {
@@ -76,19 +80,39 @@ export default class App extends React.Component {
     this.setState({ showLogoutConfirmation: !this.state.showLogoutConfirmation })
   }
 
+  // Gets all of the readings in the last 24 hours
+  setExploreReadings () {
+    axios.get('/api/web/allReadings')
+      .then((response) => {
+        this.setState({
+          readings: response.data
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   render () {
+    console.log(this.state)
     return (
       <Layout sidebarToggle={this.toggleSidebar} logout={this.toggleLogoutConfirmation} >
         <MapView
           onMapLoad={this.onMapLoad}
           onMapClick={this.onMapClick}
           mapState={this.state.mapState}
-          sidebarToggle={this.toggleSidebar} />
+          sidebarToggle={this.toggleSidebar}
+          data={this.state.readings}
+        />
         <Sidebar showSidebar={this.state.showSidebar}>
           <SidebarPageManager>
             <Redirect exact from={this.props.match.path} to='/app/explore' />
             <Route path={`${this.props.match.path}/explore`} render={(props) =>
-              <ExplorePage {...props} mapState={this.state.mapState} setMapCurrentRadius={this.setMapCurrentRadius} />
+              <ExplorePage {...props}
+                mapState={this.state.mapState}
+                setMapCurrentRadius={this.setMapCurrentRadius}
+                setData={this.setExploreReadings}
+              />
             } />
             <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
