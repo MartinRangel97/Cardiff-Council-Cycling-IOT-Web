@@ -29,12 +29,11 @@ export default class ExplorePage extends React.Component {
     this.getNO2Average().then(() => {
       this.getPM10Average().then(() => {
         this.getPM25Average().then(() => {
-          this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
+          this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average, true)
         })
       })
     })
     this.props.setData()
-    // this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
   }
 
   componentDidUpdate (prevProps) {
@@ -114,7 +113,7 @@ export default class ExplorePage extends React.Component {
           <DetailsSubpage {...props}
             setRadius={this.props.setMapCurrentRadius}
             circleAverages={this.props.circleAverages}
-            airQualityIndex={this.props.airQualityIndex}
+            airQualityIndexSub={this.props.airQualityIndexSub}
             getAirQualityIndex={this.props.getAirQualityIndex}
           />
         } />
@@ -126,7 +125,7 @@ export default class ExplorePage extends React.Component {
                   <IconAirPollution className='icon' />
                   <div className='details'>
                     <h1>Air Pollution</h1>
-                    <span className='value'>{this.props.airQualityIndex}</span>
+                    <span className='value'>{this.props.airQualityIndexMain}</span>
                   </div>
                 </div>
                 <div className='pill-container'>
@@ -173,6 +172,7 @@ ExplorePage.propTypes = {
   setData: PropTypes.func,
   getCircleAverage: PropTypes.func,
   getAirQualityIndex: PropTypes.func,
-  airQualityIndex: PropTypes.string,
+  airQualityIndexMain: PropTypes.string,
+  airQualityIndexSub: PropTypes.string,
   circleAverages: PropTypes.object
 }

@@ -12,6 +12,12 @@ export default class JourneySubpage extends React.Component {
 
   componentWillMount () {}
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.circleAverages !== nextProps.circleAverages) {
+      nextProps.getAirQualityIndex(nextProps.circleAverages.NO2, nextProps.circleAverages.PM25, nextProps.circleAverages.PM10)
+    }
+  }
+
   componentDidUpdate () {}
 
   componentWillUnmount () {}
@@ -63,5 +69,6 @@ JourneySubpage.propTypes = {
   pm10: PropTypes.number,
   pm25: PropTypes.number,
   no2: PropTypes.number,
-  dBA: PropTypes.number
+  dBA: PropTypes.number,
+  getAirQualityIndex: PropTypes.func
 }
