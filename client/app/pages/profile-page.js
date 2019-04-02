@@ -21,6 +21,7 @@ export default class ProfilePage extends React.Component {
       journeys: [],
       totalDistance: 0,
       currentDistance: 0,
+      arrayDistance: [],
       noiseAverage: 0,
       NO2Average: 0,
       PM10Average: 0,
@@ -70,12 +71,15 @@ export default class ProfilePage extends React.Component {
 x
   // Statistics
   getTotalDistanceTravelled = (response) => {
-    console.log(this.state.journeys)
+    // console.log(this.state.journeys)
     this.state.journeys.forEach((journey) => {
       this.getJourneyDistance(journey.id).then((response) => {
+        var listDistance = this.state.arrayDistance
+        listDistance.push(this.state.currentDistance)
         var totalDistance = this.state.totalDistance + this.state.currentDistance
         this.setState({
-          totalDistance: totalDistance
+          totalDistance: totalDistance,
+          arrayDistance: listDistance
         })
       })
     })
@@ -112,6 +116,7 @@ x
         console.log('Distance' + response.data)
         this.setState({
           currentDistance: response.data
+          // arrayDistance: this.arrayDistance.push(response.data)
         })
       })
       .catch((error) => {
@@ -178,7 +183,7 @@ x
                   month={this.getJourneyMonth(journey)}
                   startTime={this.getJourneyStartTime(journey)}
                   endTime={this.getJourneyEndTime(journey)}
-                  distanceTravelled={'5'}
+                  distanceTravelled={this.state.arrayDistance[i]}
                 />
               )}
             </Section>
