@@ -12,6 +12,7 @@ import IconAirPollution from './explore-page/icons/air-pollution.svg'
 import IconNoise from './explore-page/icons/noise.svg'
 import IconBike from './settings-page/icons/bike.svg'
 import Journey from './profile-page/journey-card';
+import JourneySubpage from './profile-page/journey-subpage';
 
 export default class ProfilePage extends React.Component {
   constructor (props) {
@@ -90,15 +91,10 @@ x
   render () {
     return (
       <SidebarPageManager>
-        <Route path={`${this.props.match.path}/subpage`} render={() =>
-          <SidebarPage title='Subpage Example' canGoBack>
-            <Section title='About'>
-              <Card>
-                <h1>This is an Example Subpage</h1>
-                <h2>Click the back button to go back to the explore page.</h2>
-              </Card>
-            </Section>
-          </SidebarPage>
+        <Route path={`${this.props.match.path}/journey`} render={() =>
+          <JourneySubpage
+            title='Get date here'
+          />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Profile'>
@@ -133,7 +129,7 @@ x
                   </div>
                 </div>
               </Card>
-              <Card className='average' link={``}>
+              <Card className='average' link={`${this.props.match.path}/averages/noise`}>
                 <IconNoise className='icon' />
                 <div className='details'>
                   <h1>Average Noise Pollution Exposure</h1>
@@ -145,7 +141,7 @@ x
               {this.state.journeys.map((journey, i) =>
                 <Journey
                   key={i}
-                  link={`${this.props.match.path}/journey/' + i`}
+                  link={`${this.props.match.path}/journey/` + journey.id}
                   day={this.getJourneyDay(journey)}
                   month={this.getJourneyMonth(journey)}
                   startTime={this.getJourneyStartTime(journey)}
