@@ -21,7 +21,8 @@ export default class ExplorePage extends React.Component {
       NO2Average: 0,
       PM10Average: 0,
       PM25Average: 0,
-      airQualityIndex: 'N/A'
+      airQualityIndex: 'N/A',
+      circleAverages: {}
     }
   }
 
@@ -37,6 +38,7 @@ export default class ExplorePage extends React.Component {
     // If the map was clicked, show the details page
     if (prevProps.mapState !== this.props.mapState) {
       if (this.props.mapState.clickLocation) {
+        this.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
         this.props.history.push({
           pathname: `${this.props.match.path}/details`,
           search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
@@ -44,6 +46,38 @@ export default class ExplorePage extends React.Component {
         })
       }
     }
+  }
+
+  getCircleAverage = (lat, lon, rad) => {
+    axios.post('/api/web/circleAverage', {
+      'latitude': lat,
+      'longitude': lon,
+      'radius': rad
+    })
+      .then((response) => {
+        if (response.data.dB !== null) {
+          this.setState({
+            circleAverages: {
+              dB: response.data.dB.toFixed(0),
+              NO2: response.data.NO2.toFixed(0),
+              PM10: response.data.PM10.toFixed(0),
+              PM25: response.data.PM25.toFixed(0)
+            }
+          })
+        } else {
+          this.setState({
+            circleAverages: {
+              dB: 0,
+              NO2: 0,
+              PM10: 0,
+              PM25: 0
+            }
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   getAirQualityIndex = (no2, pm25, pm10) => {
@@ -141,10 +175,11 @@ export default class ExplorePage extends React.Component {
   getNoiseAverage = () => {
     axios.get('/api/web/noiseAverage')
       .then((response) => {
-        console.log('Noise' + response.data)
-        this.setState({
-          noiseAverage: response.data.toFixed(0)
-        })
+        if (response.data !== 'NaN') {
+          this.setState({
+            noiseAverage: response.data.toFixed(0)
+          })
+        }
       })
       .catch((error) => {
         console.log(error)
@@ -154,10 +189,11 @@ export default class ExplorePage extends React.Component {
   getNO2Average = () => {
     axios.get('/api/web/NO2Average')
       .then((response) => {
-        console.log('NO2 ' + response.data)
-        this.setState({
-          NO2Average: response.data.toFixed(0)
-        })
+        if (response.data !== 'NaN') {
+          this.setState({
+            NO2Average: response.data.toFixed(0)
+          })
+        }
       })
       .catch((error) => {
         console.log(error)
@@ -167,10 +203,11 @@ export default class ExplorePage extends React.Component {
   getPM10Average = () => {
     axios.get('/api/web/PM10Average')
       .then((response) => {
-        console.log('PM10 ' + response.data)
-        this.setState({
-          PM10Average: response.data.toFixed(0)
-        })
+        if (response.data !== 'NaN') {
+          this.setState({
+            PM10Average: response.data.toFixed(0)
+          })
+        }
       })
       .catch((error) => {
         console.log(error)
@@ -180,10 +217,11 @@ export default class ExplorePage extends React.Component {
   getPM25Average = () => {
     axios.get('/api/web/PM25Average')
       .then((response) => {
-        console.log('PM2.5 ' + response.data)
-        this.setState({
-          PM25Average: response.data.toFixed(0)
-        })
+        if (response.data !== 'NaN') {
+          this.setState({
+            PM25Average: response.data.toFixed(0)
+          })
+        }
       })
       .catch((error) => {
         console.log(error)
@@ -194,7 +232,7 @@ export default class ExplorePage extends React.Component {
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} render={(props) =>
-          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} />
+          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.state.circleAverages} />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Explore'>
