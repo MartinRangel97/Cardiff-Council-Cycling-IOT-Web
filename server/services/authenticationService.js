@@ -1,4 +1,5 @@
 const database = require('../database')
+const bcrypt = require('bcrypt')
 
 exports.createUser = function (email, password) {
   return new Promise((resolve, reject) => {
@@ -9,17 +10,20 @@ exports.createUser = function (email, password) {
     }).then(user => {
       if (user) {
         reject(new Error(' Email address is already taken'))
-      } else {
-        database.getDatabase().user.create({
-          email: email,
-          password: password
-        })
-          .then(() => {
-            resolve('Account Successfully Created')
-          })
       }
-    }).catch((err) => {
-      reject(new Error(`Error: ${err.message}`))
+    }).then(() => {
+      // Hash the password
+      return bcrypt.hash(password, 10)
+    }).then(hashedPassword => {
+      // Add the user to the database
+      database.getDatabase().user.create({
+        email: email,
+        password: hashedPassword
+      }).then(() => {
+        resolve()
+      }).catch((error) => {
+        reject(error)
+      })
     })
   })
 }
