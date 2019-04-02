@@ -96,6 +96,7 @@ export default class App extends React.Component {
           </SidebarPageManager>
         </Sidebar>
         <AveragesPage path={`${this.props.match.path}/explore/averages/:type`} />
+        <AveragesPage path={`${this.props.match.path}/profile/averages/:type`} />
         <SettingsPage path={`${this.props.match.path}/settings`} />
         <DetailsPage path={`${this.props.match.path}/history/view/details`} />
         <ConfirmationModal

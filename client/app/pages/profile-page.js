@@ -11,6 +11,8 @@ import Card from '../components/common/card'
 import IconAirPollution from './explore-page/icons/air-pollution.svg'
 import IconNoise from './explore-page/icons/noise.svg'
 import IconBike from './settings-page/icons/bike.svg'
+import Journey from './profile-page/journey-card';
+import JourneySubpage from './profile-page/journey-subpage';
 
 export default class ProfilePage extends React.Component {
   constructor (props) {
@@ -18,7 +20,12 @@ export default class ProfilePage extends React.Component {
     this.state = {
       journeys: [],
       totalDistance: 0,
-      currentDistance: 0
+      currentDistance: 0,
+      noiseAverage: 0,
+      NO2Average: 0,
+      PM10Average: 0,
+      PM25Average: 0,
+      airQualityIndex: 'N/A'
     }
   }
 
@@ -40,7 +47,6 @@ export default class ProfilePage extends React.Component {
         this.setState({
           journeys: response.data
         })
-        console.log(this.state.journeys)
       })
       .catch((error) => {
         console.log(error)
@@ -50,13 +56,18 @@ export default class ProfilePage extends React.Component {
   getTotalAverages = (userId) => {
     axios.get('/api/web/' + userId + '/measurements')
       .then((response) => {
-        return response.data
+        this.setState({
+          noiseAverage: response.data.dBA.toFixed(0),
+          NO2Average: response.data.NO2.toFixed(0),
+          PM10Average: response.data.PM10.toFixed(0),
+          PM25Average: response.data.PM25.toFixed(0)
+        })
       })
       .catch((error) => {
         console.log(error)
       })
   }
-
+x
   // Statistics
   getTotalDistanceTravelled = (response) => {
     console.log(this.state.journeys)
@@ -71,46 +82,28 @@ export default class ProfilePage extends React.Component {
   }
 
   // Trips
-  getJourneyMonth = (journeyId) => {
-    return axios.get('/api/web/journeys/' + journeyId + '/month')
-      .then((response) => {
-        // console.log('month: ' + response.data)
-        return response.data
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+  checkLeadingZero = (date) => ((date.toString().length === 1) ? '0' : '') + date.toString()
+
+  getJourneyMonth = (journey) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December']
+    let month = months[new Date(journey.startTime).getMonth()]
+    return month
   }
 
-  getJourneyDay = (journeyId) => {
-    axios.get('/api/web/journeys/' + journeyId + '/day')
-      .then((response) => {
-        // console.log('day: ' + response.data)
-        return response.data
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+  getJourneyDay = (journey) => {
+    return this.checkLeadingZero(new Date(journey.startTime).getDate())
   }
 
-  getJourneyStartTime = (journeyId) => {
-    axios.get('/api/web/journeys/' + journeyId + '/startTime')
-      .then((response) => {
-        return response.data
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+  getJourneyStartTime = (journey) => {
+    let hours = this.checkLeadingZero(new Date(journey.startTime).getHours())
+    let minutes = this.checkLeadingZero(new Date(journey.startTime).getMinutes())
+    return (hours + ':' + minutes)
   }
 
-  getJourneyEndTime = (journeyId) => {
-    axios.get('/api/web/journeys/' + journeyId + '/endTime')
-      .then((response) => {
-        return response.data
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+  getJourneyEndTime = (journey) => {
+    let hours = this.checkLeadingZero(new Date(journey.endTime).getHours())
+    let minutes = this.checkLeadingZero(new Date(journey.endTime).getMinutes())
+    return (hours + ':' + minutes)
   }
 
   getJourneyDistance = (journeyId) => {
@@ -130,15 +123,10 @@ export default class ProfilePage extends React.Component {
     console.log(this.state)
     return (
       <SidebarPageManager>
-        <Route path={`${this.props.match.path}/subpage`} render={() =>
-          <SidebarPage title='Subpage Example' canGoBack>
-            <Section title='About'>
-              <Card>
-                <h1>This is an Example Subpage</h1>
-                <h2>Click the back button to go back to the explore page.</h2>
-              </Card>
-            </Section>
-          </SidebarPage>
+        <Route path={`${this.props.match.path}/journey`} render={() =>
+          <JourneySubpage
+            title='Get date here'
+          />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Profile'>
@@ -150,33 +138,48 @@ export default class ProfilePage extends React.Component {
                   <span className='value'>{this.state.totalDistance} Miles</span>
                 </div>
               </Card>
-              <Card className='average' link={``}>
-                <IconAirPollution className='icon' />
-                <div className='details'>
-                  <h1>Average Air Pollution Exposure</h1>
-                  <span className='value'>Moderate</span>
+              <Card link={`${this.props.match.path}/averages/air`}>
+                <div className='average'>
+                  <IconAirPollution className='icon' />
+                  <div className='details'>
+                    <h1>Average Air Pollution Exposure</h1>
+                    <span className='value'>{this.state.airQualityIndex}</span>
+                  </div>
+                </div>
+                <div className='pill-container'>
+                  <div className='pill'>
+                    <h2>NO2</h2>
+                    <span>{this.state.NO2Average} µg/m³</span>
+                  </div>
+                  <div className='pill'>
+                    <h2>PM2.5</h2>
+                    <span>{this.state.PM25Average} µgm-3</span>
+                  </div>
+                  <div className='pill'>
+                    <h2>PM10</h2>
+                    <span>{this.state.PM10Average} µg/m³</span>
+                  </div>
                 </div>
               </Card>
-              <Card className='average' link={``}>
+              <Card className='average' link={`${this.props.match.path}/averages/noise`}>
                 <IconNoise className='icon' />
                 <div className='details'>
                   <h1>Average Noise Pollution Exposure</h1>
-                  <span className='value'>25 dBA</span>
+                  <span className='value'>{this.state.noiseAverage} dBA</span>
                 </div>
               </Card>
             </Section>
             <Section title='Your Trips'>
               {this.state.journeys.map((journey, i) =>
-                <Card className='average' link={``} key={i}>
-                  <div className='date'>
-                    <h1>Hello</h1>
-                    <span>Hi</span>
-                  </div>
-                  <div className='details'>
-                    <h1>9:35 - 11:58</h1>
-                    <span className='value'>5 Miles</span>
-                  </div>
-                </Card>
+                <Journey
+                  key={i}
+                  link={`${this.props.match.path}/journey/` + journey.id}
+                  day={this.getJourneyDay(journey)}
+                  month={this.getJourneyMonth(journey)}
+                  startTime={this.getJourneyStartTime(journey)}
+                  endTime={this.getJourneyEndTime(journey)}
+                  distanceTravelled={'5'}
+                />
               )}
             </Section>
           </SidebarPage>
