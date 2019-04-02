@@ -16,27 +16,26 @@ export default class ProfilePage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      journeys: []
+      journeys: [],
+      totalDistance: 0,
+      currentDistance: 0
     }
   }
 
   componentWillMount () {
     // testing the functions
-    this.getJourneys(1)
+    this.getJourneys(1).then((response) => {
+      this.getTotalDistanceTravelled()
+    })
     this.getTotalAverages(1)
     this.getJourneyMonth(1)
     this.getJourneyDay(1)
     this.getJourneyStartTime(1)
     this.getJourneyEndTime(1)
-    this.getJourneyDistance(1)
-  }
-
-  fetchData = (data) => {
-    return data
   }
 
   getJourneys = (userId) => {
-    axios.get('/api/web/' + userId + '/journeys')
+    return axios.get('/api/web/' + userId + '/journeys')
       .then((response) => {
         this.setState({
           journeys: response.data
@@ -59,13 +58,23 @@ export default class ProfilePage extends React.Component {
   }
 
   // Statistics
-  getTotalDistanceTravelled = (journey) => {}
+  getTotalDistanceTravelled = (response) => {
+    console.log(this.state.journeys)
+    this.state.journeys.forEach((journey) => {
+      this.getJourneyDistance(journey.id).then((response) => {
+        var totalDistance = this.state.totalDistance + this.state.currentDistance
+        this.setState({
+          totalDistance: totalDistance
+        })
+      })
+    })
+  }
 
   // Trips
   getJourneyMonth = (journeyId) => {
     return axios.get('/api/web/journeys/' + journeyId + '/month')
       .then((response) => {
-        console.log('month: ' + response.data)
+        // console.log('month: ' + response.data)
         return response.data
       })
       .catch((error) => {
@@ -76,7 +85,7 @@ export default class ProfilePage extends React.Component {
   getJourneyDay = (journeyId) => {
     axios.get('/api/web/journeys/' + journeyId + '/day')
       .then((response) => {
-        console.log('day: ' + response.data)
+        // console.log('day: ' + response.data)
         return response.data
       })
       .catch((error) => {
@@ -105,24 +114,12 @@ export default class ProfilePage extends React.Component {
   }
 
   getJourneyDistance = (journeyId) => {
-    axios.get('/api/web/journeys/' + journeyId + '/distance')
+    return axios.get('/api/web/journeys/' + journeyId + '/distance')
       .then((response) => {
         console.log('Distance' + response.data)
-        return response.data
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-
-  getJourneyAirAverage = (journey) => {
-    let userId = journey.userId
-    let journeyId = journey.journeyId
-    // Get journey array
-    axios.get('api/web' + userId + 'journeys' / journeyId)
-      .then((response) => {
-        // TODO: Average air here
-        return response.data
+        this.setState({
+          currentDistance: response.data
+        })
       })
       .catch((error) => {
         console.log(error)
@@ -130,6 +127,7 @@ export default class ProfilePage extends React.Component {
   }
 
   render () {
+    console.log(this.state)
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/subpage`} render={() =>
@@ -149,7 +147,7 @@ export default class ProfilePage extends React.Component {
                 <IconBike className='icon' />
                 <div className='details'>
                   <h1>Total Distance Travelled</h1>
-                  <span className='value'>23 Miles</span>
+                  <span className='value'>{this.state.totalDistance} Miles</span>
                 </div>
               </Card>
               <Card className='average' link={``}>
@@ -171,8 +169,8 @@ export default class ProfilePage extends React.Component {
               {this.state.journeys.map((journey, i) =>
                 <Card className='average' link={``} key={i}>
                   <div className='date'>
-                    <h1>{this.getJourneyMonth(i + 1)}</h1>
-                    <span>{this.getJourneyDay(i + 1)}</span>
+                    <h1>Hello</h1>
+                    <span>Hi</span>
                   </div>
                   <div className='details'>
                     <h1>9:35 - 11:58</h1>
