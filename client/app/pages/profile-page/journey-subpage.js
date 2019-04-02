@@ -5,20 +5,56 @@ import SidebarPage from '../../components/sidebar/sidebar-page'
 import Section from '../../components/common/section'
 import Card from '../../components/common/card'
 
+import axios from 'axios'
+
 import IconAirPollution from '../explore-page/icons/air-pollution.svg'
 import IconNoise from '../explore-page/icons/noise.svg'
 
 export default class JourneySubpage extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      dBA: 0,
+      NO2: 0,
+      PM10: 0,
+      PM25: 0
+    }
+  }
 
-  componentWillMount () {}
+  getJourneyId = () => {
+    let journeyId = window.location.pathname.split('/').slice(-1)[0]
+    return journeyId
+  }
+
+  componentWillMount () {
+    this.getJourneyReadings(1, this.getJourneyId())
+    // this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
+  }
 
   componentDidUpdate () {}
 
   componentWillUnmount () {}
 
+  getJourneyReadings = (userId, journeyId) => {
+    axios.get('/api/web/' + userId + '/journeys/' + journeyId + '/measurements')
+      .then((response) => {
+        if (response.data !== 'NaN') {
+          this.setState({
+            dBA: response.data.dBA.toFixed(0),
+            NO2: response.data.NO2.toFixed(0),
+            PM10: response.data.PM10.toFixed(0),
+            PM25: response.data.PM25.toFixed(0)
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   render () {
     return (
-      <SidebarPage title={this.props.title} canGoBack>
+      <SidebarPage title='Details'canGoBack>
         <Section title='Journey Averages'>
           <Card link={``}>
             <div className='average'>
@@ -31,15 +67,15 @@ export default class JourneySubpage extends React.Component {
             <div className='pill-container'>
               <div className='pill'>
                 <h2>NO2</h2>
-                <span>{this.props.no2} µg/m³</span>
+                <span>{this.state.NO2} µg/m³</span>
               </div>
               <div className='pill'>
                 <h2>PM2.5</h2>
-                <span>{this.props.pm25} µgm-3</span>
+                <span>{this.state.PM25} µgm-3</span>
               </div>
               <div className='pill'>
                 <h2>PM10</h2>
-                <span>{this.props.pm10} µg/m³</span>
+                <span>{this.state.PM10} µg/m³</span>
               </div>
             </div>
           </Card>
@@ -47,7 +83,7 @@ export default class JourneySubpage extends React.Component {
             <IconNoise className='icon' />
             <div className='details'>
               <h1>Noise</h1>
-              <span className='value'>{this.props.dBA} dBA</span>
+              <span className='value'>{this.state.dBA} dBA</span>
             </div>
           </Card>
         </Section>
@@ -59,9 +95,7 @@ export default class JourneySubpage extends React.Component {
 JourneySubpage.propTypes = {
   title: PropTypes.string,
   // match: PropTypes.object, Use later for path
+  // getAirQualityIndex: PropTypes.func,
   airQualityIndex: PropTypes.string,
-  pm10: PropTypes.number,
-  pm25: PropTypes.number,
-  no2: PropTypes.number,
-  dBA: PropTypes.number
+  userId: PropTypes.string
 }

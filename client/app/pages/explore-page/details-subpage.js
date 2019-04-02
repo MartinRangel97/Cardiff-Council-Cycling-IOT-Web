@@ -22,6 +22,12 @@ export default class DetailssPage extends React.Component {
     console.log('details page props: ' + this.props.circleAverages.NO2, this.props.circleAverages.PM10, this.props.circleAverages.PM25)
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.circleAverages !== nextProps.circleAverages) {
+      nextProps.getAirQualityIndex(nextProps.circleAverages.NO2, nextProps.circleAverages.PM10, nextProps.circleAverages.PM25)
+    }
+  }
+
   componentDidUpdate (prevProps) {
     // If the location changed (new coordinates), update the radius
     if (prevProps.location !== this.props.location) {

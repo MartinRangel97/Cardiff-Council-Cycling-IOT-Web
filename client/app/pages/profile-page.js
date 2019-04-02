@@ -36,8 +36,11 @@ export default class ProfilePage extends React.Component {
     this.getJourneys(1).then((response) => {
       this.getTotalDistanceTravelled()
     })
-    this.getTotalAverages(1)
-    this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM10Average, this.state.PM25Average)
+    this.getTotalAverages(1).then(() => {
+      this.setState({
+        airQualityIndex: this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
+      })
+    })
   }
 
   componentDidUpdate (prevProps) {
@@ -53,7 +56,8 @@ export default class ProfilePage extends React.Component {
       }
     }
   }
-
+x
+  // Statistics
   getJourneys = (userId) => {
     return axios.get('/api/web/' + userId + '/journeys')
       .then((response) => {
@@ -67,7 +71,7 @@ export default class ProfilePage extends React.Component {
   }
 
   getTotalAverages = (userId) => {
-    axios.get('/api/web/' + userId + '/measurements')
+    return axios.get('/api/web/' + userId + '/measurements')
       .then((response) => {
         this.setState({
           noiseAverage: response.data.dBA.toFixed(0),
@@ -80,8 +84,7 @@ export default class ProfilePage extends React.Component {
         console.log(error)
       })
   }
-x
-  // Statistics
+
   getTotalDistanceTravelled = (response) => {
     this.state.journeys.forEach((journey) => {
       this.getJourneyDistance(journey.id).then((response) => {
@@ -212,6 +215,7 @@ x
 }
 
 ProfilePage.propTypes = {
+  history: PropTypes.object,
   match: PropTypes.object,
   mapState: PropTypes.object,
   setMapCurrentRadius: PropTypes.func,

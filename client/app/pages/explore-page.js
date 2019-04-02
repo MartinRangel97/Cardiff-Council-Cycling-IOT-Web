@@ -29,7 +29,9 @@ export default class ExplorePage extends React.Component {
     this.getNO2Average().then(() => {
       this.getPM10Average().then(() => {
         this.getPM25Average().then(() => {
-          this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
+          this.setState({
+            airQualityIndex: this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
+          })
         })
       })
     })
@@ -42,7 +44,6 @@ export default class ExplorePage extends React.Component {
     if (prevProps.mapState !== this.props.mapState) {
       if (this.props.mapState.clickLocation) {
         this.props.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
-        this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
         this.props.history.push({
           pathname: `${this.props.match.path}/details`,
           search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +

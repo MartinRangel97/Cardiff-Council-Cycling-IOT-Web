@@ -123,9 +123,6 @@ export default class App extends React.Component {
     this.setState({
       airQualityIndex: aqi
     })
-    console.log('should return 1' + this.getNO2Index(1))
-    console.log('function running: ' + this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
-    console.log('function index: ' + highestIndex)
     return aqi
   }
 
