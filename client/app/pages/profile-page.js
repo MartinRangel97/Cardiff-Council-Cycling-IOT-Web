@@ -36,9 +36,8 @@ export default class ProfilePage extends React.Component {
     this.getJourneys(1).then((response) => {
       this.getTotalDistanceTravelled()
     })
-    this.getTotalAverages(1).then((response) => {
-      this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM10Average, this.state.PM25Average)
-    })
+    this.getTotalAverages(1)
+    this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM10Average, this.state.PM25Average)
   }
 
   componentDidUpdate (prevProps) {

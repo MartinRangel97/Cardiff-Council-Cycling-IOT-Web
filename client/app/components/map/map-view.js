@@ -107,8 +107,6 @@ export default class MapView extends React.Component {
     // Prepare event listeners
     this.map.on('load', () => {
       this.props.onMapLoad()
-      console.log('map')
-      console.log(this.props.dat)
       this.map.addSource('air', {
         type: 'geojson',
         data: this.props.data
@@ -254,5 +252,5 @@ MapView.propTypes = {
   onMapLoad: PropTypes.func,
   onMapClick: PropTypes.func,
   mapState: PropTypes.object,
-  data: PropTypes.object
+  data: PropTypes.GeoJsonObject
 }
