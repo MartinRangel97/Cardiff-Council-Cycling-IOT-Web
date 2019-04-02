@@ -8,6 +8,8 @@ import SidebarPage from '../components/sidebar/sidebar-page'
 import Section from '../components/common/section'
 import Card from '../components/common/card'
 
+import DetailsSubpage from './explore-page/details-subpage'
+
 import IconAirPollution from './explore-page/icons/air-pollution.svg'
 import IconNoise from './explore-page/icons/noise.svg'
 import IconBike from './settings-page/icons/bike.svg'
@@ -25,8 +27,7 @@ export default class ProfilePage extends React.Component {
       noiseAverage: 0,
       NO2Average: 0,
       PM10Average: 0,
-      PM25Average: 0,
-      airQualityIndex: 'N/A'
+      PM25Average: 0
     }
   }
 
@@ -36,6 +37,21 @@ export default class ProfilePage extends React.Component {
       this.getTotalDistanceTravelled()
     })
     this.getTotalAverages(1)
+    this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM10Average, this.state.PM25Average)
+  }
+
+  componentDidUpdate (prevProps) {
+    // If the map was clicked, show the details page
+    if (prevProps.mapState !== this.props.mapState) {
+      if (this.props.mapState.clickLocation) {
+        this.props.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
+        this.props.history.push({
+          pathname: `${this.props.match.path}/details`,
+          search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
+            'lat=' + this.props.mapState.clickLocation.lat
+        })
+      }
+    }
   }
 
   getJourneys = (userId) => {
@@ -121,6 +137,9 @@ x
   render () {
     return (
       <SidebarPageManager>
+        <Route path={`${this.props.match.path}/details`} render={(props) =>
+          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.props.circleAverages} />
+        } />
         <Route path={`${this.props.match.path}/journey`} render={() =>
           <JourneySubpage
             title='Get date here'
@@ -141,7 +160,7 @@ x
                   <IconAirPollution className='icon' />
                   <div className='details'>
                     <h1>Average Air Pollution Exposure</h1>
-                    <span className='value'>{this.state.airQualityIndex}</span>
+                    <span className='value'>{this.props.airQualityIndex}</span>
                   </div>
                 </div>
                 <div className='pill-container'>
@@ -188,5 +207,11 @@ x
 }
 
 ProfilePage.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
+  mapState: PropTypes.object,
+  setMapCurrentRadius: PropTypes.func,
+  getCircleAverage: PropTypes.func,
+  getAirQualityIndex: PropTypes.func,
+  airQualityIndex: PropTypes.string,
+  circleAverages: PropTypes.object
 }

@@ -27,7 +27,14 @@ export default class App extends React.Component {
       showSidebar: true,
       showLogoutConfirmation: false,
       mapState: null,
-      readings: [[]]
+      readings: [[]],
+      airQualityIndex: 'N/A',
+      circleAverages: {
+        dB: 0,
+        NO2: 0,
+        PM10: 0,
+        PM25: 0
+      }
     }
 
     this.setExploreReadings = this.setExploreReadings.bind(this)
@@ -64,6 +71,134 @@ export default class App extends React.Component {
     })
   }
 
+  getCircleAverage = (lat, lon, rad) => {
+    axios.post('/api/web/circleAverage', {
+      'latitude': lat,
+      'longitude': lon,
+      'radius': rad
+    })
+      .then((response) => {
+        if (response.data.dB !== null) {
+          this.setState({
+            circleAverages: {
+              dB: response.data.dB.toFixed(0),
+              NO2: response.data.NO2.toFixed(0),
+              PM10: response.data.PM10.toFixed(0),
+              PM25: response.data.PM25.toFixed(0)
+            }
+          })
+        } else {
+          this.setState({
+            circleAverages: {
+              dB: 0,
+              NO2: 0,
+              PM10: 0,
+              PM25: 0
+            }
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  // Handle air quality index
+  getAirQualityIndex = (no2, pm25, pm10) => {
+    let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
+    let aqi
+    if (highestIndex > 0 || highestIndex <= 3) {
+      aqi = 'Low'
+    } else if (highestIndex <= 6) {
+      aqi = 'Moderate'
+    } else if (highestIndex <= 9) {
+      aqi = 'High'
+    } else if (highestIndex > 9) {
+      aqi = 'Very High'
+    } else {
+      aqi = 'N/A'
+    }
+
+    console.log('index' + highestIndex)
+    console.log(aqi)
+    this.setState({
+      airQualityIndex: aqi
+    })
+    return aqi
+  }
+
+  getNO2Index = (no2) => {
+    if (no2 < 68) {
+      return 1
+    } else if (no2 <= 134) {
+      return 2
+    } else if (no2 <= 200) {
+      return 3
+    } else if (no2 <= 267) {
+      return 4
+    } else if (no2 <= 334) {
+      return 5
+    } else if (no2 <= 400) {
+      return 6
+    } else if (no2 <= 467) {
+      return 7
+    } else if (no2 <= 534) {
+      return 8
+    } else if (no2 <= 535) {
+      return 9
+    } else if (no2 >= 536) {
+      return 10
+    }
+  }
+
+  getPM25Index = (pm25) => {
+    if (pm25 < 12) {
+      return 1
+    } else if (pm25 <= 23) {
+      return 2
+    } else if (pm25 <= 35) {
+      return 3
+    } else if (pm25 <= 41) {
+      return 4
+    } else if (pm25 <= 47) {
+      return 5
+    } else if (pm25 <= 53) {
+      return 6
+    } else if (pm25 <= 58) {
+      return 7
+    } else if (pm25 <= 64) {
+      return 8
+    } else if (pm25 <= 70) {
+      return 9
+    } else if (pm25 >= 71) {
+      return 10
+    }
+  }
+
+  getPM10Index = (pm10) => {
+    if (pm10 < 17) {
+      return 1
+    } else if (pm10 <= 33) {
+      return 2
+    } else if (pm10 <= 50) {
+      return 3
+    } else if (pm10 <= 58) {
+      return 4
+    } else if (pm10 <= 66) {
+      return 5
+    } else if (pm10 <= 75) {
+      return 6
+    } else if (pm10 <= 83) {
+      return 7
+    } else if (pm10 <= 91) {
+      return 8
+    } else if (pm10 <= 100) {
+      return 9
+    } else if (pm10 > 101) {
+      return 10
+    }
+  }
+
   toggleSidebar = (show) => {
     if (typeof show !== 'boolean') {
       this.setState({ showSidebar: !this.state.showSidebar })
@@ -94,7 +229,6 @@ export default class App extends React.Component {
   }
 
   render () {
-    console.log(this.state)
     return (
       <Layout sidebarToggle={this.toggleSidebar} logout={this.toggleLogoutConfirmation} >
         <MapView
@@ -112,9 +246,22 @@ export default class App extends React.Component {
                 mapState={this.state.mapState}
                 setMapCurrentRadius={this.setMapCurrentRadius}
                 setData={this.setExploreReadings}
+                getCircleAverage={this.getCircleAverage}
+                getAirQualityIndex={this.getAirQualityIndex}
+                airQualityIndex={this.state.airQualityIndex}
+                circleAverages={this.state.circleAverages}
               />
             } />
-            <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
+            <Route path={`${this.props.match.path}/profile`} render={(props) =>
+              <ProfilePage {...props}
+                mapState={this.state.mapState}
+                getCircleAverage={this.getCircleAverage}
+                setMapCurrentRadius={this.setMapCurrentRadius}
+                getAirQualityIndex={this.getAirQualityIndex}
+                airQualityIndex={this.state.airQualityIndex}
+                circleAverages={this.state.circleAverages}
+              />
+            } />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
             <Route path={`${this.props.match.path}/search`} render={(props) => <SearchPage {...props} />} />
           </SidebarPageManager>
