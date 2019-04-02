@@ -20,8 +20,7 @@ export default class ExplorePage extends React.Component {
       noiseAverage: 0,
       NO2Average: 0,
       PM10Average: 0,
-      PM25Average: 0,
-      circleAverages: {}
+      PM25Average: 0
     }
   }
 
@@ -37,7 +36,7 @@ export default class ExplorePage extends React.Component {
     // If the map was clicked, show the details page
     if (prevProps.mapState !== this.props.mapState) {
       if (this.props.mapState.clickLocation) {
-        this.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
+        this.props.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
         this.props.history.push({
           pathname: `${this.props.match.path}/details`,
           search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
@@ -45,38 +44,6 @@ export default class ExplorePage extends React.Component {
         })
       }
     }
-  }
-
-  getCircleAverage = (lat, lon, rad) => {
-    axios.post('/api/web/circleAverage', {
-      'latitude': lat,
-      'longitude': lon,
-      'radius': rad
-    })
-      .then((response) => {
-        if (response.data.dB !== null) {
-          this.setState({
-            circleAverages: {
-              dB: response.data.dB.toFixed(0),
-              NO2: response.data.NO2.toFixed(0),
-              PM10: response.data.PM10.toFixed(0),
-              PM25: response.data.PM25.toFixed(0)
-            }
-          })
-        } else {
-          this.setState({
-            circleAverages: {
-              dB: 0,
-              NO2: 0,
-              PM10: 0,
-              PM25: 0
-            }
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
   }
 
   getNoiseAverage = () => {
@@ -139,7 +106,7 @@ export default class ExplorePage extends React.Component {
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} render={(props) =>
-          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.state.circleAverages} />
+          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.props.circleAverages} />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Explore'>
@@ -193,6 +160,8 @@ ExplorePage.propTypes = {
   match: PropTypes.object,
   mapState: PropTypes.object,
   setMapCurrentRadius: PropTypes.func,
+  getCircleAverage: PropTypes.func,
   getAirQualityIndex: PropTypes.func,
-  airQualityIndex: PropTypes.string
+  airQualityIndex: PropTypes.string,
+  circleAverages: PropTypes.object
 }

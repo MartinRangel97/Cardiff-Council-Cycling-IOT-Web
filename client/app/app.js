@@ -19,6 +19,8 @@ import AveragesPage from './pages/explore-page/averages-page'
 import SettingsPage from './pages/settings-page'
 import DetailsPage from './pages/details-page'
 
+import axios from 'axios'
+
 export default class App extends React.Component {
   constructor (props) {
     super(props)
@@ -26,7 +28,13 @@ export default class App extends React.Component {
       showSidebar: true,
       showLogoutConfirmation: false,
       mapState: null,
-      airQualityIndex: 'N/A'
+      airQualityIndex: 'N/A',
+      circleAverages: {
+        dB: 0,
+        NO2: 0,
+        PM10: 0,
+        PM25: 0
+      }
     }
   }
 
@@ -61,8 +69,39 @@ export default class App extends React.Component {
     })
   }
 
-  // Handle air quality index
+  getCircleAverage = (lat, lon, rad) => {
+    axios.post('/api/web/circleAverage', {
+      'latitude': lat,
+      'longitude': lon,
+      'radius': rad
+    })
+      .then((response) => {
+        if (response.data.dB !== null) {
+          this.setState({
+            circleAverages: {
+              dB: response.data.dB.toFixed(0),
+              NO2: response.data.NO2.toFixed(0),
+              PM10: response.data.PM10.toFixed(0),
+              PM25: response.data.PM25.toFixed(0)
+            }
+          })
+        } else {
+          this.setState({
+            circleAverages: {
+              dB: 0,
+              NO2: 0,
+              PM10: 0,
+              PM25: 0
+            }
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
+  // Handle air quality index
   getAirQualityIndex = (no2, pm25, pm10) => {
     let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
     let aqi
@@ -185,9 +224,11 @@ export default class App extends React.Component {
             <Route path={`${this.props.match.path}/explore`} render={(props) =>
               <ExplorePage {...props}
                 mapState={this.state.mapState}
+                getCircleAverage={this.getCircleAverage}
                 setMapCurrentRadius={this.setMapCurrentRadius}
                 getAirQualityIndex={this.getAirQualityIndex}
                 airQualityIndex={this.state.airQualityIndex}
+                circleAverages={this.state.circleAverages}
               />
             } />
             <Route path={`${this.props.match.path}/profile`} render={(props) =>
