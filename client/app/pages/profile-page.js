@@ -133,7 +133,7 @@ x
                 <IconBike className='icon' />
                 <div className='details'>
                   <h1>Total Distance Travelled</h1>
-                  <span className='value'>{this.state.totalDistance} Miles</span>
+                  <span className='value'>{this.state.totalDistance.toFixed(1)} Miles</span>
                 </div>
               </Card>
               <Card link={`${this.props.match.path}/averages/air`}>
