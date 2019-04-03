@@ -118,7 +118,6 @@ export default class App extends React.Component {
       })
   }
 
-<<<<<<< HEAD
   getUserCircleAverage = (lat, lon, rad, userId) => {
     axios.post('/api/web/user/' + userId + '/circleAverage', {
       'latitude': lat,
@@ -152,7 +151,6 @@ export default class App extends React.Component {
   }
 
   // Handle air quality index
-=======
   /**
   * Calculates overall air quality index band.
   * Calls getNO2Index, getPM25Index and getPM10Index and uses highest value to determine AQI.
@@ -161,7 +159,6 @@ export default class App extends React.Component {
   * @param {int} pm10 PM10 value shall be passed into getNO2Index
   * @param {boolean} main Sets state of airQualityIndexMain or airQualityIndexSub depending on page layer
   */
->>>>>>> 8d0f62d002a7a509d171b2354aa7dfc24195b051
   getAirQualityIndex = (no2, pm25, pm10, main) => {
     let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
     let aqi
