@@ -54,7 +54,7 @@ router.post('/circleAverage', function (req, res, next) {
     PM10: 0
   }
 
-  database.getDatabase().measurement.findAll({
+  database.getDatabase().reading.findAll({
     attributes: [
       ['id', 'id'],
       ['dBReading', 'dBReading'],
@@ -78,7 +78,7 @@ router.post('/circleAverage', function (req, res, next) {
 
   })
     .then(async function (posts) {
-      let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
+      let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
       postsAsJSON.forEach((reading) => {
         // stores the sum of all the readings
         averages.dB += reading.dBReading
@@ -101,14 +101,14 @@ router.post('/circleAverage', function (req, res, next) {
 router.get('/noiseAverage', function (req, res, next) {
   var noiseAve = 0
 
-  database.getDatabase().measurement.findAll({
+  database.getDatabase().reading.findAll({
     where: {
       timeTaken: {
         [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
       }
     }
   }).then(async function (posts) {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     postsAsJSON.forEach((reading) => {
       noiseAve += reading.dBReading
     })
@@ -121,14 +121,14 @@ router.get('/noiseAverage', function (req, res, next) {
 router.get('/NO2Average', function (req, res, next) {
   var NO2Ave = 0
 
-  database.getDatabase().measurement.findAll({
+  database.getDatabase().reading.findAll({
     where: {
       timeTaken: {
         [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
       }
     }
   }).then(async function (posts) {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     postsAsJSON.forEach((reading) => {
       NO2Ave += reading.NO2Reading
     })
@@ -141,14 +141,14 @@ router.get('/NO2Average', function (req, res, next) {
 router.get('/PM10Average', function (req, res, next) {
   var PM10Ave = 0
 
-  database.getDatabase().measurement.findAll({
+  database.getDatabase().reading.findAll({
     where: {
       timeTaken: {
         [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
       }
     }
   }).then(async function (posts) {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     postsAsJSON.forEach((reading) => {
       PM10Ave += reading.PM10Reading
     })
@@ -161,14 +161,14 @@ router.get('/PM10Average', function (req, res, next) {
 router.get('/PM25Average', function (req, res, next) {
   var PM25Ave = 0
 
-  database.getDatabase().measurement.findAll({
+  database.getDatabase().reading.findAll({
     where: {
       timeTaken: {
         [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
       }
     }
   }).then(async function (posts) {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     postsAsJSON.forEach((reading) => {
       PM25Ave += reading.PM25Reading
     })
@@ -178,14 +178,14 @@ router.get('/PM25Average', function (req, res, next) {
 })
 
 router.get('/allReadings', function (req, res, next) {
-  database.getDatabase().measurement.findAll({
+  database.getDatabase().reading.findAll({
     where: {
       timeTaken: {
         [Op.gte]: moment().subtract(1, 'days').toDate() // filters the records from the last 24 hours
       }
     }
   }).then(async function (posts) {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     res.send(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
   })
 })

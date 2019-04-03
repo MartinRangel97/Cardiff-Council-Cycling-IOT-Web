@@ -13,7 +13,7 @@ export default class MapView extends React.Component {
     super(props)
     this.state = {
       selectedOverlay: 'air',
-      measurement: [[]]
+      reading: [[]]
     }
     this.createRadius = this.createRadius.bind(this)
   }
@@ -97,7 +97,7 @@ export default class MapView extends React.Component {
       .then((response) => {
         console.log('Get all readings: ' + response.data)
         this.setState({
-          measurement: response.data
+          reading: response.data
         })
       }
       )
@@ -126,14 +126,14 @@ export default class MapView extends React.Component {
     // Prepare event listeners
     this.map.on('load', () => {
       this.props.onMapLoad()
-      console.log('map: ' + this.state.measurement)
+      console.log('map: ' + this.state.reading)
       this.map.addSource('air', {
         type: 'geojson',
-        data: this.state.measurement
+        data: this.state.reading
       })
       this.map.addSource('noise', {
         type: 'geojson',
-        data: this.state.measurement
+        data: this.state.reading
       })
       // add air layer here
       this.map.addLayer({
