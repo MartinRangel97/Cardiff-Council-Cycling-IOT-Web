@@ -241,8 +241,21 @@ export default class App extends React.Component {
       })
   }
 
+  // Gets all of the readings based on userId
   setProfileMap = (userId) => {
     axios.get('/api/web/user/' + userId + '/measurements/geojson')
+      .then((response) => {
+        this.setState({
+          mapData: response.data
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  setJourneyMap = (userId, journeyId) => {
+    axios.get('/api/web/user/' + userId + '/journey/' + journeyId + '/measurements/geojson')
       .then((response) => {
         this.setState({
           mapData: response.data

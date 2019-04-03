@@ -293,4 +293,17 @@ router.get('/journeys/:journeyId/distance', function (req, res, next) {
   })
 })
 
+// Gets measurements as geojson based on user and journey ID
+router.get('/user/:userId/journey/:journeyId/measurements/geojson', function (req, res, next) {
+  database.getDatabase().measurement.findAll({
+    where: {
+      userId: req.params.userId,
+      journeyId: req.params.journeyId
+    }
+  }).then(posts => {
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
+    res.send(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
+  })
+})
+
 module.exports = router

@@ -28,36 +28,16 @@ export default class JourneySubpage extends React.Component {
 
   componentWillMount () {
     this.getJourneyReadings(1, this.getJourneyId()).then(() => {
-      console.log(this.state)
+      // Gets AQI after getting all averages in the state
       this.props.getAirQualityIndex(this.state.no2, this.state.pm25, this.state.pm10, false)
     })
   }
 
   componentDidMount () {}
 
-  // componentWillReceiveProps (nextProp) {
-  //   let curPropAverages = {
-  //     pm10: this.props.pm10,
-  //     pm25: this.props.pm25,
-  //     no2: this.props.no2,
-  //     dBA: this.props.dBA
-  //   }
-  //   let nextPropAverages = {
-  //     pm10: nextProp.pm10,
-  //     pm25: nextProp.pm25,
-  //     no2: nextProp.no2,
-  //     dBA: nextProp.dBA
-  //   }
-  //   if (this.props !== nextProp) {
-  //     nextProp.getAirQualityIndex(nextProp.no2, nextProp.pm25, nextProp.pm10, false)
-  //   }
-  // }
-
   componentDidUpdate () {}
 
-  componentWillUnmount () {
-    // this.props.getAirQualityIndex(this.state.no2, this.state.pm25, this.state.pm10, false)
-  }
+  componentWillUnmount () {}
 
   getJourneyReadings = (userId, journeyId) => {
     return axios.get('/api/web/user/' + userId + '/journeys/' + journeyId + '/measurements/averages')
@@ -119,7 +99,6 @@ export default class JourneySubpage extends React.Component {
 JourneySubpage.propTypes = {
   title: PropTypes.string,
   // match: PropTypes.object, Use later for path
-  // getAirQualityIndex: PropTypes.func,
   airQualityIndex: PropTypes.string,
   pm10: PropTypes.number,
   pm25: PropTypes.number,
