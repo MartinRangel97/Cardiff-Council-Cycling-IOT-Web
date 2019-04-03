@@ -90,13 +90,6 @@ export default class MapView extends React.Component {
     }
   }
 
-  // componentWillUpdate (prevProps) {
-  //   if (prevProps.mapState !== this.props.mapState) {
-  //     this.map.getSource('air').setData(this.props.data)
-  //     this.map.getSource('noise').setData(this.props.data)
-  //   }
-  // }
-
   componentDidMount () {
     // Public Style URL:
     // https://api.mapbox.com/styles/v1/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3.html?fresh=true&title=true&access_token=pk.eyJ1Ijoiam9uYXRoYW5wZXRlcmNvbGUiLCJhIjoiY2p0YWhqaTRrMGFydjQzcWQ1NWR5aTk3dCJ9.V7HyWXQG5lpWtgk-17y6yw#13.5/51.480233/-3.152327/0
@@ -270,5 +263,8 @@ MapView.propTypes = {
   onMapLoad: PropTypes.func,
   onMapClick: PropTypes.func,
   mapState: PropTypes.object,
-  data: PropTypes.object
+  data: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ])
 }
