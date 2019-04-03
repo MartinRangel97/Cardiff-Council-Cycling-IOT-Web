@@ -27,7 +27,7 @@ export default class JourneySubpage extends React.Component {
   }
 
   componentWillMount () {
-    // this.props.setJourneyMap(1, this.getJourneyId())
+    this.props.setJourneyMap(1, this.getJourneyId())
     this.getJourneyReadings(1, this.getJourneyId()).then(() => {
       // Gets AQI after getting all averages in the state
       this.props.getAirQualityIndex(this.state.no2, this.state.pm25, this.state.pm10, false)
@@ -76,7 +76,7 @@ export default class JourneySubpage extends React.Component {
               </div>
               <div className='pill'>
                 <h2>PM2.5</h2>
-                <span>{this.state.pm25} µgm-3</span>
+                <span>{this.state.pm25} µg/m³</span>
               </div>
               <div className='pill'>
                 <h2>PM10</h2>
@@ -88,7 +88,7 @@ export default class JourneySubpage extends React.Component {
             <IconNoise className='icon' />
             <div className='details'>
               <h1>Noise</h1>
-              <span className='value'>{this.state.dBA} dBA</span>
+              <span className='value'>{this.state.dBA} dB</span>
             </div>
           </Card>
         </Section>

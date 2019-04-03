@@ -33,28 +33,13 @@ export default class ProfilePage extends React.Component {
 
   componentWillMount () {
     // Functions to get data to pass onto the state
-    this.props.setData(2)
+    this.props.setData(1)
     this.getJourneys(1).then((response) => {
       this.getTotalDistanceTravelled()
     })
     this.getTotalAverages(1).then(() => {
       this.props.getAirQualityIndex(this.state.no2Average, this.state.pm25Average, this.state.pm10Average, true)
     })
-  }
-
-  componentDidUpdate (prevProps) {
-    // If the map was clicked, show the details page
-    if (prevProps.mapState !== this.props.mapState) {
-      if (this.props.mapState.clickLocation) {
-        // pass in latitude, longitude, radius, userId in parameters
-        this.props.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1, 2)
-        this.props.history.push({
-          pathname: `${this.props.match.path}/details`,
-          search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
-            'lat=' + this.props.mapState.clickLocation.lat
-        })
-      }
-    }
   }
 
   // Statistics
@@ -181,7 +166,7 @@ export default class ProfilePage extends React.Component {
                   </div>
                   <div className='pill'>
                     <h2>PM2.5</h2>
-                    <span>{this.state.pm25Average} µgm-3</span>
+                    <span>{this.state.pm25Average} µg/m³</span>
                   </div>
                   <div className='pill'>
                     <h2>PM10</h2>
@@ -193,7 +178,7 @@ export default class ProfilePage extends React.Component {
                 <IconNoise className='icon' />
                 <div className='details'>
                   <h1>Average Noise Pollution Exposure</h1>
-                  <span className='value'>{this.state.noiseAverage} dBA</span>
+                  <span className='value'>{this.state.noiseAverage} dB</span>
                 </div>
               </Card>
             </Section>

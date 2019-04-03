@@ -67,7 +67,7 @@ export default class DetailssPage extends React.Component {
               </div>
               <div className='pill'>
                 <h2>PM2.5</h2>
-                <span>{this.props.circleAverages.PM25} µgm-3</span>
+                <span>{this.props.circleAverages.PM25} µg/m³</span>
               </div>
               <div className='pill'>
                 <h2>PM10</h2>
@@ -79,7 +79,7 @@ export default class DetailssPage extends React.Component {
             <IconNoise className='icon' />
             <div className='details'>
               <h1>Noise</h1>
-              <span className='value'>{this.props.circleAverages.dB} dBA</span>
+              <span className='value'>{this.props.circleAverages.dB} dB</span>
             </div>
           </Card>
         </Section>
