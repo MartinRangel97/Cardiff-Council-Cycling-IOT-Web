@@ -104,6 +104,38 @@ export default class App extends React.Component {
       })
   }
 
+  getUserCircleAverage = (lat, lon, rad, userId) => {
+    axios.post('/api/web/user/' + userId + '/circleAverage', {
+      'latitude': lat,
+      'longitude': lon,
+      'radius': rad
+    })
+      .then((response) => {
+        if (response.data.dB !== null) {
+          this.setState({
+            circleAverages: {
+              dB: response.data.dB.toFixed(0),
+              NO2: response.data.NO2.toFixed(0),
+              PM10: response.data.PM10.toFixed(0),
+              PM25: response.data.PM25.toFixed(0)
+            }
+          })
+        } else {
+          this.setState({
+            circleAverages: {
+              dB: 0,
+              NO2: 0,
+              PM10: 0,
+              PM25: 0
+            }
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   // Handle air quality index
   getAirQualityIndex = (no2, pm25, pm10, main) => {
     let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
@@ -295,7 +327,7 @@ export default class App extends React.Component {
             <Route path={`${this.props.match.path}/profile`} render={(props) =>
               <ProfilePage {...props}
                 mapState={this.state.mapState}
-                getCircleAverage={this.getCircleAverage}
+                getCircleAverage={this.getUserCircleAverage}
                 setMapCurrentRadius={this.setMapCurrentRadius}
                 getAirQualityIndex={this.getAirQualityIndex}
                 airQualityIndexMain={this.state.airQualityIndexMain}

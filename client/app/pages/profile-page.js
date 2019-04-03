@@ -33,7 +33,7 @@ export default class ProfilePage extends React.Component {
 
   componentWillMount () {
     // Functions to get data to pass onto the state
-    this.props.setData(1)
+    this.props.setData(2)
     this.getJourneys(1).then((response) => {
       this.getTotalDistanceTravelled()
     })
@@ -46,7 +46,8 @@ export default class ProfilePage extends React.Component {
     // If the map was clicked, show the details page
     if (prevProps.mapState !== this.props.mapState) {
       if (this.props.mapState.clickLocation) {
-        this.props.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
+        // pass in latitude, longitude, radius, userId in parameters
+        this.props.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1, 2)
         this.props.history.push({
           pathname: `${this.props.match.path}/details`,
           search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
