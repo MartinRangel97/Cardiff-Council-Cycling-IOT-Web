@@ -30,6 +30,7 @@ export default class DetailssPage extends React.Component {
     // If the location changed (new coordinates), update the radius
     if (prevProps.location !== this.props.location) {
       this.props.setRadius(this.getLngLat())
+      this.props.getAirQualityIndex(this.props.circleAverages.NO2, this.props.circleAverages.PM10, this.props.circleAverages.PM25)
     }
   }
 
@@ -61,7 +62,6 @@ export default class DetailssPage extends React.Component {
             <div className='pill-container'>
               <div className='pill'>
                 <h2>NO2</h2>
-                {console.log('render: ' + this.props.circleAverages.NO2)}
                 <span>{this.props.circleAverages.NO2} µg/m³</span>
               </div>
               <div className='pill'>

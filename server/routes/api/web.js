@@ -164,7 +164,8 @@ router.get('/PM25Average', function (req, res, next) {
   })
 })
 
-router.get('/allReadings', function (req, res, next) {
+// Get all data as geojson
+router.get('/measurements/geojson', function (req, res, next) {
   database.getDatabase().measurement.findAll({
     where: {
       timeTaken: {
@@ -181,7 +182,7 @@ router.get('/allReadings', function (req, res, next) {
    Profile page
 */
 // Get all journeys belonging to :userId
-router.get('/:userId/journeys/', function (req, res, next) {
+router.get('/user/:userId/journeys/', function (req, res, next) {
   database.getDatabase().journey.findAll({
     where: { userId: req.params.userId }
   }).then(posts => {
@@ -190,9 +191,22 @@ router.get('/:userId/journeys/', function (req, res, next) {
   })
 })
 
+// Gets map data belonging to a user
+router.get('/user/:userId/measurements/geojson', function (req, res, next) {
+  database.getDatabase().measurement.findAll({
+    where: {
+      userId: req.params.userId
+    }
+  }).then(posts => {
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, journeyScheme)
+    // send the data as a geojson for the map
+    res.send(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
+  })
+})
+
 // Get all measurements belonging to userId and calculate averages
-router.get('/:userId/measurements', function (req, res, next) {
-  var averages = {
+router.get('/user/:userId/measurements/averages', function (req, res, next) {
+  let averages = {
     dBA: 0,
     NO2: 0,
     PM25: 0,
@@ -221,15 +235,33 @@ router.get('/:userId/measurements', function (req, res, next) {
 })
 
 // Get all measurements of :journeyId belonging to :userId
-router.get('/:userId/readings', function (req, res, next) {
+router.get('/user/:userId/journeys/:journeyId/measurements/averages', function (req, res, next) {
+  let averages = {
+    dBA: 0,
+    NO2: 0,
+    PM25: 0,
+    PM10: 0
+  }
+
   database.getDatabase().measurement.findAll({
     where: {
-      userId: req.params.userId
+      userId: req.params.userId,
+      journeyId: req.params.journeyId
     }
   }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, journeyScheme)
-    // send the data as a geojson for the map
-    res.send(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
+    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().measurement, scheme)
+    postsAsJSON.forEach((reading) => {
+      averages.dBA += reading.dBReading
+      averages.NO2 += reading.NO2Reading
+      averages.PM10 += reading.PM10Reading
+      averages.PM25 += reading.PM25Reading
+    })
+    averages.dBA = averages.dBA / postsAsJSON.length
+    averages.NO2 = averages.NO2 / postsAsJSON.length
+    averages.PM10 = averages.PM10 / postsAsJSON.length
+    averages.PM25 = averages.PM25 / postsAsJSON.length
+
+    res.send(averages)
   })
 })
 

@@ -38,7 +38,7 @@ export default class App extends React.Component {
       }
     }
 
-    this.setExploreReadings = this.setExploreReadings.bind(this)
+    this.setExploreMap = this.setExploreMap.bind(this)
   }
 
   hideSplash () {
@@ -108,16 +108,16 @@ export default class App extends React.Component {
   getAirQualityIndex = (no2, pm25, pm10, main) => {
     let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
     let aqi
-    if (highestIndex > 0 && highestIndex <= 3) {
+    if (highestIndex === 0) {
+      aqi = 'N/A'
+    } else if (highestIndex > 0 && highestIndex <= 3) {
       aqi = 'Low'
-    } else if (highestIndex <= 6) {
+    } else if (highestIndex > 3 && highestIndex <= 6) {
       aqi = 'Moderate'
-    } else if (highestIndex <= 9) {
+    } else if (highestIndex > 6 && highestIndex <= 9) {
       aqi = 'High'
     } else if (highestIndex > 9) {
       aqi = 'Very High'
-    } else if (highestIndex === 0) {
-      aqi = 'N/A'
     } else {
       aqi = 'N/A'
     }
@@ -135,84 +135,78 @@ export default class App extends React.Component {
   }
 
   getNO2Index = (no2) => {
-    if (no2 > 0 && no2 < 68) {
+    if (no2 > 0 && no2 <= 68) {
       return 1
-    } else if (no2 <= 134) {
+    } else if (no2 > 68 && no2 <= 134) {
       return 2
-    } else if (no2 <= 200) {
+    } else if (no2 > 134 && no2 <= 200) {
       return 3
-    } else if (no2 <= 267) {
+    } else if (no2 > 200 && no2 <= 267) {
       return 4
-    } else if (no2 <= 334) {
+    } else if (no2 > 267 && no2 <= 334) {
       return 5
-    } else if (no2 <= 400) {
+    } else if (no2 > 334 && no2 <= 400) {
       return 6
-    } else if (no2 <= 467) {
+    } else if (no2 > 400 && no2 <= 467) {
       return 7
-    } else if (no2 <= 534) {
+    } else if (no2 > 467 && no2 <= 534) {
       return 8
-    } else if (no2 <= 535) {
+    } else if (no2 > 534 && no2 <= 535) {
       return 9
-    } else if (no2 >= 536) {
+    } else if (no2 > 535 && no2 >= 536) {
       return 10
-    } else if (no2 === 0) {
-      return 0
     } else {
       return 0
     }
   }
 
   getPM25Index = (pm25) => {
-    if (pm25 > 0 && pm25 < 12) {
+    if (pm25 > 0 && pm25 <= 12) {
       return 1
-    } else if (pm25 <= 23) {
+    } else if (pm25 > 12 && pm25 <= 23) {
       return 2
-    } else if (pm25 <= 35) {
+    } else if (pm25 > 23 && pm25 <= 35) {
       return 3
-    } else if (pm25 <= 41) {
+    } else if (pm25 > 35 && pm25 <= 41) {
       return 4
-    } else if (pm25 <= 47) {
+    } else if (pm25 > 41 && pm25 <= 47) {
       return 5
-    } else if (pm25 <= 53) {
+    } else if (pm25 > 47 && pm25 <= 53) {
       return 6
-    } else if (pm25 <= 58) {
+    } else if (pm25 > 53 && pm25 <= 58) {
       return 7
-    } else if (pm25 <= 64) {
+    } else if (pm25 > 58 && pm25 <= 64) {
       return 8
-    } else if (pm25 <= 70) {
+    } else if (pm25 > 64 && pm25 <= 70) {
       return 9
-    } else if (pm25 >= 71) {
+    } else if (pm25 > 70 && pm25 >= 71) {
       return 10
-    } else if (pm25 === 0) {
-      return 0
     } else {
       return 0
     }
   }
 
   getPM10Index = (pm10) => {
-    if (pm10 > 0 && pm10 < 17) {
+    if (pm10 > 0 && pm10 <= 17) {
       return 1
-    } else if (pm10 <= 33) {
+    } else if (pm10 > 17 && pm10 <= 33) {
       return 2
-    } else if (pm10 <= 50) {
+    } else if (pm10 > 33 && pm10 <= 50) {
       return 3
-    } else if (pm10 <= 58) {
+    } else if (pm10 > 50 && pm10 <= 58) {
       return 4
-    } else if (pm10 <= 66) {
+    } else if (pm10 > 58 && pm10 <= 66) {
       return 5
-    } else if (pm10 <= 75) {
+    } else if (pm10 > 66 && pm10 <= 75) {
       return 6
-    } else if (pm10 <= 83) {
+    } else if (pm10 > 75 && pm10 <= 83) {
       return 7
-    } else if (pm10 <= 91) {
+    } else if (pm10 > 83 && pm10 <= 91) {
       return 8
-    } else if (pm10 <= 100) {
+    } else if (pm10 > 91 && pm10 <= 100) {
       return 9
-    } else if (pm10 > 101) {
+    } else if (pm10 > 100 && pm10 > 101) {
       return 10
-    } else if (pm10 === 0) {
-      return 0
     } else {
       return 0
     }
@@ -235,8 +229,8 @@ export default class App extends React.Component {
   }
 
   // Gets all of the readings in the last 24 hours
-  setExploreReadings = () => {
-    axios.get('/api/web/allReadings')
+  setExploreMap = () => {
+    axios.get('/api/web/measurements/geojson')
       .then((response) => {
         this.setState({
           readings: response.data
@@ -247,8 +241,8 @@ export default class App extends React.Component {
       })
   }
 
-  setProfileReadings = (userId) => {
-    axios.get('/api/web/' + userId + '/readings')
+  setProfileMap = (userId) => {
+    axios.get('/api/web/user/' + userId + '/measurements/geojson')
       .then((response) => {
         this.setState({
           readings: response.data
@@ -276,7 +270,7 @@ export default class App extends React.Component {
               <ExplorePage {...props}
                 mapState={this.state.mapState}
                 setMapCurrentRadius={this.setMapCurrentRadius}
-                setData={this.setExploreReadings}
+                setData={this.setExploreMap}
                 getCircleAverage={this.getCircleAverage}
                 getAirQualityIndex={this.getAirQualityIndex}
                 airQualityIndexMain={this.state.airQualityIndexMain}
@@ -293,7 +287,7 @@ export default class App extends React.Component {
                 airQualityIndexMain={this.state.airQualityIndexMain}
                 airQualityIndexSub={this.state.airQualityIndexSub}
                 circleAverages={this.state.circleAverages}
-                setData={this.setProfileReadings}
+                setData={this.setProfileMap}
               />
             } />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />

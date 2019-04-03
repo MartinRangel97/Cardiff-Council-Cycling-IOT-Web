@@ -38,7 +38,6 @@ export default class ProfilePage extends React.Component {
       this.getTotalDistanceTravelled()
     })
     this.getTotalAverages(1).then(() => {
-      console.log(this.state)
       this.props.getAirQualityIndex(this.state.no2Average, this.state.pm25Average, this.state.pm10Average, true)
     })
   }
@@ -57,8 +56,9 @@ export default class ProfilePage extends React.Component {
     }
   }
 
+  // Statistics
   getJourneys = (userId) => {
-    return axios.get('/api/web/' + userId + '/journeys')
+    return axios.get('/api/web/user/' + userId + '/journeys')
       .then((response) => {
         this.setState({
           journeys: response.data
@@ -70,7 +70,7 @@ export default class ProfilePage extends React.Component {
   }
 
   getTotalAverages = (userId) => {
-    return axios.get('/api/web/' + userId + '/measurements')
+    return axios.get('/api/web/user/' + userId + '/measurements/averages')
       .then((response) => {
         this.setState({
           noiseAverage: response.data.dBA.toFixed(0),
@@ -83,8 +83,7 @@ export default class ProfilePage extends React.Component {
         console.log(error)
       })
   }
-x
-  // Statistics
+
   getTotalDistanceTravelled = (response) => {
     this.state.journeys.forEach((journey) => {
       this.getJourneyDistance(journey.id).then((response) => {
