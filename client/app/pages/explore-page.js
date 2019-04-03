@@ -36,15 +36,13 @@ export default class ExplorePage extends React.Component {
 
   componentDidUpdate (prevProps) {
     // If the map was clicked, show the details page
-    if (prevProps.mapState !== this.props.mapState) {
-      if (this.props.mapState.clickLocation) {
-        this.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
-        this.props.history.push({
-          pathname: `${this.props.match.path}/details`,
-          search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
-            'lat=' + this.props.mapState.clickLocation.lat
-        })
-      }
+    if (prevProps.mapState.clickLocation !== this.props.mapState.clickLocation) {
+      this.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
+      this.props.history.push({
+        pathname: `${this.props.match.path}/details`,
+        search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
+          'lat=' + this.props.mapState.clickLocation.lat
+      })
     }
   }
 
@@ -217,9 +215,7 @@ export default class ExplorePage extends React.Component {
   journey () {
     var request = new XMLHttpRequest()
     request.open('GET', '/api/web/journey', true)
-    console.log(request.status)
     request.onload = (data) => {
-      console.log(request.status)
       if (request.status === 200) {
         this.setState({
           journey: request.response
@@ -231,8 +227,6 @@ export default class ExplorePage extends React.Component {
   }
 
   render () {
-    console.log(this.state)
-    console.log(this.props)
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} render={(props) =>

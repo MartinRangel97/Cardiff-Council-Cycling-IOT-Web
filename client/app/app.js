@@ -39,7 +39,7 @@ class App extends React.Component {
     this.state = {
       showSidebar: true,
       showLogoutConfirmation: false,
-      mapState: null,
+      mapState: {},
       noiseAverage: 0
     }
   }
@@ -62,6 +62,7 @@ class App extends React.Component {
     this.setState({
       showSidebar: true,
       mapState: {
+        ...this.state.mapState,
         clickLocation: event.lngLat
       }
     })
@@ -70,6 +71,7 @@ class App extends React.Component {
   setMapCurrentRadius = (point) => {
     this.setState({
       mapState: {
+        ...this.state.mapState,
         currentRadius: point
       }
     })
