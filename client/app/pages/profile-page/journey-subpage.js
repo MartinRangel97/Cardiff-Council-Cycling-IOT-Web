@@ -15,9 +15,9 @@ export default class JourneySubpage extends React.Component {
     super(props)
     this.state = {
       dBA: 0,
-      NO2: 0,
-      PM10: 0,
-      PM25: 0
+      no2: 0,
+      pm10: 0,
+      pm25: 0
     }
   }
 
@@ -27,23 +27,28 @@ export default class JourneySubpage extends React.Component {
   }
 
   componentWillMount () {
-    this.getJourneyReadings(1, this.getJourneyId())
-    this.props.getAirQualityIndex(this.state.no2, this.state.pm25, this.state.pm10, false)
+    // this.props.setJourneyMap(1, this.getJourneyId())
+    this.getJourneyReadings(1, this.getJourneyId()).then(() => {
+      // Gets AQI after getting all averages in the state
+      this.props.getAirQualityIndex(this.state.no2, this.state.pm25, this.state.pm10, false)
+    })
   }
+
+  componentDidMount () {}
 
   componentDidUpdate () {}
 
   componentWillUnmount () {}
 
   getJourneyReadings = (userId, journeyId) => {
-    axios.get('/api/web/user/' + userId + '/journeys/' + journeyId + '/measurements/averages')
+    return axios.get('/api/web/user/' + userId + '/journeys/' + journeyId + '/measurements/averages')
       .then((response) => {
         if (response.data !== 'NaN') {
           this.setState({
             dBA: response.data.dBA.toFixed(0),
-            NO2: response.data.NO2.toFixed(0),
-            PM10: response.data.PM10.toFixed(0),
-            PM25: response.data.PM25.toFixed(0)
+            no2: response.data.NO2.toFixed(0),
+            pm10: response.data.PM10.toFixed(0),
+            pm25: response.data.PM25.toFixed(0)
           })
         }
       })
@@ -67,15 +72,15 @@ export default class JourneySubpage extends React.Component {
             <div className='pill-container'>
               <div className='pill'>
                 <h2>NO2</h2>
-                <span>{this.state.NO2} µg/m³</span>
+                <span>{this.state.no2} µg/m³</span>
               </div>
               <div className='pill'>
                 <h2>PM2.5</h2>
-                <span>{this.state.PM25} µgm-3</span>
+                <span>{this.state.pm25} µgm-3</span>
               </div>
               <div className='pill'>
                 <h2>PM10</h2>
-                <span>{this.state.PM10} µg/m³</span>
+                <span>{this.state.pm10} µg/m³</span>
               </div>
             </div>
           </Card>
@@ -95,8 +100,8 @@ export default class JourneySubpage extends React.Component {
 JourneySubpage.propTypes = {
   title: PropTypes.string,
   // match: PropTypes.object, Use later for path
-  // getAirQualityIndex: PropTypes.func,
   airQualityIndex: PropTypes.string,
+  setJourneyMap: PropTypes.func,
   pm10: PropTypes.number,
   pm25: PropTypes.number,
   no2: PropTypes.number,

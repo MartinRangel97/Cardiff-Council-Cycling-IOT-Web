@@ -152,6 +152,7 @@ export default class ProfilePage extends React.Component {
             title='Get date here'
             airQualityIndex={this.props.airQualityIndexSub}
             getAirQualityIndex={this.props.getAirQualityIndex}
+            setJourneyMap={this.props.setJourneyMap}
           />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
@@ -225,5 +226,6 @@ ProfilePage.propTypes = {
   airQualityIndexMain: PropTypes.string,
   airQualityIndexSub: PropTypes.string,
   circleAverages: PropTypes.object,
-  setData: PropTypes.func
+  setData: PropTypes.func,
+  setJourneyMap: PropTypes.func
 }
