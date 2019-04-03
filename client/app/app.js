@@ -5,6 +5,7 @@ import { Route, Redirect } from 'react-router-dom'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { withLocalize } from 'react-localize-redux'
 import globalTranslations from '../translations/global.json'
+import axios from 'axios'
 
 // Components
 import Layout from './components/layout/layout'
@@ -38,7 +39,8 @@ class App extends React.Component {
     this.state = {
       showSidebar: true,
       showLogoutConfirmation: false,
-      mapState: null
+      mapState: {},
+      noiseAverage: 0
     }
   }
 
@@ -59,8 +61,34 @@ class App extends React.Component {
   onMapClick = (event) => {
     this.setState({
       showSidebar: true,
-      mapState: { clickLocation: event.lngLat }
+      mapState: {
+        ...this.state.mapState,
+        clickLocation: event.lngLat
+      }
     })
+  }
+
+  setMapCurrentRadius = (point) => {
+    this.setState({
+      mapState: {
+        ...this.state.mapState,
+        currentRadius: point
+      }
+    })
+  }
+
+  getdBAverage = () => {
+    axios.get('/api/web/noiseAverage')
+      .then((response) => {
+        if (response.data !== 'NaN') {
+          this.setState({
+            noiseAverage: response.data.toFixed(0)
+          })
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   toggleSidebar = (show) => {
@@ -85,11 +113,19 @@ class App extends React.Component {
         <MapView
           onMapLoad={this.onMapLoad}
           onMapClick={this.onMapClick}
+          mapState={this.state.mapState}
           sidebarToggle={this.toggleSidebar} />
         <Sidebar showSidebar={this.state.showSidebar}>
           <SidebarPageManager>
             <Redirect exact from={this.props.match.path} to='/app/explore' />
-            <Route path={`${this.props.match.path}/explore`} render={(props) => <ExplorePage {...props} mapState={this.state.mapState} />} />
+            <Route path={`${this.props.match.path}/explore`} render={(props) =>
+              <ExplorePage
+                {...props}
+                mapState={this.state.mapState}
+                setMapCurrentRadius={this.setMapCurrentRadius}
+                dBAverage={this.state.noiseAverage}
+                setdBAverage={this.getdBAverage} />
+            } />
             <Route path={`${this.props.match.path}/profile`} render={(props) => <ProfilePage {...props} />} />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
             <Route path={`${this.props.match.path}/search`} render={(props) => <SearchPage {...props} />} />
