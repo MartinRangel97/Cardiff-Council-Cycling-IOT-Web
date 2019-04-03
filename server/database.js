@@ -29,11 +29,11 @@ function configure (host, user, password, database) {
     })
     // Require Models
     let UserModel = require('./models/user')(sequelize, DataTypes)
-    let MeasurementModel = require('./models/measurements')(sequelize, DataTypes)
+    let ReadingModel = require('./models/reading')(sequelize, DataTypes)
     let JourneyModel = require('./models/journey')(sequelize, DataTypes)
     // Add the models
     db.user = UserModel
-    db.measurement = MeasurementModel
+    db.reading = ReadingModel
     db.journey = JourneyModel
     // TODO: Add any associations here
     // Set the db Sequelize instance

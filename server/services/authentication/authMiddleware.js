@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const keys = require('./keys')
+const keys = require('../../../config/keys')
 const secret = keys.secretOrKey
 
 const withAuth = function (req, res, next) {
@@ -16,7 +16,7 @@ const withAuth = function (req, res, next) {
       if (err) {
         res.status(401).send('Unauthorised: Invalid token')
       } else {
-        req.email = decoded.email
+        req.userID = decoded.id
         next()
       }
     })
