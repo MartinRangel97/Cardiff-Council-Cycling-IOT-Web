@@ -40,15 +40,13 @@ router.get('/export', function (req, res, next) {
         ['PM10Reading', 'PM10Reading']
       ],
       where: {
-        id: 1,
+        userId: 1
       }
     }).then((reading) => {
       let readingsJSON = Serializer.serializeMany(reading, database.getDatabase().reading, readingScheme)
-      // res.attachment('export.csv')
       if (readingsJSON.length > 0) {
         try {
-          res.send(readingsJSON[0].PM10Reading.toString())
-          // console.log(parse(readingsJSON))
+          res.send(readingsJSON)
         } catch (err) {
           console.log(err)
           res.sendStatus(400)
@@ -66,21 +64,51 @@ router.get('/export', function (req, res, next) {
         include: ['PM25Reading']
       }
     }
+
+
+    let no2 = []
+    let pm10 = []
+    let pm25 = []
+    let dB = []
   
+    let listReadings = {
+      dB: dB, 
+      pm10: pm10, 
+      pm25: pm25, 
+      no2: no2
+    }
 
   database.getDatabase().reading.findAll({
     attributes:[
-      ['PM25Reading', 'PM25Reading']
+      ['PM25Reading', 'PM25Reading'],
+      ['NO2Reading', 'NO2Reading'],
+      ['PM10Reading', 'PM10Reading'],
+      ['dBReading', 'dBReading']
     ],
     where: {
-      id: 1,
+      userId: 1,
     }
   }).then((reading) => {
     let readingsJSON = Serializer.serializeMany(reading, database.getDatabase().reading, readingScheme)
+    // readingsJSON.forEach((reading) => {
+    //   no2.push(reading.NO2Reading)
+    //   pm10.push(reading.PM10Reading)
+    //   pm25.push(reading.PM25Reading)
+    //   dB.push(reading.dBReading)
+    // })
+    console.log(readingsJSON)
+
+    for (var i = 0; i < 100; i++) {
+      no2.push(readingsJSON[i].NO2Reading.toFixed(0))
+      pm10.push(readingsJSON[i].PM10Reading.toFixed(0))
+      pm25.push(readingsJSON[i].PM25Reading.toFixed(0))
+      dB.push(readingsJSON[i].dBReading.toFixed(0))
+    }
+
     // res.attachment('export.csv')
     if (readingsJSON.length > 0) {
       try {
-        res.send(readingsJSON[0].PM25Reading.toString())
+        res.send(listReadings)
         // console.log(parse(readingsJSON))
       } catch (err) {
         console.log(err)
@@ -145,7 +173,7 @@ router.get('/export', function (req, res, next) {
       // res.attachment('export.csv')
       if (readingsJSON.length > 0) {
         try {
-          res.send(readingsJSON[0].dBReading.toString())
+          res.send(readingsJSON.dBReading.toString())
           // console.log(parse(readingsJSON))
         } catch (err) {
           console.log(err)

@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom'
 
 import Chart from 'react-apexcharts'
 import ReactApexChart from 'react-apexcharts'
+import axios from 'axios';
 
 
 export default class ChartsPage extends React.Component {
@@ -25,7 +26,7 @@ export default class ChartsPage extends React.Component {
               align: 'Right',
             },
             xaxis: {
-              categories: ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
+            //   categories: ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
               title:{
                   text: "Hours",
               }
@@ -105,7 +106,6 @@ export default class ChartsPage extends React.Component {
                 },
             },
               
-              
                 {
                   seriesName: 'dB',
                   opposite: true,
@@ -146,30 +146,68 @@ export default class ChartsPage extends React.Component {
             name: 'NO2',
             title: "NO2",
             type: 'line',
-            data: [48, 76, 18, 206, 335, 196, 256, 295, 340, 136, 84, 177, 51]
+            data: []
           }, {
             name: 'PM2.5',
             title: "PM2.5",
-            data: [9, 41, 24, 38, 49, 25, 12, 47, 58, 33, 28, 14, 32]
+            data: []
           }, {
             name: 'PM10',
             title: "PM10",
-            data: [12, 50, 32, 59, 42, 67, 75, 49, 30, 22, 63, 8, 18]
+            data: []
           },
           {
               name: 'dB',
+              title: 'dB',
               type: 'line',
-              data: [45, 67, 75, 59, 84, 93, 38, 60, 29, 62, 77, 28]
+              data: []
             }],
         }
+    }
+
+       dataresults () {
+
+        axios.get('/api/web/reading/PM25/')
+        .then((response) => {
+            this.setState({
+                series: [{
+                    name: 'NO2',
+                    title: "NO2",
+                    type: 'line',
+                    data: response.data.no2
+                  }, {
+                    name: 'PM2.5',
+                    title: "PM2.5",
+                    data: response.data.pm25
+                  }, {
+                    name: 'PM10',
+                    title: "PM10",
+                    data: response.data.pm10
+                  },
+                  {
+                      name: 'dB',
+                      type: 'line',
+                      data: response.data.dB
+                    }]
+            })
+        })
+        .catch((error) => {
+            console.log(error)
+        })
       }
+    
+
+      componentWillMount () {
+        this.dataresults()
+      }
+    
   
       render() {
         return (
           
   
           <div id="chart">
-            <ReactApexChart options={this.state.options} series={this.state.series} type="line" height="350" width="480" />
+            <ReactApexChart options={this.state.options} series={this.state.series} type="line" height="700" width="700" />
           </div>
   
   
