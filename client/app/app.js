@@ -37,12 +37,10 @@ export default class App extends React.Component {
         PM25: 0
       }
     }
-
-    this.setExploreMap = this.setExploreMap.bind(this)
   }
 
+  // Hide the splash screen
   hideSplash () {
-    // Hide the splash screen
     // Ref: https://github.com/nguyenbathanh/react-loading-screen
     const loadingScreen = document.getElementById('splash-screen')
     loadingScreen.classList.add('fade-out')
@@ -55,6 +53,11 @@ export default class App extends React.Component {
     this.hideSplash()
   }
 
+  /**
+  * Handles map click events.
+  * Sets showSidebar state to true and passes click location to mapState.
+  * @param {event} event onClick event
+  */
   onMapClick = (event) => {
     this.setState({
       showSidebar: true,
@@ -64,6 +67,10 @@ export default class App extends React.Component {
     })
   }
 
+  /**
+  * Set radius
+  * @param {float} rad Radius in miles
+  */
   setMapCurrentRadius = (point) => {
     this.setState({
       mapState: {
@@ -72,6 +79,13 @@ export default class App extends React.Component {
     })
   }
 
+  /**
+  * Sends a post request to web api to calculate average pollution data within a circle radius on the map.
+  * Sets state of circleAverages{}.
+  * @param {float} lat Latitude coordinate
+  * @param {float} lon Longitude coordinate
+  * @param {float} rad Radius in miles
+  */
   getCircleAverage = (lat, lon, rad) => {
     axios.post('/api/web/circleAverage', {
       'latitude': lat,
@@ -104,6 +118,7 @@ export default class App extends React.Component {
       })
   }
 
+<<<<<<< HEAD
   getUserCircleAverage = (lat, lon, rad, userId) => {
     axios.post('/api/web/user/' + userId + '/circleAverage', {
       'latitude': lat,
@@ -137,6 +152,16 @@ export default class App extends React.Component {
   }
 
   // Handle air quality index
+=======
+  /**
+  * Calculates overall air quality index band.
+  * Calls getNO2Index, getPM25Index and getPM10Index and uses highest value to determine AQI.
+  * @param {int} no2 NO2 value shall be passed into getNO2Index
+  * @param {int} pm25 PM25 value shall be passed into getNO2Index
+  * @param {int} pm10 PM10 value shall be passed into getNO2Index
+  * @param {boolean} main Sets state of airQualityIndexMain or airQualityIndexSub depending on page layer
+  */
+>>>>>>> 8d0f62d002a7a509d171b2354aa7dfc24195b051
   getAirQualityIndex = (no2, pm25, pm10, main) => {
     let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
     let aqi
@@ -166,6 +191,10 @@ export default class App extends React.Component {
     return aqi
   }
 
+  /**
+  * Calculates the air quality index band of a NO2 value
+  * @param {int} no2
+  */
   getNO2Index = (no2) => {
     if (no2 > 0 && no2 <= 68) {
       return 1
@@ -192,6 +221,10 @@ export default class App extends React.Component {
     }
   }
 
+  /**
+  * Calculates the air quality index band of a PM25 value
+  * @param {int} pm25
+  */
   getPM25Index = (pm25) => {
     if (pm25 > 0 && pm25 <= 12) {
       return 1
@@ -218,6 +251,10 @@ export default class App extends React.Component {
     }
   }
 
+  /**
+  * Calculates the air quality index band of a PM10 value
+  * @param {int} pm10
+  */
   getPM10Index = (pm10) => {
     if (pm10 > 0 && pm10 <= 17) {
       return 1
@@ -252,6 +289,7 @@ export default class App extends React.Component {
     }
   }
 
+  // Redirect to root page - temporary solution until log-out functionality is implemented.
   logout = () => {
     window.location = '/'
   }
@@ -273,7 +311,10 @@ export default class App extends React.Component {
       })
   }
 
-  // Gets all of the readings based on userId
+  /**
+  * Gets all journey readings for a user and passes to mapbox as geojson
+  * @param {int} userId Gets user id
+  */
   setProfileMap = (userId) => {
     axios.get('/api/web/user/' + userId + '/measurements/geojson')
       .then((response) => {
