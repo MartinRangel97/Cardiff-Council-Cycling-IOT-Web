@@ -254,6 +254,7 @@ export default class App extends React.Component {
       })
   }
 
+  // Gets all of the readings based on user and journey id
   setJourneyMap = (userId, journeyId) => {
     axios.get('/api/web/user/' + userId + '/journey/' + journeyId + '/measurements/geojson')
       .then((response) => {
@@ -300,6 +301,7 @@ export default class App extends React.Component {
                 airQualityIndexMain={this.state.airQualityIndexMain}
                 airQualityIndexSub={this.state.airQualityIndexSub}
                 circleAverages={this.state.circleAverages}
+                setJourneyMap={this.setJourneyMap}
                 setData={this.setProfileMap}
               />
             } />

@@ -27,6 +27,7 @@ export default class JourneySubpage extends React.Component {
   }
 
   componentWillMount () {
+    // this.props.setJourneyMap(1, this.getJourneyId())
     this.getJourneyReadings(1, this.getJourneyId()).then(() => {
       // Gets AQI after getting all averages in the state
       this.props.getAirQualityIndex(this.state.no2, this.state.pm25, this.state.pm10, false)
@@ -100,6 +101,7 @@ JourneySubpage.propTypes = {
   title: PropTypes.string,
   // match: PropTypes.object, Use later for path
   airQualityIndex: PropTypes.string,
+  setJourneyMap: PropTypes.func,
   pm10: PropTypes.number,
   pm25: PropTypes.number,
   no2: PropTypes.number,
