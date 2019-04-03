@@ -23,7 +23,7 @@ export default class DetailssPage extends React.Component {
   componentWillReceiveProps (nextProps) {
     // Check circle pollution averages has changed, if so get new air quality index
     if (this.props.circleAverages !== nextProps.circleAverages) {
-      nextProps.getAirQualityIndex(nextProps.circleAverages.NO2, nextProps.circleAverages.PM10, nextProps.circleAverages.PM25)
+      nextProps.getAirQualityIndex(nextProps.circleAverages.NO2, nextProps.circleAverages.PM25, nextProps.circleAverages.PM10, false)
     }
   }
 
@@ -57,7 +57,7 @@ export default class DetailssPage extends React.Component {
               <IconAirPollution className='icon' />
               <div className='details'>
                 <h1>Air Pollution</h1>
-                <span className='value'>{this.props.airQualityIndex}</span>
+                <span className='value'>{this.props.airQualityIndexSub}</span>
               </div>
             </div>
             <div className='pill-container'>
@@ -93,5 +93,5 @@ DetailssPage.propTypes = {
   setRadius: PropTypes.func,
   circleAverages: PropTypes.object,
   getAirQualityIndex: PropTypes.func,
-  airQualityIndex: PropTypes.string
+  airQualityIndexSub: PropTypes.string
 }

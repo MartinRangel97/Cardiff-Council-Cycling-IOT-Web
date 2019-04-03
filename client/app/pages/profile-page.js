@@ -25,9 +25,9 @@ export default class ProfilePage extends React.Component {
       currentDistance: 0,
       arrayDistance: [],
       noiseAverage: 0,
-      NO2Average: 0,
-      PM10Average: 0,
-      PM25Average: 0
+      no2Average: 0,
+      pm10Average: 0,
+      pm25Average: 0
     }
   }
 
@@ -38,9 +38,7 @@ export default class ProfilePage extends React.Component {
       this.getTotalDistanceTravelled()
     })
     this.getTotalAverages(1).then(() => {
-      this.setState({
-        airQualityIndex: this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
-      })
+      this.props.getAirQualityIndex(this.state.no2Average, this.state.pm25Average, this.state.pm10Average, true)
     })
   }
 
@@ -76,9 +74,9 @@ export default class ProfilePage extends React.Component {
       .then((response) => {
         this.setState({
           noiseAverage: response.data.dBA.toFixed(0),
-          NO2Average: response.data.NO2.toFixed(0),
-          PM10Average: response.data.PM10.toFixed(0),
-          PM25Average: response.data.PM25.toFixed(0)
+          no2Average: response.data.NO2.toFixed(0),
+          pm10Average: response.data.PM10.toFixed(0),
+          pm25Average: response.data.PM25.toFixed(0)
         })
       })
       .catch((error) => {
@@ -145,13 +143,15 @@ export default class ProfilePage extends React.Component {
           <DetailsSubpage {...props}
             setRadius={this.props.setMapCurrentRadius}
             circleAverages={this.props.circleAverages}
-            airQualityIndex={this.props.airQualityIndex}
+            airQualityIndexSub={this.props.airQualityIndexSub}
             getAirQualityIndex={this.props.getAirQualityIndex}
           />
         } />
         <Route path={`${this.props.match.path}/journey`} render={() =>
           <JourneySubpage
             title='Get date here'
+            airQualityIndex={this.props.airQualityIndexSub}
+            getAirQualityIndex={this.props.getAirQualityIndex}
           />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
@@ -169,21 +169,21 @@ export default class ProfilePage extends React.Component {
                   <IconAirPollution className='icon' />
                   <div className='details'>
                     <h1>Average Air Pollution Exposure</h1>
-                    <span className='value'>{this.props.airQualityIndex}</span>
+                    <span className='value'>{this.props.airQualityIndexMain}</span>
                   </div>
                 </div>
                 <div className='pill-container'>
                   <div className='pill'>
                     <h2>NO2</h2>
-                    <span>{this.state.NO2Average} µg/m³</span>
+                    <span>{this.state.no2Average} µg/m³</span>
                   </div>
                   <div className='pill'>
                     <h2>PM2.5</h2>
-                    <span>{this.state.PM25Average} µgm-3</span>
+                    <span>{this.state.pm25Average} µgm-3</span>
                   </div>
                   <div className='pill'>
                     <h2>PM10</h2>
-                    <span>{this.state.PM10Average} µg/m³</span>
+                    <span>{this.state.pm10Average} µg/m³</span>
                   </div>
                 </div>
               </Card>
@@ -222,7 +222,8 @@ ProfilePage.propTypes = {
   setMapCurrentRadius: PropTypes.func,
   getCircleAverage: PropTypes.func,
   getAirQualityIndex: PropTypes.func,
-  airQualityIndex: PropTypes.string,
+  airQualityIndexMain: PropTypes.string,
+  airQualityIndexSub: PropTypes.string,
   circleAverages: PropTypes.object,
   setData: PropTypes.func
 }

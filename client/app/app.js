@@ -28,7 +28,8 @@ export default class App extends React.Component {
       showLogoutConfirmation: false,
       mapState: null,
       mapData: [[]],
-      airQualityIndex: 'N/A',
+      airQualityIndexMain: 'N/A',
+      airQualityIndexSub: 'N/A',
       circleAverages: {
         dB: 0,
         NO2: 0,
@@ -104,7 +105,7 @@ export default class App extends React.Component {
   }
 
   // Handle air quality index
-  getAirQualityIndex = (no2, pm25, pm10) => {
+  getAirQualityIndex = (no2, pm25, pm10, main) => {
     let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
     let aqi
     if (highestIndex === 0) {
@@ -120,9 +121,16 @@ export default class App extends React.Component {
     } else {
       aqi = 'N/A'
     }
-    this.setState({
-      airQualityIndex: aqi
-    })
+    if (main) {
+      this.setState({
+        airQualityIndexMain: aqi
+      })
+    } else {
+      this.setState({
+        airQualityIndexSub: aqi
+      })
+    }
+
     return aqi
   }
 
@@ -265,7 +273,8 @@ export default class App extends React.Component {
                 setData={this.setExploreMap}
                 getCircleAverage={this.getCircleAverage}
                 getAirQualityIndex={this.getAirQualityIndex}
-                airQualityIndex={this.state.airQualityIndex}
+                airQualityIndexMain={this.state.airQualityIndexMain}
+                airQualityIndexSub={this.state.airQualityIndexSub}
                 circleAverages={this.state.circleAverages}
               />
             } />
@@ -275,7 +284,8 @@ export default class App extends React.Component {
                 getCircleAverage={this.getCircleAverage}
                 setMapCurrentRadius={this.setMapCurrentRadius}
                 getAirQualityIndex={this.getAirQualityIndex}
-                airQualityIndex={this.state.airQualityIndex}
+                airQualityIndexMain={this.state.airQualityIndexMain}
+                airQualityIndexSub={this.state.airQualityIndexSub}
                 circleAverages={this.state.circleAverages}
                 setData={this.setProfileMap}
               />

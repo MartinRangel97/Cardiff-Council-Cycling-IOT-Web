@@ -28,6 +28,7 @@ export default class JourneySubpage extends React.Component {
 
   componentWillMount () {
     this.getJourneyReadings(1, this.getJourneyId())
+    this.props.getAirQualityIndex(this.state.no2, this.state.pm25, this.state.pm10, false)
   }
 
   componentDidUpdate () {}
@@ -96,5 +97,10 @@ JourneySubpage.propTypes = {
   // match: PropTypes.object, Use later for path
   // getAirQualityIndex: PropTypes.func,
   airQualityIndex: PropTypes.string,
+  pm10: PropTypes.number,
+  pm25: PropTypes.number,
+  no2: PropTypes.number,
+  dBA: PropTypes.number,
+  getAirQualityIndex: PropTypes.func,
   userId: PropTypes.string
 }
