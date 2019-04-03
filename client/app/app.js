@@ -37,7 +37,7 @@ export default class App extends React.Component {
       }
     }
 
-    this.setExploreReadings = this.setExploreReadings.bind(this)
+    this.setExploreMap = this.setExploreMap.bind(this)
   }
 
   hideSplash () {
@@ -221,8 +221,20 @@ export default class App extends React.Component {
   }
 
   // Gets all of the readings in the last 24 hours
-  setExploreReadings () {
-    axios.get('/api/web/allReadings')
+  setExploreMap = () => {
+    axios.get('/api/web/measurements/geojson')
+      .then((response) => {
+        this.setState({
+          readings: response.data
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  setProfileMap = (userId) => {
+    axios.get('/api/web/user/' + userId + '/measurements/geojson')
       .then((response) => {
         this.setState({
           readings: response.data
@@ -250,7 +262,7 @@ export default class App extends React.Component {
               <ExplorePage {...props}
                 mapState={this.state.mapState}
                 setMapCurrentRadius={this.setMapCurrentRadius}
-                setData={this.setExploreReadings}
+                setData={this.setExploreMap}
                 getCircleAverage={this.getCircleAverage}
                 getAirQualityIndex={this.getAirQualityIndex}
                 airQualityIndex={this.state.airQualityIndex}
@@ -265,6 +277,7 @@ export default class App extends React.Component {
                 getAirQualityIndex={this.getAirQualityIndex}
                 airQualityIndex={this.state.airQualityIndex}
                 circleAverages={this.state.circleAverages}
+                setData={this.setProfileMap}
               />
             } />
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />

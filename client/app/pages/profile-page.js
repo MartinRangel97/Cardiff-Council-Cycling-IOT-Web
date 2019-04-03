@@ -33,6 +33,7 @@ export default class ProfilePage extends React.Component {
 
   componentWillMount () {
     // Functions to get data to pass onto the state
+    this.props.setData(1)
     this.getJourneys(1).then((response) => {
       this.getTotalDistanceTravelled()
     })
@@ -56,10 +57,10 @@ export default class ProfilePage extends React.Component {
       }
     }
   }
-x
+
   // Statistics
   getJourneys = (userId) => {
-    return axios.get('/api/web/' + userId + '/journeys')
+    return axios.get('/api/web/user/' + userId + '/journeys')
       .then((response) => {
         this.setState({
           journeys: response.data
@@ -71,7 +72,7 @@ x
   }
 
   getTotalAverages = (userId) => {
-    return axios.get('/api/web/' + userId + '/measurements')
+    return axios.get('/api/web/user/' + userId + '/measurements/averages')
       .then((response) => {
         this.setState({
           noiseAverage: response.data.dBA.toFixed(0),
@@ -222,5 +223,6 @@ ProfilePage.propTypes = {
   getCircleAverage: PropTypes.func,
   getAirQualityIndex: PropTypes.func,
   airQualityIndex: PropTypes.string,
-  circleAverages: PropTypes.object
+  circleAverages: PropTypes.object,
+  setData: PropTypes.func
 }

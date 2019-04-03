@@ -36,7 +36,7 @@ export default class JourneySubpage extends React.Component {
   componentWillUnmount () {}
 
   getJourneyReadings = (userId, journeyId) => {
-    axios.get('/api/web/' + userId + '/journeys/' + journeyId + '/measurements')
+    axios.get('/api/web/user/' + userId + '/journeys/' + journeyId + '/measurements/averages')
       .then((response) => {
         if (response.data !== 'NaN') {
           this.setState({
