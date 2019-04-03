@@ -36,7 +36,6 @@ export default class ExplorePage extends React.Component {
       })
     })
     this.props.setData()
-    // this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
   }
 
   componentDidUpdate (prevProps) {

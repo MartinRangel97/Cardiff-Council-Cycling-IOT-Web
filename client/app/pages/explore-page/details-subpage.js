@@ -16,12 +16,12 @@ export default class DetailssPage extends React.Component {
   }
 
   componentWillMount () {
-    // Set the radius
+    // Set the radius at click point
     this.props.setRadius(this.getLngLat())
-    this.props.getAirQualityIndex(this.props.circleAverages.NO2, this.props.circleAverages.PM10, this.props.circleAverages.PM25)
   }
 
   componentWillReceiveProps (nextProps) {
+    // Check circle pollution averages has changed, if so get new air quality index
     if (this.props.circleAverages !== nextProps.circleAverages) {
       nextProps.getAirQualityIndex(nextProps.circleAverages.NO2, nextProps.circleAverages.PM10, nextProps.circleAverages.PM25)
     }

@@ -28,7 +28,6 @@ export default class JourneySubpage extends React.Component {
 
   componentWillMount () {
     this.getJourneyReadings(1, this.getJourneyId())
-    // this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average)
   }
 
   componentDidUpdate () {}

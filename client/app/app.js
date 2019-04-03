@@ -27,7 +27,7 @@ export default class App extends React.Component {
       showSidebar: true,
       showLogoutConfirmation: false,
       mapState: null,
-      readings: [[]],
+      mapData: [[]],
       airQualityIndex: 'N/A',
       circleAverages: {
         dB: 0,
@@ -220,12 +220,12 @@ export default class App extends React.Component {
     this.setState({ showLogoutConfirmation: !this.state.showLogoutConfirmation })
   }
 
-  // Gets all of the readings in the last 24 hours
+  // Gets all of the readings in the last 24 hours and passes to mapbox as geojson
   setExploreMap = () => {
     axios.get('/api/web/measurements/geojson')
       .then((response) => {
         this.setState({
-          readings: response.data
+          mapData: response.data
         })
       })
       .catch((error) => {
@@ -237,7 +237,7 @@ export default class App extends React.Component {
     axios.get('/api/web/user/' + userId + '/measurements/geojson')
       .then((response) => {
         this.setState({
-          readings: response.data
+          mapData: response.data
         })
       })
       .catch((error) => {
@@ -253,7 +253,7 @@ export default class App extends React.Component {
           onMapClick={this.onMapClick}
           mapState={this.state.mapState}
           sidebarToggle={this.toggleSidebar}
-          data={this.state.readings}
+          data={this.state.mapData}
         />
         <Sidebar showSidebar={this.state.showSidebar}>
           <SidebarPageManager>
