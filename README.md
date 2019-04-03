@@ -91,7 +91,12 @@ If you're deploying the application from a different Git repository/service, you
 terraform init
 ```
 
-4. Create a file called `override.tf` in the root of this repository and add your AWS credentials (the access key ID and secret access key for your AWS user), a username and password for the database, and the name of the branch that you want to deploy:  
+4. Generate an SSH key pair and save the public key in the root of this repository with the name `aws.key.pub`:
+```
+ssh-keygen -o -t rsa -b 4096 -C "your@email.com"
+```
+
+5. Create a file called `override.tf` in the root of this repository and add your AWS credentials (the access key ID and secret access key for your AWS user), a username and password for the database, and the name of the branch that you want to deploy:  
 _If you want to be promted for a variable when you deploy, don't include it in this file._
 ```
 variable "aws_access_key_id" { default = "YOUR ACCESS KEY ID" }
@@ -101,18 +106,22 @@ variable "db_password" { default = "DATABASE PASSWORD" }
 variable "git_branch" { default = "BRANCH NAME" }
 ```
 
-5. View the Terraform plan to see the changes that will be made:
+6. View the Terraform plan to see the changes that will be made:
 ```
 terraform plan
 ```
 
-6. Apply the Terraform plan:
+7. Apply the Terraform plan:
 ```
 terraform apply
 ```
 
-7. Terraform will now create the instances for you. When the instances have been created, Terraform will output the public IP address for your server. Once the application has finished building, you'll be able to access it at this IP.  
+8. Terraform will now create the instances for you. When the instances have been created, Terraform will output the public IP address for your server. Once the application has finished building, you'll be able to access it at this IP.  
 _It will take a while to update, build, and start the application, but it should finish within 15 minutes._
+
+9. To connect to the server via SSH, use the SSH hostname that Terraform outputted, along with the private key you generated earlier (you may need to convert this key with PuTTYgen to use it).
+
+10. To connect to the database via MySQL Workbench, use the DB hostname that Terraform outputted, along with the username and password that you configured Terraform with.
 
 ## Commands
 

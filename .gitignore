@@ -86,5 +86,13 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Ignore Terrraform ssh key
+# Ignore Terrraform keys
 git.key
+git.key.pub
+aws.key
+aws.key.ppk
+aws.key.pub
+
+# IntelliJ
+.idea
+*.iml

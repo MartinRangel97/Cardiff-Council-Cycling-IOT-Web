@@ -20,6 +20,7 @@ resource "aws_instance" "clean_air" {
   instance_type          = "t2.micro"
   user_data              = "${data.template_file.script.rendered}"
   vpc_security_group_ids = ["${aws_security_group.server.id}"]
+  key_name               = "${aws_key_pair.ssh.key_name}"
 
   tags {
     Name = "clean-air"
@@ -39,6 +40,7 @@ resource "aws_db_instance" "clean_air_db" {
   parameter_group_name   = "default.mysql5.7"
   skip_final_snapshot    = true
   vpc_security_group_ids = ["${aws_security_group.database.id}"]
+  publicly_accessible    = true
 }
 
 resource "aws_security_group" "server" {
@@ -54,6 +56,20 @@ resource "aws_security_group" "server" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+  egress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
@@ -77,8 +93,21 @@ resource "aws_security_group" "database" {
   }
 }
 
+resource "aws_key_pair" "ssh" {
+  key_name   = "clean_air_ssh"
+  public_key = "${file("./aws.key.pub")}"
+}
+
 output "public_ip" {
   value = "${aws_instance.clean_air.public_ip}"
+}
+
+output "ssh_hostname" {
+  value = "ubuntu@${aws_instance.clean_air.public_dns}"
+}
+
+output "dn_hostname" {
+  value = "${aws_db_instance.clean_air_db.address}"
 }
 
 variable "aws_access_key_id" { }
