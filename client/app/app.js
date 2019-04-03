@@ -290,7 +290,8 @@ export default class App extends React.Component {
                 getCircleAverage={this.getCircleAverage}
                 setMapCurrentRadius={this.setMapCurrentRadius}
                 getAirQualityIndex={this.getAirQualityIndex}
-                airQualityIndex={this.state.airQualityIndexMain}
+                airQualityIndexMain={this.state.airQualityIndexMain}
+                airQualityIndexSub={this.state.airQualityIndexSub}
                 circleAverages={this.state.circleAverages}
                 setData={this.setProfileReadings}
               />
