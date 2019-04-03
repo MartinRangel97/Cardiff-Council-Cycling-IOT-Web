@@ -127,7 +127,7 @@ class SettingsModal extends React.Component {
 
 SettingsModal.propTypes = {
   path: PropTypes.string,
-  addTranslation: PropTypes.object
+  addTranslation: PropTypes.func
 }
 
 export default withLocalize(SettingsModal)

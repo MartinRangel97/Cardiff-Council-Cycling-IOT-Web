@@ -20,56 +20,42 @@ export default class ExplorePage extends React.Component {
       noiseAverage: 0,
       NO2Average: 0,
       PM10Average: 0,
-      PM25Average: 0,
-      airQualityIndex: 'N/A',
-      circleAverages: {}
+      PM25Average: 0
     }
   }
 
   componentWillMount () {
-    this.props.setdBAverage()
-    this.getNO2Average()
-    this.getPM10Average()
-    this.getPM25Average()
-    this.getAirQualityIndex(this.state.NO2Average, this.state.PM10Average, this.state.PM25Average)
+    this.getNoiseAverage()
+    this.getNO2Average().then(() => {
+      this.getPM10Average().then(() => {
+        this.getPM25Average().then(() => {
+          this.props.getAirQualityIndex(this.state.NO2Average, this.state.PM25Average, this.state.PM10Average, true)
+        })
+      })
+    })
+    this.props.setData()
   }
 
   componentDidUpdate (prevProps) {
-    // If the map was clicked, show the details page
+    // If the map Fas clicked, show the details page
     if (prevProps.mapState.clickLocation !== this.props.mapState.clickLocation) {
-      this.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
-      this.props.history.push({
-        pathname: `${this.props.match.path}/details`,
-        search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
-          'lat=' + this.props.mapState.clickLocation.lat
-      })
+      if (this.props.mapState.clickLocation) {
+        this.props.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
+        this.props.history.push({
+          pathname: `${this.props.match.path}/details`,
+          search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
+            'lat=' + this.props.mapState.clickLocation.lat
+        })
+      }
     }
   }
 
-  getCircleAverage = (lat, lon, rad) => {
-    axios.post('/api/web/circleAverage', {
-      'latitude': lat,
-      'longitude': lon,
-      'radius': rad
-    })
+  getNoiseAverage = () => {
+    axios.get('/api/web/noiseAverage')
       .then((response) => {
-        if (response.data.dB !== null) {
+        if (response.data !== 'NaN') {
           this.setState({
-            circleAverages: {
-              dB: response.data.dB.toFixed(0),
-              NO2: response.data.NO2.toFixed(0),
-              PM10: response.data.PM10.toFixed(0),
-              PM25: response.data.PM25.toFixed(0)
-            }
-          })
-        } else {
-          this.setState({
-            circleAverages: {
-              dB: 0,
-              NO2: 0,
-              PM10: 0,
-              PM25: 0
-            }
+            noiseAverage: response.data.toFixed(0)
           })
         }
       })
@@ -78,100 +64,8 @@ export default class ExplorePage extends React.Component {
       })
   }
 
-  getAirQualityIndex = (no2, pm25, pm10) => {
-    let highestIndex = Math.max(this.getNO2Index(no2), this.getPM25Index(pm25), this.getPM10Index(pm10))
-    let aqi
-    if (highestIndex <= 3) {
-      aqi = 'Low'
-    } else if (highestIndex <= 6) {
-      aqi = 'Moderate'
-    } else if (highestIndex <= 9) {
-      aqi = 'High'
-    } else if (highestIndex > 9) {
-      aqi = 'Very High'
-    } else {
-      aqi = 'N/A'
-    }
-    this.setState({
-      airQualityIndex: aqi
-    })
-    return aqi
-  }
-
-  getNO2Index = (no2) => {
-    if (no2 < 68) {
-      return 1
-    } else if (no2 <= 134) {
-      return 2
-    } else if (no2 <= 200) {
-      return 3
-    } else if (no2 <= 267) {
-      return 4
-    } else if (no2 <= 334) {
-      return 5
-    } else if (no2 <= 400) {
-      return 6
-    } else if (no2 <= 467) {
-      return 7
-    } else if (no2 <= 534) {
-      return 8
-    } else if (no2 <= 535) {
-      return 9
-    } else if (no2 >= 536) {
-      return 10
-    }
-  }
-
-  getPM25Index = (pm25) => {
-    if (pm25 < 12) {
-      return 1
-    } else if (pm25 <= 23) {
-      return 2
-    } else if (pm25 <= 35) {
-      return 3
-    } else if (pm25 <= 41) {
-      return 4
-    } else if (pm25 <= 47) {
-      return 5
-    } else if (pm25 <= 53) {
-      return 6
-    } else if (pm25 <= 58) {
-      return 7
-    } else if (pm25 <= 64) {
-      return 8
-    } else if (pm25 <= 70) {
-      return 9
-    } else if (pm25 >= 71) {
-      return 10
-    }
-  }
-
-  getPM10Index = (pm10) => {
-    if (pm10 < 17) {
-      return 1
-    } else if (pm10 <= 33) {
-      return 2
-    } else if (pm10 <= 50) {
-      return 3
-    } else if (pm10 <= 58) {
-      return 4
-    } else if (pm10 <= 66) {
-      return 5
-    } else if (pm10 <= 75) {
-      return 6
-    } else if (pm10 <= 83) {
-      return 7
-    } else if (pm10 <= 91) {
-      return 8
-    } else if (pm10 <= 100) {
-      return 9
-    } else if (pm10 > 101) {
-      return 10
-    }
-  }
-
   getNO2Average = () => {
-    axios.get('/api/web/NO2Average')
+    return axios.get('/api/web/NO2Average')
       .then((response) => {
         if (response.data !== 'NaN') {
           this.setState({
@@ -185,7 +79,7 @@ export default class ExplorePage extends React.Component {
   }
 
   getPM10Average = () => {
-    axios.get('/api/web/PM10Average')
+    return axios.get('/api/web/PM10Average')
       .then((response) => {
         if (response.data !== 'NaN') {
           this.setState({
@@ -199,7 +93,7 @@ export default class ExplorePage extends React.Component {
   }
 
   getPM25Average = () => {
-    axios.get('/api/web/PM25Average')
+    return axios.get('/api/web/PM25Average')
       .then((response) => {
         if (response.data !== 'NaN') {
           this.setState({
@@ -230,7 +124,12 @@ export default class ExplorePage extends React.Component {
     return (
       <SidebarPageManager>
         <Route path={`${this.props.match.path}/details`} render={(props) =>
-          <DetailsSubpage {...props} setRadius={this.props.setMapCurrentRadius} circleAverages={this.state.circleAverages} />
+          <DetailsSubpage {...props}
+            setRadius={this.props.setMapCurrentRadius}
+            circleAverages={this.props.circleAverages}
+            airQualityIndexSub={this.props.airQualityIndexSub}
+            getAirQualityIndex={this.props.getAirQualityIndex}
+          />
         } />
         <Route path={`${this.props.match.path}/`} render={() =>
           <SidebarPage title='Explore'>
@@ -240,7 +139,7 @@ export default class ExplorePage extends React.Component {
                   <IconAirPollution className='icon' />
                   <div className='details'>
                     <h1>Air Pollution</h1>
-                    <span className='value'>{this.state.airQualityIndex}</span>
+                    <span className='value'>{this.props.airQualityIndexMain}</span>
                   </div>
                 </div>
                 <div className='pill-container'>
@@ -262,7 +161,7 @@ export default class ExplorePage extends React.Component {
                 <IconNoise className='icon' />
                 <div className='details'>
                   <h1>Noise</h1>
-                  <span className='value'>{this.props.dBAverage} dB</span>
+                  <span className='value'>{this.state.noiseAverage} dB</span>
                 </div>
               </Card>
             </Section>
@@ -284,6 +183,10 @@ ExplorePage.propTypes = {
   match: PropTypes.object,
   mapState: PropTypes.object,
   setMapCurrentRadius: PropTypes.func,
-  dBAverage: PropTypes.number,
-  setdBAverage: PropTypes.func
+  setData: PropTypes.func,
+  getCircleAverage: PropTypes.func,
+  getAirQualityIndex: PropTypes.func,
+  airQualityIndexMain: PropTypes.string,
+  airQualityIndexSub: PropTypes.string,
+  circleAverages: PropTypes.object
 }

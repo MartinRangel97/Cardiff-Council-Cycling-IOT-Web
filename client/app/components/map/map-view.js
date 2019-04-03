@@ -93,19 +93,6 @@ export default class MapView extends React.Component {
     }
   }
 
-  getReadings () {
-    axios.get('/api/web/allReadings')
-      .then((response) => {
-        this.setState({
-          reading: response.data
-        })
-      }
-      )
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-
   applyMapState = () => {
     // Apply layers to the map when the map state has changed
     // Check if current radius is not null
@@ -140,9 +127,9 @@ export default class MapView extends React.Component {
     }
   }
 
-  componentWillMount () {
-    this.getReadings()
-  }
+  // componentWillMount () {
+  //   this.getReadings()
+  // }
 
   componentDidMount () {
     // Public Style URL:
@@ -164,11 +151,11 @@ export default class MapView extends React.Component {
       })
       this.map.addSource('air', {
         type: 'geojson',
-        data: this.state.reading
+        data: this.props.data
       })
       this.map.addSource('noise', {
         type: 'geojson',
-        data: this.state.reading
+        data: this.props.data
       })
       // add air layer here
       this.map.addLayer({
@@ -244,6 +231,15 @@ export default class MapView extends React.Component {
     this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right')
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.data !== nextProps.data) {
+      if (this.map.getSource('air') !== undefined) {
+        this.map.getSource('air').setData(nextProps.data)
+        this.map.getSource('noise').setData(nextProps.data)
+      }
+    }
+  }
+
   componentDidUpdate (prevProps) {
     // Check if the mapstate changed
     if (prevProps.mapState !== this.props.mapState) {
@@ -279,5 +275,9 @@ MapView.propTypes = {
   sidebarToggle: PropTypes.func,
   onMapLoad: PropTypes.func,
   onMapClick: PropTypes.func,
-  mapState: PropTypes.object
+  mapState: PropTypes.object,
+  data: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ])
 }

@@ -16,14 +16,22 @@ export default class DetailssPage extends React.Component {
   }
 
   componentWillMount () {
-    // Set the radius
+    // Set the radius at click point
     this.props.setRadius(this.getLngLat())
+  }
+
+  componentWillReceiveProps (nextProps) {
+    // Check circle pollution averages has changed, if so get new air quality index
+    if (this.props.circleAverages !== nextProps.circleAverages) {
+      nextProps.getAirQualityIndex(nextProps.circleAverages.NO2, nextProps.circleAverages.PM25, nextProps.circleAverages.PM10, false)
+    }
   }
 
   componentDidUpdate (prevProps) {
     // If the location changed (new coordinates), update the radius
     if (prevProps.location !== this.props.location) {
       this.props.setRadius(this.getLngLat())
+      this.props.getAirQualityIndex(this.props.circleAverages.NO2, this.props.circleAverages.PM10, this.props.circleAverages.PM25)
     }
   }
 
@@ -49,7 +57,7 @@ export default class DetailssPage extends React.Component {
               <IconAirPollution className='icon' />
               <div className='details'>
                 <h1>Air Pollution</h1>
-                <span className='value'>Low</span>
+                <span className='value'>{this.props.airQualityIndexSub}</span>
               </div>
             </div>
             <div className='pill-container'>
@@ -83,5 +91,7 @@ export default class DetailssPage extends React.Component {
 DetailssPage.propTypes = {
   location: PropTypes.object,
   setRadius: PropTypes.func,
-  circleAverages: PropTypes.object
+  circleAverages: PropTypes.object,
+  getAirQualityIndex: PropTypes.func,
+  airQualityIndexSub: PropTypes.string
 }
