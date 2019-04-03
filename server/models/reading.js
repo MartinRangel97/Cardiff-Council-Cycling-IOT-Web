@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = (sequelize, DataTypes) => {
-  var Measurement = sequelize.define('measurements', {
+  var Reading = sequelize.define('reading', {
     userId: DataTypes.INTEGER,
     journeyId: DataTypes.INTEGER,
     dBReading: DataTypes.FLOAT,
@@ -12,14 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     longitude: DataTypes.FLOAT,
     latitude: DataTypes.FLOAT
   })
-  Measurement.associate = models => {
-    Measurement.belongsTo(models.journey, { foreignKey: 'journeyId' })
-    Measurement.belongsTo(models.user, { foreignKey: 'userId' })
+  Reading.associate = models => {
+    Reading.belongsTo(models.journey, { foreignKey: 'journeyId' })
+    Reading.belongsTo(models.user, { foreignKey: 'userId' })
   }
 
-  Measurement.sync()
-    .then(() => console.log('Measurement table created successfully'))
+  Reading.sync()
+    .then(() => console.log('Reading table created successfully'))
     .catch(err => console.log('Wrong database credentials entered: ', err))
 
-  return Measurement
+  return Reading
 }

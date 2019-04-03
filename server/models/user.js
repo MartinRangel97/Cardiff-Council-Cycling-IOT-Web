@@ -1,27 +1,13 @@
 'use strict'
 
-const bcrypt = require('bcrypt')
-
 module.exports = (sequelize, DataTypes) => {
-  var User = sequelize.define('User', {
+  var User = sequelize.define('user', {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     shareReadings: DataTypes.BOOLEAN
-  }, {
-    hooks: {
-      beforeCreate: (user) => {
-        const salt = bcrypt.genSaltSync(8)
-        user.password = bcrypt.hashSync(user.password, salt)
-      }
-    },
-    instanceMethods: {
-      validPassword (password) {
-        return bcrypt.compareSync(password, this.password)
-      }
-    }
   })
   User.associate = models => {
-    User.hasMany(models.measurement, { targetKey: 'id', foreignKey: 'userId' })
+    User.hasMany(models.reading, { targetKey: 'id', foreignKey: 'userId' })
     User.hasMany(models.journey, { targetKey: 'id', foreignKey: 'userId' })
   }
 

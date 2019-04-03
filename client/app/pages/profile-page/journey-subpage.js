@@ -41,7 +41,7 @@ export default class JourneySubpage extends React.Component {
   componentWillUnmount () {}
 
   getJourneyReadings = (userId, journeyId) => {
-    return axios.get('/api/web/user/' + userId + '/journeys/' + journeyId + '/measurements/averages')
+    return axios.get('/api/web/user/journeys/' + journeyId + '/readings/averages')
       .then((response) => {
         if (response.data !== 'NaN') {
           this.setState({
@@ -98,14 +98,8 @@ export default class JourneySubpage extends React.Component {
 }
 
 JourneySubpage.propTypes = {
-  title: PropTypes.string,
   // match: PropTypes.object, Use later for path
   airQualityIndex: PropTypes.string,
   setJourneyMap: PropTypes.func,
-  pm10: PropTypes.number,
-  pm25: PropTypes.number,
-  no2: PropTypes.number,
-  dBA: PropTypes.number,
   getAirQualityIndex: PropTypes.func,
-  userId: PropTypes.string
 }

@@ -31,5 +31,7 @@ export default class ViewDatePage extends React.Component {
 }
 
 ViewDatePage.propTypes = {
-  path: PropTypes.string
+  path: PropTypes.string,
+  match: PropTypes.object,
+  location: PropTypes.object
 }

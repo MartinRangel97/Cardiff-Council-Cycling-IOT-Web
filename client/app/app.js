@@ -2,6 +2,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Route, Redirect } from 'react-router-dom'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { withLocalize } from 'react-localize-redux'
+import globalTranslations from '../translations/global.json'
 import axios from 'axios'
 
 // Components
@@ -20,13 +23,23 @@ import AveragesPage from './pages/explore-page/averages-page'
 import SettingsPage from './pages/settings-page'
 import DetailsPage from './pages/details-page'
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor (props) {
     super(props)
+
+    this.props.initialize({
+      languages: [
+        { name: 'English', code: 'en' },
+        { name: 'Welsh', code: 'cy' }
+      ],
+      translation: globalTranslations,
+      options: { renderToStaticMarkup }
+    })
+
     this.state = {
       showSidebar: true,
       showLogoutConfirmation: false,
-      mapState: null,
+      mapState: {},
       mapData: [[]],
       airQualityIndexMain: 'N/A',
       airQualityIndexSub: 'N/A',
@@ -62,6 +75,7 @@ export default class App extends React.Component {
     this.setState({
       showSidebar: true,
       mapState: {
+        ...this.state.mapState,
         clickLocation: event.lngLat
       }
     })
@@ -74,6 +88,7 @@ export default class App extends React.Component {
   setMapCurrentRadius = (point) => {
     this.setState({
       mapState: {
+        ...this.state.mapState,
         currentRadius: point
       }
     })
@@ -118,6 +133,14 @@ export default class App extends React.Component {
       })
   }
 
+  /**
+  * Sends a post request to web api to calculate average pollution data within a circle radius on the map.
+  * Sets state of circleAverages{}.
+  * @param {float} lat Latitude coordinate
+  * @param {float} lon Longitude coordinate
+  * @param {float} rad Radius in miles
+  * @param {int} userId Expects id of user account
+  */
   getUserCircleAverage = (lat, lon, rad, userId) => {
     axios.post('/api/web/user/' + userId + '/circleAverage', {
       'latitude': lat,
@@ -297,7 +320,7 @@ export default class App extends React.Component {
 
   // Gets all of the readings in the last 24 hours and passes to mapbox as geojson
   setExploreMap = () => {
-    axios.get('/api/web/measurements/geojson')
+    axios.get('/api/web/readings/geojson')
       .then((response) => {
         this.setState({
           mapData: response.data
@@ -310,10 +333,10 @@ export default class App extends React.Component {
 
   /**
   * Gets all journey readings for a user and passes to mapbox as geojson
-  * @param {int} userId Gets user id
+  * @param {int} userId Expects id of user account
   */
   setProfileMap = (userId) => {
-    axios.get('/api/web/user/' + userId + '/measurements/geojson')
+    axios.get('/api/web/user/readings/geojson')
       .then((response) => {
         this.setState({
           mapData: response.data
@@ -324,9 +347,12 @@ export default class App extends React.Component {
       })
   }
 
-  // Gets all of the readings based on user and journey id
-  setJourneyMap = (userId, journeyId) => {
-    axios.get('/api/web/user/' + userId + '/journey/' + journeyId + '/measurements/geojson')
+  /**
+  * Gets readings of a specific journey for a user and passes to mapbox as geojson
+  * @param {int} journeyId Expects id of journey
+  */
+  setJourneyMap = (journeyId) => {
+    axios.get('/api/web/user/journey/' + journeyId + '/readings/geojson')
       .then((response) => {
         this.setState({
           mapData: response.data
@@ -398,5 +424,8 @@ export default class App extends React.Component {
 
 App.propTypes = {
   match: PropTypes.object,
-  location: PropTypes.object
+  location: PropTypes.object,
+  initialize: PropTypes.func
 }
+
+export default withLocalize(App)

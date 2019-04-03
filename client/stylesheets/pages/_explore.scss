@@ -28,18 +28,21 @@
 .pill-container {
   display: flex;
   font-size: 13px;
-  justify-content: space-between;
   margin-top: 20px;
   .pill {
     background: $color-background;
-    padding: 8px 20px;
+    padding: 8px 12px;
     border-radius: 10px;
+    flex-grow: 1;
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
     h2 {
       font-weight: 600;
       color: $color-black;
     }
     span {
       color: $color-grey;
-  }
+    }
   }
 }

@@ -35,7 +35,10 @@ export default class StateModal extends React.Component {
 
 StateModal.propTypes = {
   className: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   subheading: PropTypes.string,
   onNo: PropTypes.func,
   onYes: PropTypes.func,

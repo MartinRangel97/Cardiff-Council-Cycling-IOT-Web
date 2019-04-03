@@ -38,7 +38,7 @@ export default class ExplorePage extends React.Component {
 
   componentDidUpdate (prevProps) {
     // If the map Fas clicked, show the details page
-    if (prevProps.mapState !== this.props.mapState) {
+    if (prevProps.mapState.clickLocation !== this.props.mapState.clickLocation) {
       if (this.props.mapState.clickLocation) {
         this.props.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
         this.props.history.push({
@@ -104,6 +104,20 @@ export default class ExplorePage extends React.Component {
       .catch((error) => {
         console.log(error)
       })
+  }
+
+  journey () {
+    var request = new XMLHttpRequest()
+    request.open('GET', '/api/web/journey', true)
+    request.onload = (data) => {
+      if (request.status === 200) {
+        this.setState({
+          journey: request.response
+        })
+      } else {
+        console.log('Failed')
+      }
+    }
   }
 
   render () {

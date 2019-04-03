@@ -31,7 +31,10 @@ class SidebarPage extends React.Component {
 }
 
 SidebarPage.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   children: PropTypes.node,
   canGoBack: PropTypes.bool,
   history: PropTypes.object,

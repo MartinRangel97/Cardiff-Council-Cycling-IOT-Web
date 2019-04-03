@@ -13,7 +13,10 @@ const Button = props => {
 Button.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
-  text: PropTypes.string,
+  text: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
   danger: PropTypes.bool
 }
 

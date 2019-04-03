@@ -12,7 +12,7 @@ import DetailsSubpage from './explore-page/details-subpage'
 
 import IconAirPollution from './explore-page/icons/air-pollution.svg'
 import IconNoise from './explore-page/icons/noise.svg'
-import IconBike from './settings-page/icons/bike.svg'
+import IconBike from './profile-page/icons/bike.svg'
 import Journey from './profile-page/journey-card'
 import JourneySubpage from './profile-page/journey-subpage'
 
@@ -44,7 +44,7 @@ export default class ProfilePage extends React.Component {
 
   // Statistics
   getJourneys = (userId) => {
-    return axios.get('/api/web/user/' + userId + '/journeys')
+    return axios.get('/api/web/user/journeys')
       .then((response) => {
         this.setState({
           journeys: response.data
@@ -56,7 +56,7 @@ export default class ProfilePage extends React.Component {
   }
 
   getTotalAverages = (userId) => {
-    return axios.get('/api/web/user/' + userId + '/measurements/averages')
+    return axios.get('/api/web/user/readings/averages')
       .then((response) => {
         this.setState({
           noiseAverage: response.data.dBA.toFixed(0),

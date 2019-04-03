@@ -17,7 +17,10 @@ const IconButton = props => {
 IconButton.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
-  title: PropTypes.string
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
 }
 
 export default IconButton

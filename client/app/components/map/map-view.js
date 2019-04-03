@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
+import axios from 'axios'
 
 import Searchbar from './searchbar'
 import OverlayPicker from './overlay-picker'
@@ -11,7 +12,9 @@ export default class MapView extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedOverlay: 'air'
+      mapIsLoaded: false,
+      selectedOverlay: 'air',
+      reading: [[]]
     }
     this.createRadius = this.createRadius.bind(this)
   }
@@ -90,22 +93,62 @@ export default class MapView extends React.Component {
     }
   }
 
+  applyMapState = () => {
+    // Apply layers to the map when the map state has changed
+    // Check if current radius is not null
+    if (this.props.mapState.currentRadius) {
+      // Get the coordinates from mapstate
+      let coordinates = [parseFloat(this.props.mapState.currentRadius.lng), parseFloat(this.props.mapState.currentRadius.lat)]
+      let radius = 1
+
+      // If a circle exists, remove it
+      if (this.map.getSource('clickRadius')) {
+        this.map.removeLayer('clickRadius')
+        this.map.removeSource('clickRadius')
+      }
+
+      this.map.addSource('clickRadius', this.createRadius(coordinates, radius))
+      this.map.addLayer({
+        'id': 'clickRadius',
+        'type': 'fill',
+        'source': 'clickRadius',
+        'layout': {},
+        'paint': {
+          'fill-color': '#4c9cff',
+          'fill-opacity': 0.5
+        }
+      })
+    } else {
+      // If a circle exists, remove it
+      if (this.map.getSource('clickRadius')) {
+        this.map.removeLayer('clickRadius')
+        this.map.removeSource('clickRadius')
+      }
+    }
+  }
+
+  // componentWillMount () {
+  //   this.getReadings()
+  // }
+
   componentDidMount () {
     // Public Style URL:
     // https://api.mapbox.com/styles/v1/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3.html?fresh=true&title=true&access_token=pk.eyJ1Ijoiam9uYXRoYW5wZXRlcmNvbGUiLCJhIjoiY2p0YWhqaTRrMGFydjQzcWQ1NWR5aTk3dCJ9.V7HyWXQG5lpWtgk-17y6yw#13.5/51.480233/-3.152327/0
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/jonathanpetercole/cjtb9gdix19sd1fmy23x766v3',
-      center: [-3.181049629732371, 51.489130476354376],
-      zoom: 11
-      // Cardiff
-      // center: [-3.175559, 51.480802],
-      // zoom: 13.75
+      center: [-3.175559, 51.480802],
+      zoom: 13.35
     })
 
-    // Prepare event listeners
+    // On map load event
     this.map.on('load', () => {
-      this.props.onMapLoad()
+      this.setState({
+        mapIsLoaded: true
+      }, () => {
+        this.props.onMapLoad()
+        this.applyMapState()
+      })
       this.map.addSource('air', {
         type: 'geojson',
         data: this.props.data
@@ -200,38 +243,8 @@ export default class MapView extends React.Component {
   componentDidUpdate (prevProps) {
     // Check if the mapstate changed
     if (prevProps.mapState !== this.props.mapState) {
-      // Check if current radius is not null
-      if (this.props.mapState.currentRadius) {
-        // Get the coordinates from mapstate
-        let coordinates = [parseFloat(this.props.mapState.currentRadius.lng), parseFloat(this.props.mapState.currentRadius.lat)]
-        let radius = 1
-
-        // If a circle exists, remove it
-        if (this.map.getSource('clickRadius')) {
-          this.map.removeLayer('clickRadius')
-          this.map.removeSource('clickRadius')
-        }
-
-        this.map.getSource('air').setData(this.props.data)
-        this.map.getSource('noise').setData(this.props.data)
-
-        this.map.addSource('clickRadius', this.createRadius(coordinates, radius))
-        this.map.addLayer({
-          'id': 'clickRadius',
-          'type': 'fill',
-          'source': 'clickRadius',
-          'layout': {},
-          'paint': {
-            'fill-color': '#4c9cff',
-            'fill-opacity': 0.5
-          }
-        })
-      } else {
-        // If a circle exists, remove it
-        if (this.map.getSource('clickRadius')) {
-          this.map.removeLayer('clickRadius')
-          this.map.removeSource('clickRadius')
-        }
+      if (this.state.mapIsLoaded) {
+        this.applyMapState()
       }
     }
   }

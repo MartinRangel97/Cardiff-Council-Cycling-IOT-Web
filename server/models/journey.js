@@ -2,12 +2,10 @@
 
 module.exports = (sequelize, DataTypes) => {
   var Journey = sequelize.define('journey', {
-    userId: DataTypes.INTEGER,
-    startTime: DataTypes.DATE,
-    endTime: DataTypes.DATE
+    userId: DataTypes.INTEGER
   })
   Journey.associate = models => {
-    Journey.hasMany(models.measurement, { targetKey: 'id', foreignKey: 'journeyId' })
+    Journey.hasMany(models.reading, { targetKey: 'id', foreignKey: 'journeyId' })
     Journey.belongsTo(models.user, { foreignKey: 'userId' })
   }
 
