@@ -101,5 +101,5 @@ JourneySubpage.propTypes = {
   // match: PropTypes.object, Use later for path
   airQualityIndex: PropTypes.string,
   setJourneyMap: PropTypes.func,
-  getAirQualityIndex: PropTypes.func,
+  getAirQualityIndex: PropTypes.func
 }
