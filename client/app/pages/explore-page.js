@@ -256,7 +256,7 @@ export default class ExplorePage extends React.Component {
                   </div>
                   <div className='pill'>
                     <h2>PM2.5</h2>
-                    <span>{this.state.PM25Average} µgm-3</span>
+                    <span>{this.state.PM25Average} µg/m³</span>
                   </div>
                   <div className='pill'>
                     <h2>PM10</h2>
