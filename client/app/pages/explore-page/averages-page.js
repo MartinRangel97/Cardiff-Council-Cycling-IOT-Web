@@ -23,24 +23,12 @@ export default class AveragesPage extends React.Component {
           width: [3, 3, 3, 3]
         },
         title: {
-          text: 'Noise and Air Pollution Readings over the last 12hrs',
+          text: 'Noise and Air Pollution Readings',
           align: 'Right',
         },
         xaxis: {
-          offsetX: 0,
-          offsetY: 0,
-          format: undefined,
-          formatter: undefined,
-          datetimeFormatter: {
-              year: 'yyyy',
-              month: "MMM 'yy",
-              day: 'dd MMM',
-              hour: 'HH:mm',
-          },
-          //  categories: ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
-          title:{
-              text: "Hours",
-          }
+          categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999],
+          title: 'Hours'
         },
         yaxis: [
           {
@@ -181,24 +169,33 @@ export default class AveragesPage extends React.Component {
     axios.get('/api/web/reading/PM25/')
     .then((response) => {
         this.setState({
+            options: {
+              xaxis : {
+                categories: response.data.date
+              }
+            },
             series: [{
                 name: 'NO2',
                 title: "NO2",
                 type: 'line',
                 data: response.data.no2
+                // data: [1,2,3,4,5,6,7,8,9]
               }, {
                 name: 'PM2.5',
                 title: "PM2.5",
                 data: response.data.pm25
+                // data: [1,2,3,4,5,6,7,8,9]
               }, {
                 name: 'PM10',
                 title: "PM10",
                 data: response.data.pm10
+                // data: [1,2,3,4,5,6,7,8,9]
               },
               {
                   name: 'dB',
                   type: 'line',
                   data: response.data.dB
+                  // data: [1,2,3,4,5,6,7,8,9]
                 }]
         })
     })

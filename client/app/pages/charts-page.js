@@ -22,14 +22,15 @@ export default class ChartsPage extends React.Component {
               width: [3, 3, 3, 3]
             },
             title: {
-              text: 'Noise and Air Pollution Readings over the last 12hrs',
+              text: 'Noise and Air Pollution Readings',
               align: 'Right',
             },
             xaxis: {
-            //   categories: ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
-              title:{
-                  text: "Hours",
-              }
+              type: 'datetime',
+            //   title:{
+            //       text: "Hours",
+            //   }
+              
             },
             yaxis: [
               {

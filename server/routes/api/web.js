@@ -70,12 +70,14 @@ router.get('/export', function (req, res, next) {
     let pm10 = []
     let pm25 = []
     let dB = []
+    let date =[]
   
     let listReadings = {
       dB: dB, 
       pm10: pm10, 
       pm25: pm25, 
-      no2: no2
+      no2: no2,
+      date: date
     }
 
   database.getDatabase().reading.findAll({
@@ -83,7 +85,8 @@ router.get('/export', function (req, res, next) {
       ['PM25Reading', 'PM25Reading'],
       ['NO2Reading', 'NO2Reading'],
       ['PM10Reading', 'PM10Reading'],
-      ['dBReading', 'dBReading']
+      ['dBReading', 'dBReading'],
+      ['timeTaken', 'timeTaken']
     ],
     where: {
       userId: 1,
@@ -96,13 +99,13 @@ router.get('/export', function (req, res, next) {
     //   pm25.push(reading.PM25Reading)
     //   dB.push(reading.dBReading)
     // })
-    console.log(readingsJSON)
 
     for (var i = 0; i < 100; i++) {
       no2.push(readingsJSON[i].NO2Reading.toFixed(0))
       pm10.push(readingsJSON[i].PM10Reading.toFixed(0))
       pm25.push(readingsJSON[i].PM25Reading.toFixed(0))
       dB.push(readingsJSON[i].dBReading.toFixed(0))
+      date.push(readingsJSON[i].timeTaken)
     }
 
     // res.attachment('export.csv')
