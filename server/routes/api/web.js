@@ -27,53 +27,135 @@ router.get('/export', function (req, res, next) {
   })
 })
 
-  router.get('/measurements/PM10', function (req, res, next) {
-    const measurements = {
+  router.get('/reading/PM10', function (req, res, next) {
+    const readingScheme = {
       include: ['@all'],
       assoc: {
         include: ['PM10Reading']
       }
     }
 
-    database.getDatabase().measurement.findAll().then((measurements) => {
-      let measurementsJSON = Serializer.serializeMany(measurements, database.getDatabase().measurement, measurementsScheme)
-      try {
-        res.send(parse(measurementsJSON))
-      } catch (err) {
-        console.log(err)
-        res.sendStatus(400)
+    database.getDatabase().reading.findAll({
+      attributes:[
+        ['PM10Reading', 'PM10Reading']
+      ],
+      where: {
+        id: 1,
+      }
+    }).then((reading) => {
+      let readingsJSON = Serializer.serializeMany(reading, database.getDatabase().reading, readingScheme)
+      // res.attachment('export.csv')
+      if (readingsJSON.length > 0) {
+        try {
+          res.send(readingsJSON[0].PM10Reading.toString())
+          // console.log(parse(readingsJSON))
+        } catch (err) {
+          console.log(err)
+          res.sendStatus(400)
+        }
+      } else {
+        res.send()
       }
     })
-  }
-  )
+  })
 
-  router.get('/measurements/PM25', function (req, res, next) {
-    const measurements = {
+  router.get('/reading/PM25', function (req, res, next) {
+    const readingScheme = {
       include: ['@all'],
       assoc: {
         include: ['PM25Reading']
       }
     }
-  }
-  )
+  
 
-  router.get('/measurements/NO2', function (req, res, next) {
-    const measurements = {
+  database.getDatabase().reading.findAll({
+    attributes:[
+      ['PM25Reading', 'PM25Reading']
+    ],
+    where: {
+      id: 1,
+    }
+  }).then((reading) => {
+    let readingsJSON = Serializer.serializeMany(reading, database.getDatabase().reading, readingScheme)
+    // res.attachment('export.csv')
+    if (readingsJSON.length > 0) {
+      try {
+        res.send(readingsJSON[0].PM25Reading.toString())
+        // console.log(parse(readingsJSON))
+      } catch (err) {
+        console.log(err)
+        res.sendStatus(400)
+      }
+    } else {
+      res.send()
+    }
+  })
+})
+
+  
+
+  router.get('/reading/NO2', function (req, res, next) {
+    const readingScheme = {
       include: ['@all'],
       assoc: {
         include: ['NO2Reading']
       }
     }
-  }
-  )
 
-  router.get('/measurements/dB', function (req, res, next) {
-    const measurements = {
+    database.getDatabase().reading.findAll({
+      attributes:[
+        ['NO2Reading', 'NO2Reading']
+      ],
+      where: {
+        id: 1,
+      }
+    }).then((reading) => {
+      let readingsJSON = Serializer.serializeMany(reading, database.getDatabase().reading, readingScheme)
+      // res.attachment('export.csv')
+      if (readingsJSON.length > 0) {
+        try {
+          res.send(readingsJSON[0].NO2Reading.toString())
+          // console.log(parse(readingsJSON))
+        } catch (err) {
+          console.log(err)
+          res.sendStatus(400)
+        }
+      } else {
+        res.send()
+      }
+    })
+  })
+
+  router.get('/reading/dB', function (req, res, next) {
+    const readingScheme = {
       include: ['@all'],
       assoc: {
-        include: ['DBReading']
+        include: ['dBReading']
       }
     }
+    database.getDatabase().reading.findAll({
+      attributes:[
+        ['dBReading', 'dBReading']
+      ],
+      where: {
+        id: 1,
+      }
+    }).then((reading) => {
+      let readingsJSON = Serializer.serializeMany(reading, database.getDatabase().reading, readingScheme)
+      // res.attachment('export.csv')
+      if (readingsJSON.length > 0) {
+        try {
+          res.send(readingsJSON[0].dBReading.toString())
+          // console.log(parse(readingsJSON))
+        } catch (err) {
+          console.log(err)
+          res.sendStatus(400)
+        }
+      } else {
+        res.send()
+      }
+    })
+    
   }
   )
 

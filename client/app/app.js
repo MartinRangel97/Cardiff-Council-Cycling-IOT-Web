@@ -22,6 +22,8 @@ import AveragesPage from './pages/explore-page/averages-page'
 import SettingsPage from './pages/settings-page'
 import DetailsPage from './pages/details-page'
 import ChartsPage from './pages/charts-page'
+import AirCharts from './pages/charts2-page'
+import NoiseCharts from './pages/charts3-page'
 
 class App extends React.Component {
   constructor (props) {
@@ -95,6 +97,8 @@ class App extends React.Component {
             <Route path={`${this.props.match.path}/history`} render={(props) => <HistoryPage {...props} />} />
             <Route path={`${this.props.match.path}/search`} render={(props) => <SearchPage {...props} />} />
             <Route path={`${this.props.match.path}/charts`} render={(props) => <ChartsPage {...props} />} />
+            <Route path={`${this.props.match.path}/air/charts`} render={(props) => <AirCharts {...props} />} />
+            <Route path={`${this.props.match.path}/noise/charts`} render={(props) => <NoiseCharts {...props} />} />
           </SidebarPageManager>
         </Sidebar>
         <AveragesPage path={`${this.props.match.path}/explore/averages/:type`} />
