@@ -10,23 +10,25 @@ To build this application, you'll need Node.JS installed with NPM (bundled with 
 
 [Download Node.JS and NPM](https://nodejs.org/en/)
 
-To run the application, you will need MySQL to be installed an configured on your system with a database named `clean_air`. You can download MySQL here:
+To run the application, you will need MySQL to be installed an configured on your system with a database named `clean_air`. When asked which authentication method you want to use, select legacy authentication.
+You can download MySQL here:
+
 [Download MySQL](https://dev.mysql.com/downloads/windows/installer/)
 
-This project also contains an editor config file. To use this with VS Code or Atom, you will need to install an extension. These extensions are available here:  
+This project also contains an editor config file. To use this with VS Code or Atom, you will need to install an extension. These extensions are available here:
 
 * [VS Code](https://marketplace.visualstudio.com/items?itemName=editorconfig.editorconfig)
 * [Atom](https://atom.io/packages/editorconfig)
 
 ### Install and Run
 
-Clone the repo  
+Clone the repo:  
 ```
 git clone git@gitlab.cs.cf.ac.uk:c1630757/cardiff-council-cycling-iot-web.git
 ```
 
-Create an app.conf file in the config folder  
-_If you don't create a configuration file, the default configuration will be used_
+Create an app.conf file in the config folder:  
+_If you don't create a configuration file, the default configuration will be used._
 ```
 {
   "server": {
@@ -41,24 +43,92 @@ _If you don't create a configuration file, the default configuration will be use
 }
 ```
 
-Install with NPM  
+Install with NPM:  
 ```
 npm install
 ```
 
-Build and run the applcation  
+Build the applcation:  
 ```
-npm run buildRun
+npm run build
+```
+
+Run the applcation:  
+```
+npm run start
 ```
 
 View the application in your browser at [http://localhost:3000/](http://localhost:3000/)
+
+## Automated Deployment
+
+These instructions will guide you through deploying the project on AWS using Terraform. This will automatically create an EC2 server instance, an RDS MySQL database, and the relevant security groups, and automatically build and configure the web application.
+
+### Prerequisites
+
+In order to follow these instructions, you'll need an AWS account. You can try AWS for free here:  
+
+[AWS Free Tier](https://aws.amazon.com/free/)  
+
+You'll then need to create a new user with programmatic access. This user will need the AmazonEC2FullAccess and AmazonRDSFullAccess permissions. You can do this here:  
+
+[Manage AWS Users](https://console.aws.amazon.com/iam/home#/users)  
+
+In order to run the automated deployment scripts, you'll need Terraform installed on you system, instructions on how to do this can be found here:  
+
+[Install Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html)  
+
+If you're deploying the application from a different Git repository/service, you will need to update lines 22 and 33 of the `deploy-script.sh.tpl` file.
+
+### Instructions
+
+1. Generate an SSH key for GitLab and copy the private key into a file in the root of this repository named `git.key`.
+
+2. Open a terminal/bash window.
+
+3. Initialise Terraform:
+```
+terraform init
+```
+
+4. Generate an SSH key pair and save the public key in the root of this repository with the name `aws.key.pub`:
+```
+ssh-keygen -o -t rsa -b 4096 -C "your@email.com"
+```
+
+5. Create a file called `override.tf` in the root of this repository and add your AWS credentials (the access key ID and secret access key for your AWS user), a username and password for the database, and the name of the branch that you want to deploy:  
+_If you want to be promted for a variable when you deploy, don't include it in this file._
+```
+variable "aws_access_key_id" { default = "YOUR ACCESS KEY ID" }
+variable "aws_secret_access_key" { default = "YOUR SECRET ACCESS KEY" }
+variable "db_username" { default = "DATABASE USERNAME" }
+variable "db_password" { default = "DATABASE PASSWORD" }
+variable "git_branch" { default = "BRANCH NAME" }
+```
+
+6. View the Terraform plan to see the changes that will be made:
+```
+terraform plan
+```
+
+7. Apply the Terraform plan:
+```
+terraform apply
+```
+
+8. Terraform will now create the instances for you. When the instances have been created, Terraform will output the public IP address for your server. Once the application has finished building, you'll be able to access it at this IP.  
+_It will take a while to update, build, and start the application, but it should finish within 15 minutes._
+
+9. To connect to the server via SSH, use the SSH hostname that Terraform outputted, along with the private key you generated earlier (you may need to convert this key with PuTTYgen to use it).
+
+10. To connect to the database via MySQL Workbench, use the DB hostname that Terraform outputted, along with the username and password that you configured Terraform with.
 
 ## Commands
 
 The following NPM scripts are included in the project. For the commands that build or start the project, you can specify the environment with `:prod` or `:dev`.  
 
 * **Start**  
-  Runs the application on port 3000.  
+  Runs the application on port 8080.  
   `npm run start`
 
 * **Build**  

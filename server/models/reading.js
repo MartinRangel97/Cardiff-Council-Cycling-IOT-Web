@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = (sequelize, DataTypes) => {
-  var Reading = sequelize.define('Reading', {
+  var Reading = sequelize.define('reading', {
     userId: DataTypes.INTEGER,
     journeyId: DataTypes.INTEGER,
     dBReading: DataTypes.FLOAT,
