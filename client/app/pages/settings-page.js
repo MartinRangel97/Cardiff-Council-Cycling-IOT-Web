@@ -70,7 +70,7 @@ class SettingsModal extends React.Component {
                 </h2>
               </div>
               <div className='action'>
-                <Toggle />
+                <Toggle checked />
               </div>
             </div>
           </Card>
