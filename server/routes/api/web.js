@@ -116,7 +116,7 @@ router.get('/reading/PM25', function (req, res, next) {
     //   dB.push(reading.dBReading)
     // })
 
-    for (var i = 0; i < readingsJSON.length; i++) {
+    for (var i = 0; i < readingsJSON.length; i += 5) {
       if (readingsJSON[i].NO2Reading !== null) {
         no2.push(readingsJSON[i].NO2Reading.toFixed(0))
         pm10.push(readingsJSON[i].PM10Reading.toFixed(0))
