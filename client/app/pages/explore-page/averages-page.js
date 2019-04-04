@@ -9,9 +9,8 @@ import ReactApexChart from 'react-apexcharts'
 import axios from 'axios'
 
 export default class AveragesPage extends React.Component {
-
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
       options: {
@@ -24,16 +23,16 @@ export default class AveragesPage extends React.Component {
         },
         title: {
           text: 'Noise and Air Pollution Readings',
-          align: 'Right',
+          align: 'Right'
         },
         xaxis: {
-          categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999],
+          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
           title: 'Hours'
         },
         yaxis: [
           {
             axisTicks: {
-              show: true,
+              show: true
             },
             axisBorder: {
               show: true,
@@ -41,14 +40,14 @@ export default class AveragesPage extends React.Component {
             },
             labels: {
               style: {
-                color: '#008FFB',
+                color: '#008FFB'
               }
             },
 
             title: {
-              text: "µg/m³",
+              text: 'µg/m³',
               style: {
-                color: '#008FFB',
+                color: '#008FFB'
               }
             },
             tooltip: {
@@ -60,74 +59,74 @@ export default class AveragesPage extends React.Component {
           {
             seriesName: 'NO2',
             axisTicks: {
-                show: false,
-              },
-              axisBorder: {
-                show: false,
-                color: '#008FFB'
-              },
-            labels: {
-                show: false,
-              style: {
-                color: '#00E396',
-              }
+              show: false
             },
-        },
-        {
+            axisBorder: {
+              show: false,
+              color: '#008FFB'
+            },
+            labels: {
+              show: false,
+              style: {
+                color: '#00E396'
+              }
+            }
+          },
+          {
             seriesName: 'PM2.5',
             axisTicks: {
-                show: false,
-              },
-              axisBorder: {
-                show: false,
-                color: '#008FFB'
-              },
-            labels: {
-                show: false,
-              style: {
-                color: '#00E396',
-              }
+              show: false
             },
-        },
-        {
+            axisBorder: {
+              show: false,
+              color: '#008FFB'
+            },
+            labels: {
+              show: false,
+              style: {
+                color: '#00E396'
+              }
+            }
+          },
+          {
             seriesName: 'PM10',
             axisTicks: {
-                show: false,
-              },
-              axisBorder: {
-                show: false,
-                color: '#008FFB'
-              },
+              show: false
+            },
+            axisBorder: {
+              show: false,
+              color: '#008FFB'
+            },
             labels: {
-                show: false,
+              show: false,
               style: {
-                color: '#00E396',
+                color: '#00E396'
               }
+            }
+          },
+
+          {
+            seriesName: 'dB',
+            opposite: true,
+            axisTicks: {
+              show: true
             },
-        },
-          
-            {
-              seriesName: 'dB',
-              opposite: true,
-              axisTicks: {
-                show: true,
-              },
-              axisBorder: {
-                show: true,
+            axisBorder: {
+              show: true,
+              color: '#FEB019'
+            },
+            labels: {
+              style: {
                 color: '#FEB019'
-              },
-              labels: {
-                style: {
-                  color: '#FEB019',
-                },
-              },
-              title: {
-                text: "Decibel Units",
-                style: {
-                  color: '#FEB019',
-                }
               }
             },
+            title: {
+              text: 'Decibel Units',
+              style: {
+                color: '#FEB019'
+              }
+            }
+          }
         ],
         tooltip: {
           fixed: {
@@ -135,7 +134,7 @@ export default class AveragesPage extends React.Component {
             position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
             offsetY: 30,
             offsetX: 60
-          },
+          }
         },
         legend: {
           horizontalAlign: 'left',
@@ -144,80 +143,81 @@ export default class AveragesPage extends React.Component {
       },
       series: [{
         name: 'NO2',
-        title: "NO2",
+        title: 'NO2',
         type: 'line',
         data: []
       }, {
         name: 'PM2.5',
-        title: "PM2.5",
+        title: 'PM2.5',
         data: []
       }, {
         name: 'PM10',
-        title: "PM10",
+        title: 'PM10',
         data: []
       },
       {
-          name: 'dB',
-          title: 'dB',
-          type: 'line',
-          data: []
-        }],
+        name: 'dB',
+        title: 'dB',
+        type: 'line',
+        data: []
+      }]
     }
-}
-
-   dataresults () {
-    axios.get('/api/web/reading/PM25/')
-    .then((response) => {
-        this.setState({
-            options: {
-              xaxis : {
-                categories: response.data.date
-              }
-            },
-            series: [{
-                name: 'NO2',
-                title: "NO2",
-                type: 'line',
-                data: response.data.no2
-                // data: [1,2,3,4,5,6,7,8,9]
-              }, {
-                name: 'PM2.5',
-                title: "PM2.5",
-                data: response.data.pm25
-                // data: [1,2,3,4,5,6,7,8,9]
-              }, {
-                name: 'PM10',
-                title: "PM10",
-                data: response.data.pm10
-                // data: [1,2,3,4,5,6,7,8,9]
-              },
-              {
-                  name: 'dB',
-                  type: 'line',
-                  data: response.data.dB
-                  // data: [1,2,3,4,5,6,7,8,9]
-                }]
-        })
-    })
-    .catch((error) => {
-        console.log(error)
-    })
   }
 
+  dataresults () {
+    axios.get('/api/web/reading/PM25/')
+      .then((response) => {
+        this.setState({
+          options: {
+            xaxis: {
+              categories: response.data.date
+            }
+          },
+          series: [{
+            name: 'NO2',
+            title: 'NO2',
+            type: 'line',
+            data: response.data.no2
+            // data: [1,2,3,4,5,6,7,8,9]
+          }, {
+            name: 'PM2.5',
+            title: 'PM2.5',
+            data: response.data.pm25
+            // data: [1,2,3,4,5,6,7,8,9]
+          }, {
+            name: 'PM10',
+            title: 'PM10',
+            data: response.data.pm10
+            // data: [1,2,3,4,5,6,7,8,9]
+          },
+          {
+            name: 'dB',
+            type: 'line',
+            data: response.data.dB
+            // data: [1,2,3,4,5,6,7,8,9]
+          }]
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   componentWillMount () {
     this.dataresults()
   }
 
-
   render () {
     return (
-      <Page className='averages-page' title='Averages' path={this.props.path} canGoBack fullWidth>
-        <Section title='About'>
-        <div id="chart">
-        <ReactApexChart options={this.state.options} series={this.state.series} type="line" height="500" width="1000" />
-      </div>
+      <Page className='averages-page' title='Readings' path={this.props.path} canGoBack fullWidth>
+        <Section title='Charts'>
+          <Card>
+            <div id='chart'>
+              <ReactApexChart options={this.state.options} series={this.state.series} type='line' height='500' />
+            </div>
+          </Card>
         </Section>
+
       </Page>
     )
   }

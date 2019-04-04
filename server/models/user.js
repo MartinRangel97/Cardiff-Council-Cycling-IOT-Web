@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     shareReadings: DataTypes.BOOLEAN
   })
+  User.associate = models => {
+    User.hasMany(models.reading, { targetKey: 'id', foreignKey: 'userId' })
+    User.hasMany(models.journey, { targetKey: 'id', foreignKey: 'userId' })
+  }
 
   User.sync()
     .then(() => console.log('User table created successfully'))

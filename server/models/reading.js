@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     longitude: DataTypes.FLOAT,
     latitude: DataTypes.FLOAT
   })
+  Reading.associate = models => {
+    Reading.belongsTo(models.journey, { foreignKey: 'journeyId' })
+    Reading.belongsTo(models.user, { foreignKey: 'userId' })
+  }
 
   Reading.sync()
     .then(() => console.log('Reading table created successfully'))

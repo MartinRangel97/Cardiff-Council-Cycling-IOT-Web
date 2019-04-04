@@ -11,7 +11,7 @@ const Section = props => {
 }
 
 Section.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.node,
   children: PropTypes.node
 }
 

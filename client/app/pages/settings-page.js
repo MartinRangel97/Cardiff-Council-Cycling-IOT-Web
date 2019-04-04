@@ -70,7 +70,7 @@ class SettingsModal extends React.Component {
                 </h2>
               </div>
               <div className='action'>
-                <Toggle />
+                <Toggle checked />
               </div>
             </div>
           </Card>
@@ -127,7 +127,7 @@ class SettingsModal extends React.Component {
 
 SettingsModal.propTypes = {
   path: PropTypes.string,
-  addTranslation: PropTypes.object
+  addTranslation: PropTypes.func
 }
 
 export default withLocalize(SettingsModal)
