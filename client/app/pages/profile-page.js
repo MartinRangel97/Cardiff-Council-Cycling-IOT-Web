@@ -33,11 +33,11 @@ export default class ProfilePage extends React.Component {
 
   componentWillMount () {
     // Functions to get data to pass onto the state
-    this.props.setData(1)
-    this.getJourneys(1).then((response) => {
+    this.props.setData()
+    this.getJourneys().then((response) => {
       this.getTotalDistanceTravelled()
     })
-    this.getTotalAverages(1).then(() => {
+    this.getTotalAverages().then(() => {
       this.props.getAirQualityIndex(this.state.no2Average, this.state.pm25Average, this.state.pm10Average, true)
     })
   }
