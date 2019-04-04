@@ -99,7 +99,7 @@ export default class MapView extends React.Component {
     if (this.props.mapState.currentRadius) {
       // Get the coordinates from mapstate
       let coordinates = [parseFloat(this.props.mapState.currentRadius.lng), parseFloat(this.props.mapState.currentRadius.lat)]
-      let radius = 1
+      let radius = 0.25
 
       // If a circle exists, remove it
       if (this.map.getSource('clickRadius')) {
