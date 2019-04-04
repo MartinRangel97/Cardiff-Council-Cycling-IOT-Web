@@ -50,7 +50,7 @@ class Page extends React.Component {
 
 Page.propTypes = {
   className: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.node,
   fullWidth: PropTypes.bool,
   canGoBack: PropTypes.bool,
   path: PropTypes.string,

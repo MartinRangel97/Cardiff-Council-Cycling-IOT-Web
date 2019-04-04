@@ -23,3 +23,26 @@
     }
   }
 }
+
+// TODO: class names need to be reworked to better reflect card structure
+.pill-container {
+  display: flex;
+  font-size: 13px;
+  margin-top: 20px;
+  .pill {
+    background: $color-background;
+    padding: 8px 12px;
+    border-radius: 10px;
+    flex-grow: 1;
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+    h2 {
+      font-weight: 600;
+      color: $color-black;
+    }
+    span {
+      color: $color-grey;
+    }
+  }
+}

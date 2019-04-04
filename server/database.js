@@ -29,11 +29,22 @@ function configure (host, user, password, database) {
     })
     // Require Models
     let UserModel = require('./models/user')(sequelize, DataTypes)
+    let ReadingModel = require('./models/reading')(sequelize, DataTypes)
+    let JourneyModel = require('./models/journey')(sequelize, DataTypes)
     // Add the models
     db.user = UserModel
+    db.reading = ReadingModel
+    db.journey = JourneyModel
     // TODO: Add any associations here
+    Object.keys(db).forEach(function (modelName) {
+      if (db[modelName].associate) {
+        console.log(db[modelName])
+        db[modelName].associate(db)
+      }
+    })
     // Set the db Sequelize instance
     db.sequelize = sequelize
+    db.Sequelize = Sequelize
     db.Sequelize = Sequelize
     resolve()
   })

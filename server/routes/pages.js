@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-const withAuth = require('../../config/middleware')
+const withAuth = require('../services/authentication/authMiddleware')
 
 // GET Home Page
 router.get('/', function (req, res, next) {
