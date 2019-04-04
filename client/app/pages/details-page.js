@@ -9,7 +9,7 @@ import Card from '../components/common/card'
 export default class DetailsModal extends React.Component {
   render () {
     return (
-      <Page className='details-modal' title='Details' path={this.props.path} canGoBack>
+      <Page className='details-modal' title='Details' fullWidth path={this.props.path} canGoBack>
         <Section>
           <Card className={'p-0'}>
             <MaterialTable

@@ -28,8 +28,8 @@ router.get('/export', function (req, res, next) {
       include: ['id', 'userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken', 'longitude', 'latitude']
     }
   }
-  database.getDatabase().reading.findAll().then((reading) => {
-    let readingsJSON = Serializer.serializeMany(reading, database.getDatabase().reading, readingScheme)
+  database.getDatabase().reading.findAll().then(async (reading) => {
+    let readingsJSON = await Serializer.serializeMany(reading, database.getDatabase().reading, readingScheme)
     res.attachment('export.csv')
     if (readingsJSON.length > 0) {
       try {
@@ -116,7 +116,7 @@ router.get('/reading/PM25', function (req, res, next) {
     //   dB.push(reading.dBReading)
     // })
 
-    for (var i = 0; i < readingsJSON.length; i++) {
+    for (var i = 0; i < readingsJSON.length; i += 5) {
       if (readingsJSON[i].NO2Reading !== null) {
         no2.push(readingsJSON[i].NO2Reading.toFixed(0))
         pm10.push(readingsJSON[i].PM10Reading.toFixed(0))
@@ -243,7 +243,7 @@ router.post('/circleAverage', function (req, res, next) {
 
   })
     .then(async function (posts) {
-      let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
+      let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
       postsAsJSON.forEach((reading) => {
         // stores the sum of all the readings
         averages.dB += reading.dBReading
@@ -302,7 +302,7 @@ router.post('/user/:userId/circleAverage', function (req, res, next) {
 
   })
     .then(async function (posts) {
-      let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
+      let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
       postsAsJSON.forEach((reading) => {
         // stores the sum of all the readings
         averages.dB += reading.dBReading
@@ -332,7 +332,7 @@ router.get('/noiseAverage', function (req, res, next) {
       }
     }
   }).then(async function (posts) {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
+    let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     postsAsJSON.forEach((reading) => {
       noiseAve += reading.dBReading
     })
@@ -352,7 +352,7 @@ router.get('/NO2Average', function (req, res, next) {
       }
     }
   }).then(async function (posts) {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
+    let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     postsAsJSON.forEach((reading) => {
       NO2Ave += reading.NO2Reading
     })
@@ -372,7 +372,7 @@ router.get('/PM10Average', function (req, res, next) {
       }
     }
   }).then(async function (posts) {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
+    let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     postsAsJSON.forEach((reading) => {
       PM10Ave += reading.PM10Reading
     })
@@ -392,8 +392,8 @@ router.get('/PM25Average', function (req, res, next) {
       }
     }
   }).then(async function (posts) {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
-    postsAsJSON.forEach((reading) => {
+    let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
+    await postsAsJSON.forEach((reading) => {
       PM25Ave += reading.PM25Reading
     })
     PM25Ave = PM25Ave / postsAsJSON.length
@@ -410,7 +410,7 @@ router.get('/readings/geojson', function (req, res, next) {
       }
     }
   }).then(async function (posts) {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
+    let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     res.send(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
   })
 })
@@ -450,8 +450,8 @@ router.get('/user/readings/geojson', function (req, res, next) {
     where: {
       userId: req.userID
     }
-  }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, journeyScheme)
+  }).then(async posts => {
+    let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, journeyScheme)
     // send the data as a geojson for the map
     res.send(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
   })
@@ -470,8 +470,8 @@ router.get('/user/readings/averages', function (req, res, next) {
     where: {
       userId: req.userID
     }
-  }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
+  }).then(async posts => {
+    let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     postsAsJSON.forEach((reading) => {
       averages.dBA += reading.dBReading
       averages.NO2 += reading.NO2Reading
@@ -501,8 +501,8 @@ router.get('/user/journeys/:journeyId/readings/averages', function (req, res, ne
       userId: req.userID,
       journeyId: req.params.journeyId
     }
-  }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
+  }).then(async posts => {
+    let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     postsAsJSON.forEach((reading) => {
       averages.dBA += reading.dBReading
       averages.NO2 += reading.NO2Reading
@@ -537,8 +537,8 @@ router.get('/journeys/:journeyId/distance', function (req, res, next) {
       journeyId: req.params.journeyId
     },
     order: ['timeTaken']
-  }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, journeyScheme)
+  }).then(async posts => {
+    let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, journeyScheme)
     // Loops through the records and calculates the distance between each reading and adds it together
     for (var i = 1; i < postsAsJSON.length; i++) {
       distance += journeyDistance(postsAsJSON[i - 1].longitude, postsAsJSON[i - 1].latitude, postsAsJSON[i].longitude, postsAsJSON[i].latitude)
@@ -554,8 +554,8 @@ router.get('/user/journey/:journeyId/readings/geojson', function (req, res, next
       userId: req.userID,
       journeyId: req.params.journeyId
     }
-  }).then(posts => {
-    let postsAsJSON = Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
+  }).then(async posts => {
+    let postsAsJSON = await Serializer.serializeMany(posts, database.getDatabase().reading, scheme)
     res.send(GeoJSON.parse(postsAsJSON, { Point: ['latitude', 'longitude'], include: ['userId', 'journeyId', 'dBReading', 'NO2Reading', 'PM10Reading', 'PM25Reading', 'timeTaken'] }))
   })
 })

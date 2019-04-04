@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
-import axios from 'axios'
 
 import Searchbar from './searchbar'
 import OverlayPicker from './overlay-picker'
