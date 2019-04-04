@@ -387,7 +387,6 @@ router.get('/journeys/:journeyId/distance', function (req, res, next) {
 
 // Gets readings as geojson based on user and journey ID
 router.get('/user/journey/:journeyId/readings/geojson', function (req, res, next) {
-  console.log(req.params.journeyId)
   database.getDatabase().reading.findAll({
     where: {
       userId: req.userID,
