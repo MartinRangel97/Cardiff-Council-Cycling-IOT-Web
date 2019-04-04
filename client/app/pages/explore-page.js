@@ -40,7 +40,7 @@ export default class ExplorePage extends React.Component {
     // If the map Fas clicked, show the details page
     if (prevProps.mapState.clickLocation !== this.props.mapState.clickLocation) {
       if (this.props.mapState.clickLocation) {
-        this.props.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 1)
+        this.props.getCircleAverage(this.props.mapState.clickLocation.lat, this.props.mapState.clickLocation.lng, 0.25)
         this.props.history.push({
           pathname: `${this.props.match.path}/details`,
           search: '?lng=' + this.props.mapState.clickLocation.lng + '&' +
